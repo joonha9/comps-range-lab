@@ -36,9 +36,9 @@ FLAG_VARS = ["loss_making", "negative_ebitda", "no_history"]
 RULE_VARS = list(vl.FEATURES) + PEER_VARS  # continuous inputs (percentile ranks available)
 
 
-def _build(panel: pd.DataFrame, multiple: str, years: list[int]) -> pd.DataFrame:
+def _build(panel: pd.DataFrame, multiple: str, years: list[int], point: dict) -> pd.DataFrame:
     value_col, driver_col = vl.MULTIPLES[multiple]
-    recipe = vl.validate(POINT_METHODS[multiple])
+    recipe = vl.validate(point)
     est = vl.apply_recipe(panel, recipe, years, keep_peers=True)
     est = est[est["n_peers"] > 0]
     data = panel[panel["fiscal_year"].isin(years)]
@@ -67,18 +67,22 @@ def _build(panel: pd.DataFrame, multiple: str, years: list[int]) -> pd.DataFrame
     return t.sort_values(["fiscal_year", "id"]).reset_index(drop=True)
 
 
-def base_table(multiple: str, include_holdout: bool = False) -> pd.DataFrame:
-    """Base table for FY2016-2023 (plus FY2024-2025 only when include_holdout is True)."""
+def base_table(multiple: str, include_holdout: bool = False, point: dict | None = None) -> pd.DataFrame:
+    """Base table for FY2016-2023 (plus FY2024-2025 only when include_holdout is True).
+
+    `point` overrides the point-estimate peer method (robustness checks); default POINT_METHODS.
+    """
+    point = point or POINT_METHODS[multiple]
     years = vl.PROTOCOL.years("explore") + vl.PROTOCOL.years("validate")
     if include_holdout:
         years += vl.PROTOCOL.years("holdout", allow_holdout=True)
     panel = vl.panel_with_holdout() if include_holdout else vl.panel()
-    key = json.dumps([multiple, years, POINT_METHODS[multiple], len(panel), vl.vl_commit()])
+    key = json.dumps([multiple, years, point, len(panel), vl.vl_commit()])
     h = hashlib.sha1(key.encode()).hexdigest()[:10]
     CACHE.mkdir(parents=True, exist_ok=True)
     f = CACHE / f"base_{multiple.replace('/', '_')}_{h}.pkl"
     if f.exists():
         return pd.read_pickle(f)
-    t = _build(panel, multiple, years)
+    t = _build(panel, multiple, years, point)
     t.to_pickle(f)
     return t

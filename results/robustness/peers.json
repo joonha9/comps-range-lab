@@ -1,0 +1,340 @@
+{
+ "label": "exploratory robustness; validation and holdout were already used once",
+ "valuationlab_commit": "7830673",
+ "multiples": {
+  "EV/EBITDA": {
+   "primary: SIC2, 10 nearest on size+margin": {
+    "n_explore": 8261,
+    "recalibrated": {
+     "validate": {
+      "constant": 3.3905252284629483,
+      "agents_mean": 3.145475039328739,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.7186153868203125,
+      "point_median_abs_error": 0.42560874953970734
+     },
+     "holdout": {
+      "constant": 3.449399667515538,
+      "agents_mean": 3.243127110814534,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.818177528210729,
+      "point_median_abs_error": 0.4317860288614812
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.7222211349766886,
+      "agents_coverage": 0.7176852738007052,
+      "constant_is": 3.3905252284629483,
+      "agents_is": 3.145475039328739
+     },
+     "holdout": {
+      "constant_coverage": 0.7175871196808402,
+      "agents_coverage": 0.7028039796972556,
+      "constant_is": 3.449399667515538,
+      "agents_is": 3.243127110814534
+     }
+    }
+   },
+   "SIC3 industry, all peers": {
+    "n_explore": 8262,
+    "recalibrated": {
+     "validate": {
+      "constant": 3.5869285712875314,
+      "agents_mean": 3.290202622242686,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.7636282489844692,
+      "point_median_abs_error": 0.4264916028992098
+     },
+     "holdout": {
+      "constant": 3.5626739460993138,
+      "agents_mean": 3.329364860444266,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.9315814523647656,
+      "point_median_abs_error": 0.444991135692628
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.7184626623429582,
+      "agents_coverage": 0.7089516643952317,
+      "constant_is": 3.5785662351653222,
+      "agents_is": 3.295895914680743
+     },
+     "holdout": {
+      "constant_coverage": 0.719245254733029,
+      "agents_coverage": 0.6997380567759517,
+      "constant_is": 3.5510315265867174,
+      "agents_is": 3.3331583876804225
+     }
+    }
+   },
+   "SIC4 industry, all peers": {
+    "n_explore": 8262,
+    "recalibrated": {
+     "validate": {
+      "constant": 3.579589376640578,
+      "agents_mean": 3.3098348934742647,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.7670932643441235,
+      "point_median_abs_error": 0.42689347166980884
+     },
+     "holdout": {
+      "constant": 3.54751536702715,
+      "agents_mean": 3.332709145429854,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.833241337842286,
+      "point_median_abs_error": 0.44503089825971237
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.7162307622311992,
+      "agents_coverage": 0.7096368879729205,
+      "constant_is": 3.5845955276727004,
+      "agents_is": 3.3220222450032857
+     },
+     "holdout": {
+      "constant_coverage": 0.7192707504721811,
+      "agents_coverage": 0.6957544240206576,
+      "constant_is": 3.5502444025825453,
+      "agents_is": 3.3470077747375093
+     }
+    }
+   },
+   "SIC3, 5 nearest on size+margin": {
+    "n_explore": 8261,
+    "recalibrated": {
+     "validate": {
+      "constant": 3.509982418422205,
+      "agents_mean": 3.2629653250202217,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.859390352498389,
+      "point_median_abs_error": 0.4337916287647411
+     },
+     "holdout": {
+      "constant": 3.5225121802693904,
+      "agents_mean": 3.3213565116483226,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.9023838740130694,
+      "point_median_abs_error": 0.44733428963767746
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.7099514719111149,
+      "agents_coverage": 0.7076566159258216,
+      "constant_is": 3.5278198460561,
+      "agents_is": 3.2779278991280214
+     },
+     "holdout": {
+      "constant_coverage": 0.7125850626600189,
+      "agents_coverage": 0.6944330023724646,
+      "constant_is": 3.5401634356418237,
+      "agents_is": 3.3376774285998474
+     }
+    }
+   },
+   "SIC3, 8 nearest on growth+ROIC": {
+    "n_explore": 8214,
+    "recalibrated": {
+     "validate": {
+      "constant": 3.3712000040452805,
+      "agents_mean": 3.121233492239307,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.706032068974892,
+      "point_median_abs_error": 0.40367782513414285
+     },
+     "holdout": {
+      "constant": 3.3432010949949675,
+      "agents_mean": 3.135585793421879,
+      "agents_runs_below_constant": 5,
+      "gbm": 2.7674154869502465,
+      "point_median_abs_error": 0.4121398584474495
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.7371242773338691,
+      "agents_coverage": 0.7274048002326359,
+      "constant_is": 3.368422408886633,
+      "agents_is": 3.12087142746181
+     },
+     "holdout": {
+      "constant_coverage": 0.7374535457634614,
+      "agents_coverage": 0.7215708855612509,
+      "constant_is": 3.343254659710891,
+      "agents_is": 3.136808655195028
+     }
+    }
+   }
+  },
+  "EV/Sales": {
+   "primary: SIC2, 10 nearest on size+margin": {
+    "n_explore": 10357,
+    "recalibrated": {
+     "validate": {
+      "constant": 4.356541790927048,
+      "agents_mean": 4.2074202851138,
+      "agents_runs_below_constant": 5,
+      "gbm": 3.817754124746405,
+      "point_median_abs_error": 0.6348510418939731
+     },
+     "holdout": {
+      "constant": 4.444264844503637,
+      "agents_mean": 4.265656946527147,
+      "agents_runs_below_constant": 5,
+      "gbm": 3.9537882676184215,
+      "point_median_abs_error": 0.6241902302789017
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.7758504565398872,
+      "agents_coverage": 0.7797348236440366,
+      "constant_is": 4.356541790927048,
+      "agents_is": 4.2074202851138
+     },
+     "holdout": {
+      "constant_coverage": 0.772693526905767,
+      "agents_coverage": 0.7727259731130512,
+      "constant_is": 4.444264844503637,
+      "agents_is": 4.265656946527147
+     }
+    }
+   },
+   "SIC3 industry, all peers": {
+    "n_explore": 10357,
+    "recalibrated": {
+     "validate": {
+      "constant": 5.671844963752018,
+      "agents_mean": 5.217287810272879,
+      "agents_runs_below_constant": 5,
+      "gbm": 4.147019030146957,
+      "point_median_abs_error": 0.6504664133030383
+     },
+     "holdout": {
+      "constant": 5.564126900956808,
+      "agents_mean": 5.136146510912887,
+      "agents_runs_below_constant": 5,
+      "gbm": 4.070567831812733,
+      "point_median_abs_error": 0.6598456264554607
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.7528066365410775,
+      "agents_coverage": 0.7554298925936968,
+      "constant_is": 5.68487841980716,
+      "agents_is": 5.245423934572913
+     },
+     "holdout": {
+      "constant_coverage": 0.7469637452332303,
+      "agents_coverage": 0.7490757535472294,
+      "constant_is": 5.574127805816253,
+      "agents_is": 5.164237278544595
+     }
+    }
+   },
+   "SIC4 industry, all peers": {
+    "n_explore": 10357,
+    "recalibrated": {
+     "validate": {
+      "constant": 5.707016622786165,
+      "agents_mean": 5.260498684122642,
+      "agents_runs_below_constant": 5,
+      "gbm": 4.22257111626209,
+      "point_median_abs_error": 0.6527111248256029
+     },
+     "holdout": {
+      "constant": 5.577736368545528,
+      "agents_mean": 5.149655923287421,
+      "agents_runs_below_constant": 5,
+      "gbm": 4.152083555393097,
+      "point_median_abs_error": 0.6597340588239793
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.748912237498828,
+      "agents_coverage": 0.7512086677436123,
+      "constant_is": 5.72475647894397,
+      "agents_is": 5.290738591451108
+     },
+     "holdout": {
+      "constant_coverage": 0.7452015124971014,
+      "agents_coverage": 0.7477412097791472,
+      "constant_is": 5.59523380633234,
+      "agents_is": 5.179821296047768
+     }
+    }
+   },
+   "SIC3, 5 nearest on size+margin": {
+    "n_explore": 10357,
+    "recalibrated": {
+     "validate": {
+      "constant": 4.673417021648273,
+      "agents_mean": 4.451834811899965,
+      "agents_runs_below_constant": 5,
+      "gbm": 4.094493792785505,
+      "point_median_abs_error": 0.6581711173202067
+     },
+     "holdout": {
+      "constant": 4.647138150572454,
+      "agents_mean": 4.454905787852256,
+      "agents_runs_below_constant": 5,
+      "gbm": 4.107320190725832,
+      "point_median_abs_error": 0.6523478998442064
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.7631930208560772,
+      "agents_coverage": 0.7693993893479195,
+      "constant_is": 4.681507302405473,
+      "agents_is": 4.45682105730441
+     },
+     "holdout": {
+      "constant_coverage": 0.7707724018449114,
+      "agents_coverage": 0.7691017712169057,
+      "constant_is": 4.6538684335444955,
+      "agents_is": 4.460214893694595
+     }
+    }
+   },
+   "SIC3, 8 nearest on growth+ROIC": {
+    "n_explore": 10022,
+    "recalibrated": {
+     "validate": {
+      "constant": 5.0017769849878615,
+      "agents_mean": 4.635703097957242,
+      "agents_runs_below_constant": 5,
+      "gbm": 3.9153950733983143,
+      "point_median_abs_error": 0.598278160017849
+     },
+     "holdout": {
+      "constant": 5.044055216741029,
+      "agents_mean": 4.670056386079489,
+      "agents_runs_below_constant": 5,
+      "gbm": 3.9396389798529814,
+      "point_median_abs_error": 0.6078044990759329
+     }
+    },
+    "transferred": {
+     "validate": {
+      "constant_coverage": 0.7823586251385057,
+      "agents_coverage": 0.7897196159246146,
+      "constant_is": 4.991704480985079,
+      "agents_is": 4.62111177485677
+     },
+     "holdout": {
+      "constant_coverage": 0.7767971446053696,
+      "agents_coverage": 0.7789638480995869,
+      "constant_is": 5.030982697856237,
+      "agents_is": 4.647640067683129
+     }
+    }
+   }
+  }
+ }
+}
