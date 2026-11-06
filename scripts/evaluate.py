@@ -34,6 +34,7 @@ if a.period == "holdout" and not a.open_holdout:
 
 FIT = vl.PROTOCOL.years("explore")
 EVAL = vl.PROTOCOL.years(a.period, allow_holdout=a.open_holdout)
+VAL = vl.PROTOCOL.years("validate")
 OUT = ROOT / "results" / a.period
 runs = [ag.Run(n) for n in a.runs]
 finals = [json.loads((r.dir / "final.json").read_text()) for r in runs]
@@ -59,9 +60,18 @@ report = {"period": a.period, "fit_years": FIT, "eval_years": EVAL, "runs": a.ru
           "valuationlab_commit": vl.vl_commit(), "multiples": {}}
 for m in ag.MULTIPLES:
     t = base_table(m, include_holdout=a.period == "holdout")
-    t = t[t["fiscal_year"].isin(FIT + EVAL)].reset_index(drop=True)
-    te = t[t["fiscal_year"].isin(EVAL)].reset_index(drop=True)
     R = {"benchmarks": {}, "finalists": {}, "tests": {}}
+    if a.period == "holdout":
+        # Reproducibility: rebuilding with holdout rows must leave every FY2016-2023 row unchanged.
+        old = base_table(m)
+        cols = ["id", "fiscal_year", "e", "peer_iqr"] + [c for c in old.columns if c.startswith("pct_")]
+        new = t[t["fiscal_year"] <= max(VAL)][cols].reset_index(drop=True)
+        same = old[cols].reset_index(drop=True).equals(new)
+        R["reproducibility_fy2016_2023"] = bool(same)
+        if not same:
+            sys.exit(f"{m}: FY2016-2023 rows changed when holdout rows were added; stopping before scoring")
+    t = t[t["fiscal_year"].isin(FIT + VAL + EVAL)].reset_index(drop=True)
+    te = t[t["fiscal_year"].isin(EVAL)].reset_index(drop=True)
     for k, v in baselines.practice(te).items():
         R["benchmarks"][k] = v
     for k, fn in baselines.calibrated_methods(t, m).items():
@@ -73,6 +83,13 @@ for m in ag.MULTIPLES:
         R["finalists"][f["run"]] = (grader.score(t, s, FIT, EVAL)
                                     | {"rolling": rolling(t, baselines.fixed_fn(s)), "id": fin["id"],
                                        "compact": fin["compact"], "explore_is": fin["explore"]["interval_score"]})
+    if a.period == "holdout":  # secondary: fit and calibrate on FY2016-2023
+        fit2 = FIT + VAL
+        R["secondary_fit_2016_2023"] = {
+            "benchmarks": {k: grader.score(t, fn(fit2), fit2, EVAL)["interval_score"]
+                           for k, fn in baselines.calibrated_methods(t, m).items()},
+            "finalists": {f["run"]: grader.score(t, validate(f["finalists"][m]["spec"]).score(t), fit2, EVAL)["interval_score"]
+                          for f in finals}}
     A = float(np.mean([v["interval_score"] for v in R["finalists"].values()]))
     const, lin, gbm = (R["benchmarks"][k]["interval_score"] for k in ("constant", "linear_all", "gbm"))
 
