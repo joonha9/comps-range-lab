@@ -1,0 +1,310 @@
+<title>Comps Range Calculator</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a two-column work surface (inputs left, football field + verdict right), stacking on phones. */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #17202b;
+  --ink-2: #4c5866;
+  --muted: #7f8a97;
+  --rule: #dde2e8;
+  --accent: #1d4f7a;
+  --accent-soft: #e3ecf5;
+  --practice: #b9c3ce;
+  --high: #1f7a5a;
+  --high-soft: #e1f2ea;
+  --med: #a8650d;
+  --med-soft: #f8ecd9;
+  --low: #b0352c;
+  --low-soft: #f8e1df;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11161c; --panel: #182029; --ink: #e6ebf0; --ink-2: #b2bcc7; --muted: #8590a0; --rule: #2a3542;
+    --accent: #7fb2e0; --accent-soft: #1f3247; --practice: #4a5868;
+    --high: #5cc59b; --high-soft: #173a2e; --med: #e0a24d; --med-soft: #3d2d15; --low: #ec7b72; --low-soft: #43201d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11161c; --panel: #182029; --ink: #e6ebf0; --ink-2: #b2bcc7; --muted: #8590a0; --rule: #2a3542;
+  --accent: #7fb2e0; --accent-soft: #1f3247; --practice: #4a5868;
+  --high: #5cc59b; --high-soft: #173a2e; --med: #e0a24d; --med-soft: #3d2d15; --low: #ec7b72; --low-soft: #43201d;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 48px;
+}
+.wrap { max-width: 1120px; margin: 0 auto; display: grid; gap: 22px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(28px, 4.2vw, 40px); line-height: 1.08; margin: 0; text-wrap: balance; }
+.lede { color: var(--ink-2); max-width: 68ch; margin: 0; }
+.grid { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 18px; display: grid; gap: 14px; min-width: 0; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 19px; margin: 0; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.seg button { font: 500 14px var(--body); padding: 9px 8px; border: 0; background: transparent; color: var(--ink-2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--panel); }
+.seg button:focus-visible, input:focus-visible, textarea:focus-visible, .ex:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+label { display: grid; gap: 4px; font-size: 13px; color: var(--ink-2); }
+label small { color: var(--muted); font-size: 12px; }
+input, textarea { font: 15px var(--mono); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 9px; width: 100%; min-width: 0; }
+textarea { min-height: 78px; resize: vertical; }
+.full { grid-column: 1 / -1; }
+.note { font-size: 12.5px; color: var(--muted); margin: 0; }
+.ex { justify-self: start; font: 500 13px var(--body); color: var(--accent); background: var(--accent-soft); border: 0; border-radius: 6px; padding: 6px 10px; cursor: pointer; }
+.verdict { display: grid; grid-template-columns: auto 1fr; gap: 14px 18px; align-items: center; }
+.pill { font: 600 13px var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; white-space: nowrap; }
+.pill.high { color: var(--high); background: var(--high-soft); }
+.pill.medium { color: var(--med); background: var(--med-soft); }
+.pill.low { color: var(--low); background: var(--low-soft); }
+.headline { font-family: var(--display); font-size: clamp(22px, 3vw, 30px); font-weight: 600; line-height: 1.15; min-width: 0; }
+.headline .unit { font-family: var(--body); font-size: 14px; font-weight: 400; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 520px) { .stats { grid-template-columns: 1fr; } }
+.stat { border-top: 2px solid var(--rule); padding-top: 8px; display: grid; gap: 2px; min-width: 0; }
+.stat b { font: 500 18px var(--mono); font-variant-numeric: tabular-nums; }
+.stat span { font-size: 12.5px; color: var(--muted); }
+.field-chart { overflow-x: auto; }
+svg text { font-family: var(--mono); font-size: 11px; fill: var(--ink-2); }
+svg .lab { font-family: var(--body); font-size: 12.5px; fill: var(--ink); }
+svg .sub { font-family: var(--body); font-size: 11px; fill: var(--muted); }
+.flags { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.flags li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; align-items: start; font-size: 14px; }
+.flags .mark { font: 600 13px var(--mono); text-align: center; border-radius: 4px; line-height: 22px; }
+.flags .on .mark { color: var(--low); background: var(--low-soft); }
+.flags .off .mark { color: var(--muted); background: var(--bg); }
+.flags .off { color: var(--muted); }
+.why { font-size: 12.5px; color: var(--muted); display: block; }
+.err { color: var(--low); font-size: 14px; margin: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; color: var(--ink-2); font-size: 12.5px; }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.current td { background: var(--accent-soft); }
+.tablewrap { overflow-x: auto; }
+footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; max-width: 80ch; }
+footer a { color: var(--accent); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Comparable-company valuation · 80% range</div>
+    <h1>Comps Range Calculator</h1>
+    <p class="lede">Paste your peers' multiples and a few numbers about the target. You get the usual point estimate, the range practitioners usually show, and a range that has held market value about 70–80% of the time on years the rules never saw.</p>
+  </header>
+
+  <div class="grid">
+    <form class="panel" id="form" autocomplete="off">
+      <h2>Inputs</h2>
+      <div class="seg" role="group" aria-label="Multiple">
+        <button type="button" id="m-ebitda" aria-pressed="true">EV / EBITDA</button>
+        <button type="button" id="m-sales" aria-pressed="false">EV / Sales</button>
+      </div>
+      <div class="fields">
+        <label>Sales, $M<input id="sales" inputmode="decimal" value="1200"></label>
+        <label>EBITDA, $M<input id="ebitda" inputmode="decimal" value="180"></label>
+        <label>Net income, $M<input id="ni" inputmode="decimal" value="64"></label>
+        <label>Net debt, $M <small>debt − cash; negative = net cash</small><input id="nd" inputmode="decimal" value="310"></label>
+        <label class="full">Peer multiples <small>LTM EV/EBITDA or EV/Sales, separated by commas, spaces or lines</small>
+          <textarea id="peers">9.8, 11.2, 8.7, 12.5, 10.1, 9.4, 13.0, 10.6, 7.9, 11.8</textarea></label>
+      </div>
+      <button type="button" class="ex" id="example">Load the example again</button>
+      <p class="note" id="exnote">Example figures: a fictional mid-cap industrial with ten peers. Replace them with your own.</p>
+    </form>
+
+    <div style="display:grid; gap:22px; min-width:0">
+      <section class="panel" aria-live="polite">
+        <div class="verdict">
+          <span class="pill high" id="pill">High confidence</span>
+          <div class="headline" id="headline">—</div>
+        </div>
+        <p class="err" id="err" hidden></p>
+        <div class="stats">
+          <div class="stat"><b id="s-point">—</b><span>Point estimate (median peer × driver)</span></div>
+          <div class="stat"><b id="s-factor">—</b><span>Range factor for this tier</span></div>
+          <div class="stat"><b id="s-equity">—</b><span>Implied equity value, mid (EV − net debt)</span></div>
+        </div>
+        <div class="field-chart"><svg id="chart" width="100%" height="190" role="img" aria-label="Football field of enterprise value ranges"></svg></div>
+      </section>
+
+      <section class="panel">
+        <h2>Why this tier</h2>
+        <ul class="flags" id="flags"></ul>
+        <p class="note">Each warning flag moves the firm down one tier: 0 flags = high, 1 = medium, 2 or more = low. The flags are what five independent AI agent searches agreed on.</p>
+      </section>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>The card behind the numbers</h2>
+    <div class="tablewrap">
+      <table id="card">
+        <thead><tr><th>Multiple</th><th>Confidence</th><th>Flags</th><th>Share of firms</th><th>80% range around the point estimate</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">Ranges are point × centre ÷ factor to point × centre × factor. The centre (× 1.03 for EV/EBITDA, × 1.06 for EV/Sales) corrects the average gap between market value and the peer median.</p>
+  </section>
+
+  <footer>
+    <span><b>Evidence.</b> 27,000+ US non-financial firm-years with market value of at least $100M, FY2016–2025 (FactSet). The peer 25th–75th percentile range contained market value about 41% of the time in every period. Fitted on FY2016–2019 only, this card's ranges contained it 72% / 70% (EV/EBITDA) and 79% / 78% (EV/Sales) of the time in FY2020–2023 and FY2024–2025. EV/EBITDA ranges ran short of 80% in later years for every method tested, so treat the EV/EBITDA range as a floor.</span>
+    <span><b>Limits.</b> Listed firms, trailing multiples, market value as the benchmark. Tested with five different ways of choosing peers; coverage held across them. Not tested on private companies or forward multiples. The card was built after the pre-registered tests, so its out-of-sample figures are exploratory.</span>
+    <span>Code, protocol and reports: <a href="https://github.com/joonha9/comps-range-lab" target="_blank" rel="noopener">github.com/joonha9/comps-range-lab</a></span>
+  </footer>
+</div>
+
+<script>
+const CARD = {
+  "EV/EBITDA": { centre: 1.027, factor: { high: 1.936, medium: 2.416, low: 5.052 }, share: { high: .53, medium: .29, low: .18 },
+    flags: [
+      { id: "small", label: "Sales below $400M", why: "Small firms' values rest more on expectations and less on today's EBITDA." },
+      { id: "loss", label: "Net loss", why: "A loss year makes EBITDA a poor guide to steady-state earnings." },
+      { id: "cash", label: "Net cash above 2× EBITDA", why: "Large cash piles are priced unevenly, and EV depends on how the market treats them." },
+      { id: "margin", label: "EBITDA margin below 8%", why: "Thin margins make EBITDA, and so the multiple, swing more." } ] },
+  "EV/Sales": { centre: 1.057, factor: { high: 2.928, medium: 3.797, low: 6.514 }, share: { high: .55, medium: .24, low: .21 },
+    flags: [
+      { id: "small", label: "Sales below $150M", why: "Small firms' values rest more on expectations than on current sales." },
+      { id: "negebitda", label: "Negative EBITDA", why: "Without profits, sales say little about value; the market prices a turnaround or a burn." },
+      { id: "spread", label: "Peer multiples span more than 30×", why: "When peers disagree this much, the median says little about the target." },
+      { id: "few", label: "Fewer than 10 peers", why: "A thin peer set gives a noisy median." } ] }
+};
+const TIERS = ["high", "medium", "low"];
+const TIER_LABEL = { high: "High confidence", medium: "Medium confidence", low: "Low confidence" };
+const EXAMPLE = { sales: "1200", ebitda: "180", ni: "64", nd: "310", peers: "9.8, 11.2, 8.7, 12.5, 10.1, 9.4, 13.0, 10.6, 7.9, 11.8" };
+let multiple = "EV/EBITDA";
+const $ = id => document.getElementById(id);
+
+function num(id) { const v = parseFloat(String($(id).value).replace(/[, $]/g, "")); return Number.isFinite(v) ? v : NaN; }
+function peerList() { return String($("peers").value).split(/[\s,;]+/).map(Number).filter(x => Number.isFinite(x) && x > 0); }
+function quantile(sorted, p) { const h = (sorted.length - 1) * p, lo = Math.floor(h), hi = Math.ceil(h); return sorted[lo] + (sorted[hi] - sorted[lo]) * (h - lo); }
+function money(x) {
+  if (!Number.isFinite(x)) return "—";
+  const a = Math.abs(x), s = x < 0 ? "−" : "";
+  return a >= 1000 ? `${s}$${(a / 1000).toFixed(a >= 10000 ? 1 : 2)}B` : `${s}$${a.toFixed(0)}M`;
+}
+
+function compute() {
+  const sales = num("sales"), ebitda = num("ebitda"), ni = num("ni"), nd = num("nd");
+  const peers = peerList().sort((a, b) => a - b);
+  const errs = [];
+  if (peers.length < 3) errs.push("Enter at least three positive peer multiples.");
+  if (!(sales > 0)) errs.push("Sales must be a positive number in $M.");
+  if (multiple === "EV/EBITDA" && !(ebitda > 0)) errs.push("EV/EBITDA needs positive EBITDA. Switch to EV/Sales for this firm.");
+  if (!Number.isFinite(ni)) errs.push("Enter net income in $M (negative for a loss).");
+  if (!Number.isFinite(nd)) errs.push("Enter net debt in $M (negative for net cash).");
+  if (errs.length) return { errs };
+  const driver = multiple === "EV/EBITDA" ? ebitda : sales;
+  const med = quantile(peers, .5);
+  const point = med * driver;
+  const on = {};
+  if (multiple === "EV/EBITDA") {
+    on.small = sales < 400; on.loss = ni < 0; on.cash = ebitda > 0 && nd / ebitda < -2; on.margin = ebitda / sales < .08;
+  } else {
+    on.small = sales < 150; on.negebitda = !(ebitda > 0); on.spread = peers[peers.length - 1] / peers[0] > 30; on.few = peers.length < 10;
+  }
+  const nflags = Object.values(on).filter(Boolean).length;
+  const tier = TIERS[Math.min(nflags, 2)];
+  const c = CARD[multiple].centre, f = CARD[multiple].factor[tier];
+  return {
+    peers, point, driver, tier, on, f, c, nd,
+    honest: [point * c / f, point * c, point * c * f],
+    iqr: [quantile(peers, .25) * driver, quantile(peers, .75) * driver],
+    minmax: [peers[0] * driver, peers[peers.length - 1] * driver],
+  };
+}
+
+function niceStep(span) { const raw = span / 5, p = Math.pow(10, Math.floor(Math.log10(raw))); const m = raw / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; }
+
+function drawChart(r) {
+  const svg = $("chart"), W = Math.max(svg.clientWidth || 640, 480), H = 190;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const left = 168, right = 24, top = 14, rowH = 46;
+  const lo = Math.min(r.iqr[0], r.minmax[0], r.honest[0]), hi = Math.max(r.iqr[1], r.minmax[1], r.honest[2]);
+  const step = niceStep(hi - lo), x0 = Math.max(0, Math.floor(lo / step) * step), x1 = Math.ceil(hi / step) * step;
+  const X = v => left + (v - x0) / (x1 - x0) * (W - left - right);
+  const tierColor = getComputedStyle(document.documentElement).getPropertyValue(`--${r.tier === "medium" ? "med" : r.tier}`).trim();
+  const rows = [
+    { lab: "Peer 25th–75th pct", sub: "what decks usually show · held ~41%", a: r.iqr[0], b: r.iqr[1], fill: "var(--practice)" },
+    { lab: "Peer min–max", sub: "full peer spread", a: r.minmax[0], b: r.minmax[1], fill: "var(--practice)", op: .55 },
+    { lab: "Honest 80% range", sub: TIER_LABEL[r.tier].toLowerCase(), a: r.honest[0], b: r.honest[2], fill: tierColor, mid: r.honest[1] },
+  ];
+  let g = "";
+  for (let v = x0; v <= x1 + 1e-9; v += step) {
+    const x = X(v);
+    g += `<line x1="${x}" x2="${x}" y1="${top}" y2="${top + rowH * 3}" stroke="var(--rule)" stroke-width="1"/>`;
+    g += `<text x="${x}" y="${top + rowH * 3 + 16}" text-anchor="middle">${money(v)}</text>`;
+  }
+  rows.forEach((row, i) => {
+    const y = top + i * rowH + 10;
+    g += `<text class="lab" x="0" y="${y + 9}">${row.lab}</text><text class="sub" x="0" y="${y + 24}">${row.sub}</text>`;
+    g += `<rect x="${X(row.a)}" y="${y}" width="${Math.max(2, X(row.b) - X(row.a))}" height="20" rx="3" fill="${row.fill}" fill-opacity="${row.op || 1}"/>`;
+    if (row.mid) g += `<line x1="${X(row.mid)}" x2="${X(row.mid)}" y1="${y - 3}" y2="${y + 23}" stroke="var(--ink)" stroke-width="2"/>`;
+  });
+  const px = X(r.point);
+  g += `<line x1="${px}" x2="${px}" y1="${top}" y2="${top + rowH * 3}" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+  g += `<text x="${Math.min(px + 4, W - right - 60)}" y="${top + 2}" style="fill:var(--accent)">point ${money(r.point)}</text>`;
+  svg.innerHTML = g;
+}
+
+function render() {
+  const r = compute();
+  const err = $("err");
+  if (r.errs) {
+    err.textContent = r.errs.join(" "); err.hidden = false;
+    $("headline").textContent = "—"; ["s-point", "s-factor", "s-equity"].forEach(id => $(id).textContent = "—");
+    $("chart").innerHTML = ""; $("flags").innerHTML = ""; renderCard(null); return;
+  }
+  err.hidden = true;
+  const pill = $("pill"); pill.className = `pill ${r.tier}`; pill.textContent = TIER_LABEL[r.tier];
+  $("headline").innerHTML = `${money(r.honest[0])} – ${money(r.honest[2])} <span class="unit">enterprise value, 80% range</span>`;
+  $("s-point").textContent = money(r.point);
+  $("s-factor").textContent = `×/÷ ${r.f.toFixed(2)}`;
+  $("s-equity").textContent = money(r.honest[1] - r.nd);
+  $("flags").innerHTML = CARD[multiple].flags.map(fl => {
+    const hit = r.on[fl.id];
+    return `<li class="${hit ? "on" : "off"}"><span class="mark">${hit ? "!" : "–"}</span><span>${fl.label}${hit ? `<span class="why">${fl.why}</span>` : ""}</span></li>`;
+  }).join("");
+  drawChart(r);
+  renderCard(r.tier);
+}
+
+function renderCard(currentTier) {
+  const rows = [];
+  for (const m of ["EV/EBITDA", "EV/Sales"]) {
+    const C = CARD[m];
+    TIERS.forEach((t, k) => {
+      const cur = m === multiple && t === currentTier;
+      rows.push(`<tr class="${cur ? "current" : ""}"><td>${k === 0 ? m : ""}</td><td>${TIER_LABEL[t].replace(" confidence", "")}</td><td>${["0", "1", "2 or more"][k]}</td>` +
+        `<td class="num">${Math.round(C.share[t] * 100)}%</td><td class="num">× ${(C.centre / C.factor[t]).toFixed(2)} to × ${(C.centre * C.factor[t]).toFixed(2)}</td></tr>`);
+    });
+  }
+  document.querySelector("#card tbody").innerHTML = rows.join("");
+}
+
+function setMultiple(m) {
+  multiple = m;
+  $("m-ebitda").setAttribute("aria-pressed", String(m === "EV/EBITDA"));
+  $("m-sales").setAttribute("aria-pressed", String(m === "EV/Sales"));
+  render();
+}
+$("m-ebitda").addEventListener("click", () => setMultiple("EV/EBITDA"));
+$("m-sales").addEventListener("click", () => setMultiple("EV/Sales"));
+$("form").addEventListener("input", render);
+$("form").addEventListener("submit", e => e.preventDefault());
+$("example").addEventListener("click", () => { for (const [k, v] of Object.entries(EXAMPLE)) $(k).value = v; setMultiple("EV/EBITDA"); });
+window.addEventListener("resize", () => { const r = compute(); if (!r.errs) drawChart(r); });
+render();
+</script>
