@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Comps Range Lab</title>
+<meta name="description" content="How much should you trust a comparable-company valuation? AI agents wrote rules for honest 80% comps ranges, tested on 27,000 US firm-years with a sealed holdout.">
+<meta property="og:title" content="Comps Range Lab">
+<meta property="og:description" content="The range on the slide holds about 41% of the time. AI agents wrote rules that make an 80% comps range honest.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%234b36c9%22/%3E%3Crect x=%226%22 y=%2210%22 width=%2214%22 height=%224%22 rx=%222%22 fill=%22%23fff%22/%3E%3Crect x=%2210%22 y=%2218%22 width=%2216%22 height=%224%22 rx=%222%22 fill=%22%23fff%22 opacity=%22.6%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: one bright reading column (max 1120px) with full-width figure bands; the football field is the recurring motif. */
+:root{
+  color-scheme: light;
+  --bg:#ffffff; --tint:#f5f4fd; --tint-2:#ecebfb;
+  --ink:#141a26; --ink-2:#3d4657; --muted:#6c7586; --faint:#9aa2b1;
+  --rule:#e3e5ec; --rule-2:#cdd1dc;
+  --accent:#4b36c9; --accent-2:#3a28a8; --accent-soft:#ebe8fb;
+  --practice:#c3c8d3; --practice-2:#dfe2e8;
+  --s1:#4b36c9; --s2:#c46f0c;
+  --high:#1c7a57; --high-soft:#e0f2ea; --med:#a3600b; --med-soft:#f8ecd8; --low:#b2342b; --low-soft:#f9e2df;
+  --display:"IBM Plex Sans Condensed","IBM Plex Sans KR","Arial Narrow",Arial,sans-serif;
+  --sans:"IBM Plex Sans","IBM Plex Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+body:not(.lang-ko) .ko,.lang-ko .en{display:none!important}
+.lang-ko{word-break:keep-all}
+a{color:var(--accent-2);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+@media (max-width:600px){.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+.num,td.num,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:18px;color:var(--ink);text-decoration:none;white-space:nowrap}
+.brand i{display:grid;gap:3px;width:20px}
+.brand i b{display:block;height:4px;border-radius:2px;background:var(--accent)}
+.brand i b:nth-child(1){width:70%;margin-left:10%;background:var(--practice)}
+.brand i b:nth-child(2){width:100%}
+.nav{display:flex;gap:16px;margin-left:auto;font-size:14px;overflow-x:auto;scrollbar-width:none}
+.nav a{color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.nav a:hover{color:var(--accent-2)}
+@media (max-width:860px){.nav{display:none}}
+.lang{display:flex;border:1px solid var(--rule-2);border-radius:999px;overflow:hidden;margin-left:auto}
+@media (min-width:861px){.lang{margin-left:0}}
+.lang button{font:500 13px var(--sans);padding:5px 11px;border:0;background:transparent;color:var(--ink-2);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+
+/* hero */
+.hero{padding-block:64px 40px}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.lang-ko .eyebrow{letter-spacing:.03em}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(36px,6vw,64px);line-height:1.02;letter-spacing:-.015em;margin:12px 0 18px;max-width:17ch;text-wrap:balance}
+.lang-ko h1{font-size:clamp(32px,5.2vw,54px);line-height:1.18;letter-spacing:-.03em;max-width:19ch}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{font-size:clamp(17px,1.9vw,19.5px);color:var(--ink-2);max-width:62ch;margin:0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;margin-top:36px}
+.ff{border:1px solid var(--rule);border-radius:14px;padding:22px 22px 16px;background:var(--bg);box-shadow:0 1px 0 var(--rule),0 18px 40px -28px rgba(40,30,120,.35)}
+.ff-head{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+.ff-head h3{margin:0;font-family:var(--display);font-weight:600;font-size:20px}
+.ff-head p{margin:0;color:var(--muted);font-size:13.5px}
+.tierpick{display:flex;gap:6px;flex-wrap:wrap}
+.tierpick button{font:500 13px var(--sans);padding:5px 11px;border-radius:999px;border:1px solid var(--rule-2);background:var(--bg);color:var(--ink-2);cursor:pointer}
+.tierpick button[aria-pressed="true"].high{background:var(--high-soft);border-color:var(--high);color:var(--high)}
+.tierpick button[aria-pressed="true"].medium{background:var(--med-soft);border-color:var(--med);color:var(--med)}
+.tierpick button[aria-pressed="true"].low{background:var(--low-soft);border-color:var(--low);color:var(--low)}
+.chart-x{overflow-x:auto}
+svg{display:block}
+svg text{font-family:var(--mono);font-size:11.5px;fill:var(--ink-2)}
+svg .lab{font-family:var(--sans);font-size:13px;fill:var(--ink);font-weight:500}
+svg .sub{font-family:var(--sans);font-size:11.5px;fill:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--ink);margin-top:34px}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{padding:16px 16px 4px 0;display:grid;gap:4px;min-width:0}
+.stat b{font-family:var(--display);font-weight:600;font-size:clamp(28px,3.6vw,40px);line-height:1;color:var(--ink)}
+.stat span{font-size:13.5px;color:var(--ink-2)}
+
+/* sections */
+section.s{padding-block:64px;border-top:1px solid var(--rule)}
+.s-head{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:24px 48px;margin-bottom:28px}
+@media (max-width:860px){.s-head{grid-template-columns:minmax(0,1fr)}}
+.s-head .k{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:8px}
+.lang-ko .s-head .k{letter-spacing:.02em}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.1;margin:0 0 12px;text-wrap:balance}
+.lang-ko h2{line-height:1.3;letter-spacing:-.02em}
+.s-head p{margin:0 0 10px;color:var(--ink-2);max-width:66ch}
+h3{font-family:var(--display);font-weight:600;font-size:20px;margin:0 0 8px}
+.prose{max-width:68ch;color:var(--ink-2)}
+.prose p{margin:0 0 12px}
+.fig{border:1px solid var(--rule);border-radius:12px;padding:20px;display:grid;gap:12px;min-width:0}
+.fig-t{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px}
+.fig-t b{font-family:var(--display);font-size:18px;font-weight:600}
+.fig-t .seg{margin-left:auto}
+.cap{font-size:13px;color:var(--muted);margin:0}
+.seg{display:inline-flex;border:1px solid var(--rule-2);border-radius:8px;overflow:hidden}
+.seg button{font:500 13px var(--sans);padding:6px 12px;border:0;background:transparent;color:var(--ink-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+@media (max-width:860px){.two{grid-template-columns:minmax(0,1fr)}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:st}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.steps{grid-template-columns:minmax(0,1fr)}}
+.step{border-top:3px solid var(--accent);padding-top:12px;display:grid;gap:6px;align-content:start}
+.step .n{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.step h4{margin:0;font-family:var(--display);font-size:18px;font-weight:600}
+.step p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.formula{font-family:var(--mono);font-size:13.5px;background:var(--tint);border-radius:8px;padding:10px 12px;color:var(--ink);overflow-x:auto;white-space:nowrap}
+
+/* tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+th{font-weight:600;color:var(--muted);font-size:12.5px;letter-spacing:.03em;text-transform:uppercase;background:var(--bg);white-space:nowrap}
+.lang-ko th{letter-spacing:0;text-transform:none;font-size:13px}
+td.num{white-space:nowrap}
+tr.hl td{background:var(--tint)}
+.badge{display:inline-block;font:600 12px var(--mono);padding:2px 8px;border-radius:999px;white-space:nowrap}
+.badge.pass{color:var(--high);background:var(--high-soft)}
+.badge.fail{color:var(--low);background:var(--low-soft)}
+.badge.info{color:var(--accent-2);background:var(--accent-soft)}
+
+/* findings */
+.find{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:900px){.find{grid-template-columns:minmax(0,1fr)}}
+.find > div{background:var(--tint);border-radius:12px;padding:18px;display:grid;gap:8px;align-content:start}
+.find b.big{font-family:var(--display);font-size:30px;font-weight:600;line-height:1}
+.find p{margin:0;font-size:14.5px;color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13.5px;border:1px solid var(--rule-2);border-radius:999px;padding:4px 11px;display:inline-flex;gap:8px;align-items:center;background:var(--bg)}
+.chip .dots{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--accent)}
+details.rules{border:1px solid var(--rule);border-radius:12px;padding:14px 18px}
+details.rules summary{cursor:pointer;font-weight:600}
+details.rules code{font-family:var(--mono);font-size:12.5px;background:var(--tint);padding:2px 6px;border-radius:4px;word-break:break-word}
+.rulelist{display:grid;gap:12px;margin-top:14px}
+.rulelist div{display:grid;gap:4px}
+.rulelist small{color:var(--muted)}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:900px){.calc{grid-template-columns:minmax(0,1fr)}}
+.panel{border:1px solid var(--rule);border-radius:12px;padding:18px;display:grid;gap:14px;min-width:0;background:var(--bg)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.full{grid-column:1/-1}
+label{display:grid;gap:4px;font-size:13px;color:var(--ink-2)}
+label small{color:var(--muted);font-size:12px}
+input,textarea{font:15px var(--mono);color:var(--ink);background:var(--bg);border:1px solid var(--rule-2);border-radius:7px;padding:8px 9px;width:100%;min-width:0}
+textarea{min-height:76px;resize:vertical}
+.ex{justify-self:start;font:500 13px var(--sans);color:var(--accent-2);background:var(--accent-soft);border:0;border-radius:7px;padding:6px 11px;cursor:pointer}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+.verdict{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.pill{font:600 12.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.lang-ko .pill{letter-spacing:0}
+.pill.high{color:var(--high);background:var(--high-soft)}.pill.medium{color:var(--med);background:var(--med-soft)}.pill.low{color:var(--low);background:var(--low-soft)}
+.headline{font-family:var(--display);font-size:clamp(22px,3vw,30px);font-weight:600;line-height:1.15;min-width:0}
+.headline small{font-family:var(--sans);font-size:14px;font-weight:400;color:var(--muted)}
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:520px){.mini{grid-template-columns:minmax(0,1fr)}}
+.mini div{border-top:2px solid var(--rule);padding-top:8px;display:grid;gap:2px;min-width:0}
+.mini b{font:500 18px var(--mono)}
+.mini span{font-size:12.5px;color:var(--muted)}
+.flags{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.flags li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:14px}
+.flags .m{font:600 13px var(--mono);text-align:center;border-radius:4px;line-height:22px}
+.flags .on .m{color:var(--low);background:var(--low-soft)}
+.flags .off .m{color:var(--faint);background:var(--tint)}
+.flags .off{color:var(--muted)}
+.flags .why{display:block;font-size:12.5px;color:var(--muted)}
+.err{color:var(--low);font-size:14px;margin:0}
+
+/* limits + footer */
+.limits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 32px;padding:0;margin:0;list-style:none}
+@media (max-width:760px){.limits{grid-template-columns:minmax(0,1fr)}}
+.limits li{border-left:2px solid var(--rule-2);padding-left:14px;font-size:14.5px;color:var(--ink-2)}
+.limits b{color:var(--ink)}
+footer{border-top:1px solid var(--rule);padding-block:28px 48px;font-size:13.5px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between}
+
+/* tooltip */
+.tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:#fff;font:12.5px/1.45 var(--sans);padding:8px 10px;border-radius:8px;max-width:260px;opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s}
+.tip.show{opacity:1;transform:none}
+.tip b{font-family:var(--mono);font-weight:500}
+</style>
+</head>
+<body>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><i aria-hidden="true"><b></b><b></b></i>Comps Range Lab</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#problem"><span class="en">Problem</span><span class="ko">문제</span></a>
+      <a href="#method"><span class="en">Method</span><span class="ko">방법</span></a>
+      <a href="#results"><span class="en">Results</span><span class="ko">결과</span></a>
+      <a href="#rules"><span class="en">What agents found</span><span class="ko">에이전트가 찾은 것</span></a>
+      <a href="#calculator"><span class="en">Calculator</span><span class="ko">계산기</span></a>
+      <a href="#limits"><span class="en">Limits</span><span class="ko">한계</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="ko" aria-pressed="false">한국어</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="eyebrow"><span class="en">Independent research · Comparable-company valuation</span><span class="ko">개인 연구 · 유사기업 가치평가</span></div>
+    <h1><span class="en">The range on the slide holds <em data-v="hero_iqr"></em> of the time.</span><span class="ko">발표 자료의 가치 범위는 <em data-v="hero_iqr"></em>만 맞습니다.</span></h1>
+    <p class="lede"><span class="en">Comps are shown as a range, usually the peers' 25th to 75th percentile multiple. Across US firms that range contained market value well under half the time. Five AI agent searches wrote short rules that make an 80% range honest, and the result held on two years sealed until a single final test.</span><span class="ko">유사기업 가치평가는 보통 피어 multiple의 25–75% 구간으로 범위를 보여줍니다. 미국 기업 데이터에서 이 범위는 실제 시장가치를 절반도 맞히지 못했습니다. AI 에이전트 탐색 다섯 번이 80% 범위를 정직하게 만드는 짧은 규칙을 썼고, 마지막에 단 한 번 연 2년치 최종 시험에서도 결과가 유지됐습니다.</span></p>
+
+    <div class="hero-grid">
+      <div class="ff">
+        <div class="ff-head">
+          <div>
+            <h3><span class="en">One firm, three ranges</span><span class="ko">한 회사, 세 가지 범위</span></h3>
+            <p><span class="en">Example: a fictional mid-cap industrial, EBITDA $180M, ten peers at 7.9×–13.0× EV/EBITDA</span><span class="ko">예시: 가상의 중형 제조업체, EBITDA $180M, 피어 10개의 EV/EBITDA 7.9–13.0배</span></p>
+          </div>
+          <div class="tierpick" role="group" aria-label="Confidence tier">
+            <button type="button" class="high" data-tier="high" aria-pressed="true"><span class="en">High confidence</span><span class="ko">신뢰도 높음</span></button>
+            <button type="button" class="medium" data-tier="medium" aria-pressed="false"><span class="en">Medium</span><span class="ko">보통</span></button>
+            <button type="button" class="low" data-tier="low" aria-pressed="false"><span class="en">Low</span><span class="ko">낮음</span></button>
+          </div>
+        </div>
+        <div class="chart-x"><svg id="hero-ff" width="100%" height="200" role="img" aria-label="Football field comparing three ranges"></svg></div>
+        <p class="cap"><span class="en">Switch the tier to see how the honest range widens when the firm carries warning flags (small, loss-making, large net cash, thin margin).</span><span class="ko">등급을 바꿔 보세요. 위험 신호(소형, 적자, 큰 순현금, 얇은 마진)가 있으면 정직한 범위가 얼마나 넓어지는지 보입니다.</span></p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b data-v="st_iqr"></b><span class="en">of market values fell inside the peer 25th–75th percentile range, sealed holdout</span><span class="ko">피어 25–75% 범위 안에 든 시장가치 비율, 최종 시험</span></div>
+      <div class="stat"><b data-v="st_runs"></b><span class="en">agent runs beat the constant band in the holdout, both multiples</span><span class="ko">최종 시험에서 고정 폭 범위를 이긴 에이전트 실행, 두 multiple 모두</span></div>
+      <div class="stat"><b data-v="st_rob"></b><span class="en">peer-selection settings where the rules still beat the constant band</span><span class="ko">피어 선정 방식을 바꿔도 규칙이 고정 폭 범위를 이긴 조합</span></div>
+      <div class="stat"><b data-v="st_fy"></b><span class="en">US firm-years, FY2016–2025</span><span class="ko">미국 기업-연도, FY2016–2025</span></div>
+    </div>
+  </div>
+
+  <section class="s" id="problem">
+    <div class="wrap">
+      <div class="s-head">
+        <div class="k">01 · <span class="en">The problem</span><span class="ko">문제</span></div>
+        <div>
+          <h2><span class="en">The usual comps range is too narrow, and tighter peers make it worse</span><span class="ko">흔히 쓰는 comps 범위는 너무 좁고, 피어를 정교하게 고를수록 더 좁아집니다</span></h2>
+          <p><span class="en">If the target were just another draw from its peers, its multiple would land inside the peers' interquartile range half the time. It does not. Hand-picked nearest peers look alike, so the range narrows faster than accuracy improves.</span><span class="ko">대상 회사가 피어와 같은 분포에서 나온다면, 그 multiple은 피어의 25–75% 구간 안에 절반 정도 들어가야 합니다. 실제로는 그렇지 않습니다. 가장 비슷한 피어를 고르면 피어끼리 서로 닮아서, 범위는 정확도보다 빨리 좁아집니다.</span></p>
+        </div>
+      </div>
+      <div class="two">
+        <div class="fig">
+          <div class="fig-t"><b><span class="en">How often each range contained market value</span><span class="ko">각 범위가 실제 시장가치를 포함한 비율</span></b></div>
+          <div class="chart-x"><svg id="cov-chart" width="100%" height="210" role="img" aria-label="Coverage of practitioner and calibrated ranges"></svg></div>
+          <p class="cap"><span class="en">Sealed holdout FY2024–2025, EV/EBITDA. Tick = the level each range claims or targets. The calibrated card uses widths fitted on FY2016–2019 only.</span><span class="ko">최종 시험 FY2024–2025, EV/EBITDA. 눈금은 각 범위가 내세우거나 목표로 하는 수준입니다. 신뢰도 카드는 FY2016–2019로만 정한 폭을 썼습니다.</span></p>
+        </div>
+        <div class="fig">
+          <div class="fig-t"><b><span class="en">Interquartile coverage by peer method</span><span class="ko">피어 선정 방식별 25–75% 범위 적중률</span></b></div>
+          <div class="tablewrap" style="border:0">
+            <table id="diag-table"><thead><tr><th><span class="en">Peer method</span><span class="ko">피어 선정 방식</span></th><th>EV/EBITDA</th><th>EV/Sales</th></tr></thead><tbody></tbody></table>
+          </div>
+          <p class="cap"><span class="en">Exploration years FY2016–2019. Nominal level 50%. The nearest-peer recipes are the least calibrated.</span><span class="ko">탐색 연도 FY2016–2019. 명목 수준 50%. 가장 비슷한 피어를 고르는 방식이 가장 덜 맞습니다.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="method">
+    <div class="wrap">
+      <div class="s-head">
+        <div class="k">02 · <span class="en">Method</span><span class="ko">방법</span></div>
+        <div>
+          <h2><span class="en">Widening the range cannot win</span><span class="ko">범위를 무작정 넓혀서는 이길 수 없게 설계했습니다</span></h2>
+          <p><span class="en">Every method is calibrated to the same 80% target, and the score charges for width as well as for misses. A rule wins only by putting width where valuations are truly uncertain. The design follows the SignalLab architecture of Liu, Liu, Liu &amp; Mei (2026): a proposer, a critic that never sees a score, an archive of every attempt, and a deterministic grader.</span><span class="ko">모든 방법을 같은 80% 목표로 보정하고, 점수는 빗나간 만큼뿐 아니라 범위 폭에도 벌점을 줍니다. 규칙은 정말 불확실한 회사에 폭을 배정해야만 이깁니다. 설계는 Liu, Liu, Liu &amp; Mei (2026)의 SignalLab 구조를 따랐습니다. 제안자, 점수를 보지 않는 검토자, 모든 시도의 기록, 결정론적 채점기로 구성됩니다.</span></p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><h4><span class="en">Point estimate</span><span class="ko">점 추정</span></h4><p><span class="en">Median EV multiple of the 10 nearest peers in the same 2-digit SIC sector (size and EBITDA margin), times the target's EBITDA or sales.</span><span class="ko">같은 2자리 SIC 산업에서 규모와 EBITDA 마진이 가장 비슷한 피어 10개의 EV multiple 중앙값에 대상의 EBITDA나 매출을 곱합니다.</span></p></div>
+        <div class="step"><span class="n">2</span><h4><span class="en">Agents write a rule</span><span class="ko">에이전트가 규칙을 씀</span></h4><p><span class="en">A rule scores each firm's uncertainty from its accounting and its peers' spread: at most four terms and four conditions, each with a stated mechanism.</span><span class="ko">규칙은 회계 수치와 피어 간 차이로 회사별 불확실성 점수를 매깁니다. 항은 최대 4개, 조건도 최대 4개이고, 각각 경제적 이유를 함께 적습니다.</span></p></div>
+        <div class="step"><span class="n">3</span><h4><span class="en">Calibrate to 80%</span><span class="ko">80%로 보정</span></h4><p><span class="en">The grader scales every rule so its range covers 80% on the fitting years (split conformal), then scores later years it never saw.</span><span class="ko">채점기가 각 규칙의 폭을 조정해 보정 연도에서 80%를 맞히게 하고(split conformal), 보지 않은 이후 연도로 채점합니다.</span></p></div>
+        <div class="step"><span class="n">4</span><h4><span class="en">Score width and misses</span><span class="ko">폭과 빗나감을 함께 채점</span></h4><p><span class="en">Interval score, lower is better:</span><span class="ko">Interval score, 낮을수록 좋음:</span></p><div class="formula">width + 10 × distance outside</div></div>
+      </div>
+      <div class="fig" style="margin-top:28px">
+        <div class="fig-t"><b><span class="en">Periods and search</span><span class="ko">기간 구분과 탐색</span></b></div>
+        <div class="chart-x"><svg id="split" width="100%" height="64" role="img" aria-label="Sample split"></svg></div>
+        <p class="cap" id="funnel-cap"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="results">
+    <div class="wrap">
+      <div class="s-head">
+        <div class="k">03 · <span class="en">Results</span><span class="ko">결과</span></div>
+        <div>
+          <h2><span class="en">Better than every simple range, short of the black box</span><span class="ko">단순한 범위는 모두 이겼지만, 블랙박스에는 못 미쳤습니다</span></h2>
+          <p><span class="en">Four tests were fixed before the search. Two passed in validation and again in the sealed holdout; two failed both times. The pattern barely moved between periods.</span><span class="ko">검정 네 가지를 탐색 전에 정했습니다. 두 개는 검증에서 통과했고 최종 시험에서도 다시 통과했습니다. 나머지 두 개는 두 번 모두 실패했습니다. 결과 패턴은 기간이 바뀌어도 거의 변하지 않았습니다.</span></p>
+        </div>
+      </div>
+      <div class="fig">
+        <div class="fig-t">
+          <b><span class="en">Interval score of 80% ranges, lower is better</span><span class="ko">80% 범위의 interval score, 낮을수록 좋음</span></b>
+          <div class="seg" role="group" aria-label="Multiple"><button type="button" data-m="EV/EBITDA" aria-pressed="true">EV/EBITDA</button><button type="button" data-m="EV/Sales" aria-pressed="false">EV/Sales</button></div>
+        </div>
+        <div class="legend"><span><i style="background:var(--s1)"></i><span class="en">Validation FY2020–2023</span><span class="ko">검증 FY2020–2023</span></span><span><i style="background:var(--s2)"></i><span class="en">Sealed holdout FY2024–2025</span><span class="ko">최종 시험 FY2024–2025</span></span></div>
+        <div class="chart-x"><svg id="dot" width="100%" height="300" role="img" aria-label="Interval score by method"></svg></div>
+        <p class="cap"><span class="en">AI agents = mean of the five runs' finalists. Practice ranges are scored as reported, without calibration. Hover a dot for coverage and range width.</span><span class="ko">AI 에이전트 = 다섯 실행 최종 규칙의 평균. 실무 범위는 보정 없이 보고된 그대로 채점했습니다. 점에 마우스를 올리면 적중률과 범위 폭이 보입니다.</span></p>
+      </div>
+      <div class="tablewrap" style="margin-top:20px">
+        <table id="tests"><thead><tr><th><span class="en">Pre-registered test</span><span class="ko">사전 등록 검정</span></th><th>EV/EBITDA <span class="en">validation</span><span class="ko">검증</span></th><th>EV/EBITDA <span class="en">holdout</span><span class="ko">최종</span></th><th>EV/Sales <span class="en">validation</span><span class="ko">검증</span></th><th>EV/Sales <span class="en">holdout</span><span class="ko">최종</span></th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="rules">
+    <div class="wrap">
+      <div class="s-head">
+        <div class="k">04 · <span class="en">What the agents found</span><span class="ko">에이전트가 찾은 것</span></div>
+        <div>
+          <h2><span class="en">Five searches, one answer: spend width on small, unprofitable firms</span><span class="ko">다섯 번의 탐색, 하나의 답: 작고 수익이 약한 회사에 폭을 쓰라</span></h2>
+          <p><span class="en">Each run searched on its own. Their winning EV/EBITDA rules use nearly the same inputs, and the rules move width from large, steady firms to small and loss-making ones instead of widening every range.</span><span class="ko">각 실행은 독립적으로 탐색했습니다. 그런데 EV/EBITDA 최종 규칙들은 거의 같은 입력을 씁니다. 규칙은 모든 범위를 넓히지 않고, 크고 안정적인 회사의 폭을 줄여 작고 적자인 회사에 옮깁니다.</span></p>
+        </div>
+      </div>
+      <div class="find">
+        <div><span class="eyebrow" style="color:var(--muted)">EV/EBITDA</span><b class="big"><span class="en">Inputs the finalists share</span><span class="ko">최종 규칙의 공통 입력</span></b><div class="chips" id="chips-ebitda"></div><p><span class="en">Dots = how many of the five finalists use the input.</span><span class="ko">점 = 다섯 최종 규칙 중 그 입력을 쓴 규칙 수.</span></p></div>
+        <div><span class="eyebrow" style="color:var(--muted)">EV/Sales</span><b class="big"><span class="en">Peers and profits</span><span class="ko">피어와 수익성</span></b><div class="chips" id="chips-sales"></div><p><span class="en">For EV/Sales the rules lean on the peers themselves: how many there are and how much they disagree.</span><span class="ko">EV/Sales 규칙은 피어 자체에 더 기댑니다. 피어가 몇 개인지, 서로 얼마나 다른지입니다.</span></p></div>
+        <div><span class="eyebrow" style="color:var(--muted)"><span class="en">Search</span><span class="ko">탐색</span></span><b class="big" id="funnel-big"></b><p id="funnel-text"></p></div>
+      </div>
+      <div class="fig" style="margin-top:20px">
+        <div class="fig-t">
+          <b><span class="en">Where the width goes: largest vs smallest 20% of firms</span><span class="ko">폭이 가는 곳: 매출 상위 20%와 하위 20%</span></b>
+          <div class="seg" role="group" aria-label="Multiple"><button type="button" data-m2="EV/EBITDA" aria-pressed="true">EV/EBITDA</button><button type="button" data-m2="EV/Sales" aria-pressed="false">EV/Sales</button></div>
+        </div>
+        <div class="legend"><span><i style="background:var(--practice)"></i><span class="en">Constant band</span><span class="ko">고정 폭 범위</span></span><span><i style="background:var(--accent)"></i><span class="en">AI agents' rules</span><span class="ko">AI 에이전트 규칙</span></span></div>
+        <div class="chart-x"><svg id="width-chart" width="100%" height="230" role="img" aria-label="Range width and coverage for large and small firms"></svg></div>
+        <p class="cap"><span class="en">Bar = median range factor (× / ÷, wider is right). Label = share of market values inside the range. Sealed holdout FY2024–2025.</span><span class="ko">막대 = 범위 배수 중앙값(×/÷, 오른쪽일수록 넓음). 라벨 = 범위 안에 든 시장가치 비율. 최종 시험 FY2024–2025.</span></p>
+      </div>
+      <details class="rules" style="margin-top:20px">
+        <summary><span class="en">The ten finalist rules, as the agents wrote them</span><span class="ko">에이전트가 쓴 최종 규칙 10개</span></summary>
+        <div class="rulelist" id="rulelist"></div>
+      </details>
+    </div>
+  </section>
+
+  <section class="s" id="robust">
+    <div class="wrap">
+      <div class="s-head">
+        <div class="k">05 · <span class="en">Robustness</span><span class="ko">강건성</span></div>
+        <div>
+          <h2><span class="en">It holds however you pick peers</span><span class="ko">피어를 어떻게 골라도 유지됩니다</span></h2>
+          <p><span class="en">Bankers choose their own peers. The frozen rules were rerun under five peer methods, unchanged. They beat the constant band in every run, in every setting, in both periods. Widths fitted on one peer method kept their coverage on the others. This check came after the pre-registered tests, so it is exploratory.</span><span class="ko">뱅커는 피어를 직접 고릅니다. 고정해 둔 규칙을 피어 선정 방식 다섯 가지에 그대로 다시 적용했습니다. 모든 실행, 모든 방식, 두 기간 모두에서 고정 폭 범위를 이겼습니다. 한 방식으로 정한 폭을 다른 방식에 그대로 써도 적중률이 유지됐습니다. 사전 검정 이후에 한 확인이라 탐색적 결과입니다.</span></p>
+        </div>
+      </div>
+      <div class="tablewrap"><table id="rob"><thead></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="s" id="calculator">
+    <div class="wrap">
+      <div class="s-head">
+        <div class="k">06 · <span class="en">Use it</span><span class="ko">써 보기</span></div>
+        <div>
+          <h2><span class="en">The confidence card and calculator</span><span class="ko">신뢰도 카드와 계산기</span></h2>
+          <p><span class="en">The finalists' shared findings fit on a card a banker can apply by hand: four warning flags, three tiers, one range factor per tier. Out of sample it scores within about 1% of the agents' rules. It was built after the pre-registered tests, so its out-of-sample figures are exploratory.</span><span class="ko">최종 규칙들의 공통점은 뱅커가 손으로 적용할 수 있는 카드 한 장에 들어갑니다. 위험 신호 4개, 등급 3개, 등급마다 범위 배수 하나입니다. 처음 보는 연도에서 에이전트 규칙과 약 1% 차이로 비슷한 점수를 냈습니다. 사전 검정 이후에 만들었기 때문에 이 성적은 탐색적 결과입니다.</span></p>
+        </div>
+      </div>
+      <div class="calc">
+        <form class="panel" id="form" autocomplete="off">
+          <h3><span class="en">Inputs</span><span class="ko">입력</span></h3>
+          <div class="seg" role="group" aria-label="Multiple" style="display:grid;grid-template-columns:1fr 1fr"><button type="button" id="c-ebitda" aria-pressed="true">EV / EBITDA</button><button type="button" id="c-sales" aria-pressed="false">EV / Sales</button></div>
+          <div class="fields">
+            <label><span><span class="en">Sales</span><span class="ko">매출</span>, $M</span><input id="sales" inputmode="decimal" value="1200"></label>
+            <label>EBITDA, $M<input id="ebitda" inputmode="decimal" value="180"></label>
+            <label><span><span class="en">Net income</span><span class="ko">순이익</span>, $M</span><input id="ni" inputmode="decimal" value="64"></label>
+            <label><span><span class="en">Net debt</span><span class="ko">순부채</span>, $M</span><input id="nd" inputmode="decimal" value="310"></label>
+            <label class="full"><span><span class="en">Peer multiples</span><span class="ko">피어 multiple</span> <small><span class="en">LTM, separated by commas or spaces</span><span class="ko">LTM 기준, 쉼표나 공백으로 구분</span></small></span><textarea id="peers">9.8, 11.2, 8.7, 12.5, 10.1, 9.4, 13.0, 10.6, 7.9, 11.8</textarea></label>
+          </div>
+          <button type="button" class="ex" id="example"><span class="en">Load the example again</span><span class="ko">예시 다시 불러오기</span></button>
+          <p class="note"><span class="en">Example figures describe a fictional firm. Net debt = debt − cash; negative means net cash.</span><span class="ko">예시 숫자는 가상의 회사입니다. 순부채 = 부채 − 현금이며, 음수는 순현금입니다.</span></p>
+        </form>
+        <div style="display:grid;gap:22px;min-width:0">
+          <div class="panel" aria-live="polite">
+            <div class="verdict"><span class="pill high" id="pill"></span><div class="headline" id="headline"></div></div>
+            <p class="err" id="err" hidden></p>
+            <div class="mini">
+              <div><b id="m-point">—</b><span class="en">Point estimate (median peer × driver)</span><span class="ko">점 추정치 (피어 중앙값 × 기준 지표)</span></div>
+              <div><b id="m-factor">—</b><span class="en">Range factor for this tier</span><span class="ko">이 등급의 범위 배수</span></div>
+              <div><b id="m-equity">—</b><span class="en">Implied equity value, mid</span><span class="ko">암묵적 자기자본가치, 중앙</span></div>
+            </div>
+            <div class="chart-x"><svg id="calc-ff" width="100%" height="200" role="img" aria-label="Football field for your inputs"></svg></div>
+          </div>
+          <div class="panel"><h3><span class="en">Why this tier</span><span class="ko">이 등급인 이유</span></h3><ul class="flags" id="flags"></ul><p class="note"><span class="en">0 flags = high confidence, 1 = medium, 2 or more = low.</span><span class="ko">신호 0개 = 높음, 1개 = 보통, 2개 이상 = 낮음.</span></p></div>
+        </div>
+      </div>
+      <div class="tablewrap" style="margin-top:22px"><table id="cardtab"><thead><tr><th><span class="en">Multiple</span><span class="ko">Multiple</span></th><th><span class="en">Confidence</span><span class="ko">신뢰도</span></th><th><span class="en">Flags</span><span class="ko">신호 수</span></th><th><span class="en">Share of firms</span><span class="ko">회사 비율</span></th><th><span class="en">80% range around the point estimate</span><span class="ko">점 추정치 기준 80% 범위</span></th><th><span class="en">Out-of-sample coverage (val / holdout)</span><span class="ko">처음 보는 연도 적중률 (검증 / 최종)</span></th></tr></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="s" id="limits">
+    <div class="wrap">
+      <div class="s-head">
+        <div class="k">07 · <span class="en">Limits</span><span class="ko">한계</span></div>
+        <div><h2><span class="en">What this does not show</span><span class="ko">이 연구가 보여주지 못하는 것</span></h2></div>
+      </div>
+      <ul class="limits">
+        <li><b><span class="en">Ranges drift short.</span><span class="ko">범위가 점점 부족해집니다.</span></b> <span class="en">Fitted on 2016–2019, EV/EBITDA ranges covered about 70% in later years, not 80%, for every method but the black box. Treat the published EV/EBITDA widths as a floor.</span><span class="ko">2016–2019로 정한 EV/EBITDA 범위는 이후 연도에서 80%가 아닌 약 70%만 맞혔습니다. 블랙박스를 뺀 모든 방법이 그랬습니다. 발표한 EV/EBITDA 폭은 최소치로 보세요.</span></li>
+        <li><b><span class="en">The black box is better.</span><span class="ko">블랙박스가 더 낫습니다.</span></b> <span class="en">Gradient-boosted trees beat the short rules by a wide margin; the rules capture about a third of its gain. Something the trees use, likely interactions, is missing from the rule language.</span><span class="ko">GBM이 짧은 규칙보다 확실히 좋았고, 규칙은 그 개선분의 3분의 1 정도만 따라잡았습니다. 아마 변수 간 상호작용처럼, 트리가 쓰는 무언가가 규칙 언어에 없습니다.</span></li>
+        <li><b><span class="en">Listed firms, trailing multiples.</span><span class="ko">상장사, 과거 실적 기준.</span></b> <span class="en">US non-financial firms above $100M, LTM multiples, market value as the benchmark. Private companies and forward (NTM) multiples are untested.</span><span class="ko">시가총액 $100M 이상 미국 비금융 상장사, LTM multiple, 시장가치를 정답으로 봤습니다. 비상장사와 forward(NTM) multiple은 시험하지 않았습니다.</span></li>
+        <li><b><span class="en">One model, short searches.</span><span class="ko">모델 하나, 짧은 탐색.</span></b> <span class="en">Five runs of one model at 30 proposals each. The holdout is now spent; the next clean test needs FY2026 data.</span><span class="ko">한 모델로 30개씩 다섯 번 탐색했습니다. 최종 시험 데이터는 이제 다 썼고, 다음 깨끗한 시험에는 FY2026 데이터가 필요합니다.</span></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><span class="en">Code, protocol and every run:</span><span class="ko">코드, 프로토콜, 모든 실행 기록:</span> <a href="https://github.com/joonha9/comps-range-lab">github.com/joonha9/comps-range-lab</a> · <span class="en">Built on</span><span class="ko">기반:</span> <a href="https://joonha9.github.io/Valuation_Lab/">ValuationLab</a></span>
+    <span><a href="https://joonha9.github.io/">Joonha</a> · <span class="en">Data: FactSet. Agents ran as Claude Code subagents.</span><span class="ko">데이터: FactSet. 에이전트는 Claude Code 서브에이전트로 실행했습니다.</span></span>
+  </div>
+</footer>
+
+<script>
+const D = {"counts":{"firm_years":{"EV/EBITDA":20425,"EV/Sales":26776},"runs":5,"funnel":{"proposed":150,"graded":115,"rejected":29,"invalid":6,"duplicate":0},"random_rules":2000},"diagnostic":{"EV/EBITDA · industry_sic3":{"iqr_coverage":0.432,"minmax_coverage":0.852,"quartiles":[0.255,0.225,0.241,0.279],"iqr_width":0.838},"EV/EBITDA · size_margin_k10":{"iqr_coverage":0.409,"minmax_coverage":0.806,"quartiles":[0.257,0.176,0.274,0.293],"iqr_width":0.677},"EV/EBITDA · growth_roic_k8":{"iqr_coverage":0.368,"minmax_coverage":0.725,"quartiles":[0.222,0.205,0.216,0.357],"iqr_width":0.579},"EV/Sales · industry_sic3":{"iqr_coverage":0.442,"minmax_coverage":0.875,"quartiles":[0.257,0.228,0.242,0.273],"iqr_width":1.881},"EV/Sales · size_margin_k10":{"iqr_coverage":0.411,"minmax_coverage":0.812,"quartiles":[0.249,0.177,0.273,0.301],"iqr_width":1.513},"EV/Sales · margin_growth_k8":{"iqr_coverage":0.369,"minmax_coverage":0.724,"quartiles":[0.217,0.202,0.213,0.369],"iqr_width":1.02}},"scores":{"EV/EBITDA":{"validate":{"practice_iqr":{"is":4.004,"coverage":0.411,"factor":1.39},"practice_minmax":{"is":3.265,"coverage":0.807,"factor":2.7},"constant":{"is":3.391,"coverage":0.722,"factor":2.1},"agents":{"is":3.145,"coverage":0.718,"factor":1.99,"runs":[3.114,3.165,3.117,3.138,3.194]},"linear_all":{"is":3.048,"coverage":0.715,"factor":1.95},"gbm":{"is":2.719,"coverage":0.764,"factor":2.06}},"holdout":{"practice_iqr":{"is":4.042,"coverage":0.402,"factor":1.4},"practice_minmax":{"is":3.227,"coverage":0.803,"factor":2.68},"constant":{"is":3.449,"coverage":0.718,"factor":2.1},"agents":{"is":3.243,"coverage":0.703,"factor":1.98,"runs":[3.209,3.267,3.216,3.241,3.282]},"linear_all":{"is":3.106,"coverage":0.704,"factor":1.93},"gbm":{"is":2.818,"coverage":0.746,"factor":2.02}},"explore":{"practice_iqr":{"is":3.258,"coverage":0.409},"practice_minmax":{"is":2.684,"coverage":0.806},"constant":{"is":2.735,"coverage":0.796},"linear_all":{"is":2.448,"coverage":0.799},"gbm":{"is":2.219,"coverage":0.799}}},"EV/Sales":{"validate":{"practice_iqr":{"is":5.458,"coverage":0.41,"factor":1.65},"practice_minmax":{"is":4.298,"coverage":0.814,"factor":4.02},"constant":{"is":4.357,"coverage":0.776,"factor":3.38},"agents":{"is":4.207,"coverage":0.78,"factor":3.22,"runs":[4.18,4.206,4.171,4.258,4.222]},"linear_all":{"is":4.097,"coverage":0.784,"factor":3.33},"gbm":{"is":3.818,"coverage":0.774,"factor":3.07}},"holdout":{"practice_iqr":{"is":5.492,"coverage":0.408,"factor":1.65},"practice_minmax":{"is":4.33,"coverage":0.81,"factor":4.01},"constant":{"is":4.444,"coverage":0.773,"factor":3.38},"agents":{"is":4.266,"coverage":0.773,"factor":3.16,"runs":[4.237,4.254,4.239,4.282,4.316]},"linear_all":{"is":4.19,"coverage":0.77,"factor":3.23},"gbm":{"is":3.954,"coverage":0.776,"factor":3.06}},"explore":{"practice_iqr":{"is":5.226,"coverage":0.411},"practice_minmax":{"is":4.108,"coverage":0.812},"constant":{"is":4.233,"coverage":0.8},"linear_all":{"is":3.97,"coverage":0.8},"gbm":{"is":3.483,"coverage":0.801}}}},"tests":{"EV/EBITDA":{"validate":{"T1_runs":5,"T1":true,"T2_p":0.0,"T2":true,"T3":false,"G":0.36,"T4":false,"random_median":3.307},"holdout":{"T1_runs":5,"T1":true,"T2_p":0.0016,"T2":true,"T3":false,"G":0.33,"T4":false,"random_median":3.326}},"EV/Sales":{"validate":{"T1_runs":5,"T1":true,"T2_p":0.0,"T2":true,"T3":false,"G":0.28,"T4":false,"random_median":4.422},"holdout":{"T1_runs":5,"T1":true,"T2_p":0.0,"T2":true,"T3":false,"G":0.36,"T4":false,"random_median":4.481}}},"consensus":{"EV/EBITDA":[["log_sales",5],["loss_making",5],["net_debt_to_ebitda",4],["ebitda_margin",3],["rnd_intensity",1],["sales_growth_1y",1]],"EV/Sales":[["n_peers",4],["log_sales",3],["negative_ebitda",3],["peer_range",3],["ebitda_margin",2],["no_history",2],["debt_to_assets",1],["gross_margin",1],["log_assets",1],["peer_iqr",1],["sales_growth_1y",1]]},"finalists":{"a1":{"EV/EBITDA":{"compact":"EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6, net_debt_to_ebitda -0.5, rnd_intensity +0.3 | if loss_making x1.25 | if sales_growth_1y >= p85 x1.25 | if sales_growth_1y <= p10 x1.25","mechanism":"EV equals equity plus debt minus cash. In firms holding large net cash relative to EBITDA, EV is smaller than market capitalization, so a given percentage uncertainty in the equity value becomes a larger percentage error in EV, and the market additionally disagrees on how much trapped or idle cash is worth. In heavily indebted firms the reverse holds: near-face-value debt dominates EV and damps log errors, which also explains why widening for high net debt (g02-02) scored worse. A single linear net_debt_to_ebitda term captures this whole capital-structure gradient on top of the size and thin-margin channels.","explore":2.505,"validate":3.114,"holdout":3.209},"EV/Sales":{"compact":"EV/Sales | base constant | terms n_peers -0.6, peer_range +0.3, log_assets -0.3 | if sales_growth_1y >= p85 x1.3 | if sales_growth_1y <= p10 x1.3 | if no_history x1.2 | if negative_ebitda x1.25","mechanism":"EV/Sales comps fail for two independent reasons. The anchor is weak when the 2-digit SIC sector is thin or its peers disagree, because the nearest peers come from different business models. And trailing sales are not the revenue run-rate after a big acquisition, divestiture, demand collapse or ramp, or for new listings, so the multiple departs from peers in both directions. Earlier rules each fixed one channel; combining them should cover both under-covered groups without heavy size weights that over-cover small firms.","explore":4.052,"validate":4.18,"holdout":4.237}},"a2":{"EV/EBITDA":{"compact":"EV/EBITDA | base constant | terms net_debt_to_ebitda -0.8, log_sales -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3","mechanism":"An EV/EBITDA multiple splits exactly into net debt/EBITDA plus market cap/EBITDA, and the first piece is read off the balance sheet at close to book value. So the larger net debt is relative to EBITDA, the more of the target's multiple is already known, and the log error of the comps estimate gets smaller. Firms holding a lot of net cash work the other way: their EV is equity minus cash, a difference that magnifies any equity mispricing. Small firms and loss-making firms carry the most idiosyncratic, story-driven equity value.","explore":2.535,"validate":3.165,"holdout":3.267},"EV/Sales":{"compact":"EV/Sales | base constant | terms debt_to_assets -0.6, ebitda_margin -0.5 | if negative_ebitda x1.3","mechanism":"EV is net debt plus equity, and debt claims are priced near their book value while equity absorbs the market's divergent views about how sales will turn into profit. For heavily debt-financed firms EV is largely the stable debt claim, so EV/Sales errors are compressed; for equity-financed firms with thin EBITDA margins EV is almost entirely an equity bet on future margin expansion that peer revenue multiples cannot price. Negative EBITDA is the extreme case where the value rests entirely on that bet.","explore":4.091,"validate":4.206,"holdout":4.254}},"a3":{"EV/EBITDA":{"compact":"EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.7, net_debt_to_ebitda -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3","mechanism":"EV is equity plus debt minus cash, so the proportional error in EV equals the equity mispricing scaled by equity/EV. For a net-cash firm equity exceeds EV, so any disagreement about the operating business is amplified in EV; for a net-debt firm it is damped. Netting cash against debt (rather than using gross debt/assets as in g04-01) captures the cash-rich firms where EV is a residual and the peer multiple misses most in logs.","explore":2.522,"validate":3.117,"holdout":3.216},"EV/Sales":{"compact":"EV/Sales | base constant | terms peer_range +0.5, log_sales -0.6 | if gross_margin <= p15 x1.4 | if ebitda_margin <= p15 x1.4 | if n_peers <= p10 x1.4","mechanism":"Firms with very thin gross margins (distributors, contractors, commodity processors) pass most revenue through to suppliers, so value is a small multiple of a thin spread and EV/Sales is roughly proportional to that spread; small absolute differences in gross margin between the target and its peers become large proportional differences in the right EV/Sales, so the peer median misses more in logs. This differs from the low-EBITDA-margin flag because it targets the revenue pass-through structure itself, not current losses.","explore":4.046,"validate":4.171,"holdout":4.239}},"a4":{"EV/EBITDA":{"compact":"EV/EBITDA | base constant | terms log_sales -0.8, net_debt_to_ebitda -0.4 | if net_debt_to_ebitda <= p10 x1.3 | if net_debt_to_ebitda >= p95 x1.3 | if loss_making x1.3","mechanism":"Enterprise value is market capitalization minus net cash, so for a firm sitting on cash that is large relative to its EBITDA, EV is a small residual of a volatile equity value and any mispricing of the equity is magnified in log EV; such cash-rich firms are also typically growth or intangible businesses whose equity carries option value. At the other end, net debt far above EBITDA puts EV in a distress regime, while firms with moderate leverage have much of EV pinned to debt at face value and trade near peers.","explore":2.523,"validate":3.138,"holdout":3.241},"EV/Sales":{"compact":"EV/Sales | base constant | terms peer_iqr +0.4, log_sales -0.8 | if negative_ebitda x1.4 | if n_peers <= p10 x1.3 | if no_history x1.3","mechanism":"Comps are only as informative as the peer set: when peers disagree strongly on the sales multiple, or a firm's sector is thin or it lacks history, the median peer multiple says little about the target, and EV/Sales is especially sensitive because it ignores margin differences. Negative-EBITDA firms are additionally priced on survival odds, which no peer multiple encodes.","explore":4.1,"validate":4.258,"holdout":4.282}},"a5":{"EV/EBITDA":{"compact":"EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6 | if loss_making x1.3","mechanism":"The peer multiple is applied to a dollar amount of EBITDA, and the smaller that amount (a small firm with a thin margin), the larger the share of it made up of transitory items, one-off costs and fixed-cost swings, so the percentage error in the capitalized base is largest. Firms that lose money below EBITDA show that the EBITDA base overstates sustainable earnings, which makes the base less reliable still.","explore":2.572,"validate":3.194,"holdout":3.282},"EV/Sales":{"compact":"EV/Sales | base constant | terms log_sales -0.5, n_peers -0.7, peer_range +0.4","mechanism":"A sales-comps error has two independent sources: noise in the target's own price and noise in the peer anchor. Small firms have thin analyst coverage and illiquid shares, so their prices drift further from fundamentals, while a thin sector (few peers) or peers whose multiples span a wide range make the median sales multiple an imprecise anchor; the two error sources add up.","explore":4.108,"validate":4.222,"holdout":4.316}}},"trajectories":{"a1":{"EV/EBITDA":[2.571,2.54,2.521,2.505,2.505],"EV/Sales":[4.447,4.079,4.052,4.052,4.052]},"a2":{"EV/EBITDA":[2.59,2.585,2.535,2.535,2.535],"EV/Sales":[4.452,4.091,4.091,4.091,4.091]},"a3":{"EV/EBITDA":[2.581,2.559,2.559,2.55,2.522],"EV/Sales":[4.143,4.096,4.096,4.096,4.046]},"a4":{"EV/EBITDA":[null,2.584,2.557,2.557,2.523],"EV/Sales":[null,4.1,4.1,4.1,4.1]},"a5":{"EV/EBITDA":[2.591,2.591,2.591,2.591,2.572],"EV/Sales":[4.556,4.164,4.164,4.164,4.108]}},"size_split":{"EV/EBITDA":{"validate":{"constant":{"largest":{"coverage":0.856,"factor":2.1},"smallest":{"coverage":0.55,"factor":2.1}},"agents":{"largest":{"coverage":0.715,"factor":1.63},"smallest":{"coverage":0.703,"factor":2.87}}},"holdout":{"constant":{"largest":{"coverage":0.845,"factor":2.1},"smallest":{"coverage":0.552,"factor":2.1}},"agents":{"largest":{"coverage":0.668,"factor":1.62},"smallest":{"coverage":0.692,"factor":2.9}}}},"EV/Sales":{"validate":{"constant":{"largest":{"coverage":0.838,"factor":3.38},"smallest":{"coverage":0.649,"factor":3.38}},"agents":{"largest":{"coverage":0.734,"factor":2.44},"smallest":{"coverage":0.801,"factor":7.19}}},"holdout":{"constant":{"largest":{"coverage":0.827,"factor":3.38},"smallest":{"coverage":0.642,"factor":3.38}},"agents":{"largest":{"coverage":0.724,"factor":2.46},"smallest":{"coverage":0.785,"factor":6.93}}}}},"robustness":{"EV/EBITDA":[{"method":"primary: SIC2, 10 nearest on size+margin","validate":{"constant":3.391,"agents":3.145,"gbm":2.719,"below":5,"transferred_cov":0.718},"holdout":{"constant":3.449,"agents":3.243,"gbm":2.818,"below":5,"transferred_cov":0.703}},{"method":"SIC3 industry, all peers","validate":{"constant":3.587,"agents":3.29,"gbm":2.764,"below":5,"transferred_cov":0.709},"holdout":{"constant":3.563,"agents":3.329,"gbm":2.932,"below":5,"transferred_cov":0.7}},{"method":"SIC4 industry, all peers","validate":{"constant":3.58,"agents":3.31,"gbm":2.767,"below":5,"transferred_cov":0.71},"holdout":{"constant":3.548,"agents":3.333,"gbm":2.833,"below":5,"transferred_cov":0.696}},{"method":"SIC3, 5 nearest on size+margin","validate":{"constant":3.51,"agents":3.263,"gbm":2.859,"below":5,"transferred_cov":0.708},"holdout":{"constant":3.523,"agents":3.321,"gbm":2.902,"below":5,"transferred_cov":0.694}},{"method":"SIC3, 8 nearest on growth+ROIC","validate":{"constant":3.371,"agents":3.121,"gbm":2.706,"below":5,"transferred_cov":0.727},"holdout":{"constant":3.343,"agents":3.136,"gbm":2.767,"below":5,"transferred_cov":0.722}}],"EV/Sales":[{"method":"primary: SIC2, 10 nearest on size+margin","validate":{"constant":4.357,"agents":4.207,"gbm":3.818,"below":5,"transferred_cov":0.78},"holdout":{"constant":4.444,"agents":4.266,"gbm":3.954,"below":5,"transferred_cov":0.773}},{"method":"SIC3 industry, all peers","validate":{"constant":5.672,"agents":5.217,"gbm":4.147,"below":5,"transferred_cov":0.755},"holdout":{"constant":5.564,"agents":5.136,"gbm":4.071,"below":5,"transferred_cov":0.749}},{"method":"SIC4 industry, all peers","validate":{"constant":5.707,"agents":5.26,"gbm":4.223,"below":5,"transferred_cov":0.751},"holdout":{"constant":5.578,"agents":5.15,"gbm":4.152,"below":5,"transferred_cov":0.748}},{"method":"SIC3, 5 nearest on size+margin","validate":{"constant":4.673,"agents":4.452,"gbm":4.094,"below":5,"transferred_cov":0.769},"holdout":{"constant":4.647,"agents":4.455,"gbm":4.107,"below":5,"transferred_cov":0.769}},{"method":"SIC3, 8 nearest on growth+ROIC","validate":{"constant":5.002,"agents":4.636,"gbm":3.915,"below":5,"transferred_cov":0.79},"holdout":{"constant":5.044,"agents":4.67,"gbm":3.94,"below":5,"transferred_cov":0.779}}]},"card":{"EV/EBITDA":{"flags":["sales below $400M","net loss","net cash above 2x EBITDA","EBITDA margin below 8%"],"centre":1.027,"factor":{"high":1.936,"medium":2.416,"low":5.052},"share":{"high":0.535,"medium":0.289,"low":0.176},"oos":{"validate":{"is":3.179,"coverage":0.717,"agents":3.145,"constant":3.391,"tiers":{"high":0.718,"medium":0.7,"low":0.739}},"holdout":{"is":3.287,"coverage":0.696,"agents":3.243,"constant":3.449,"tiers":{"high":0.688,"medium":0.695,"low":0.724}}}},"EV/Sales":{"flags":["sales below $150M","negative EBITDA","peer multiples span more than 30x","fewer than 10 peers"],"centre":1.057,"factor":{"high":2.928,"medium":3.797,"low":6.514},"share":{"high":0.551,"medium":0.242,"low":0.207},"oos":{"validate":{"is":4.235,"coverage":0.791,"agents":4.207,"constant":4.357,"tiers":{"high":0.784,"medium":0.785,"low":0.812}},"holdout":{"is":4.295,"coverage":0.784,"agents":4.266,"constant":4.444,"tiers":{"high":0.793,"medium":0.769,"low":0.78}}}}},"flags_vars":["loss_making","negative_ebitda","no_history"],"commits":{"valuationlab":"7830673"}};
+let LANG = "en";
+const $ = id => document.getElementById(id);
+const T = (en, ko) => LANG === "ko" ? ko : en;
+const pct = (x, d = 0) => `${(x * 100).toFixed(d)}%`;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+
+/* tooltip */
+const tip = $("tip");
+function showTip(e, html) { tip.innerHTML = html; tip.classList.add("show"); moveTip(e); }
+function moveTip(e) { const x = Math.min(e.clientX + 14, innerWidth - 280), y = Math.min(e.clientY + 14, innerHeight - 120); tip.style.left = x + "px"; tip.style.top = y + "px"; }
+function hideTip() { tip.classList.remove("show"); }
+function bindTips(svg) {
+  svg.querySelectorAll("[data-tip]").forEach(el => {
+    el.addEventListener("pointerenter", e => showTip(e, el.getAttribute("data-tip")));
+    el.addEventListener("pointermove", moveTip);
+    el.addEventListener("pointerleave", hideTip);
+  });
+}
+
+/* shared: card + money */
+const CARD = D.card;
+const TIERS = ["high", "medium", "low"];
+const TIER = { high: ["High confidence", "신뢰도 높음"], medium: ["Medium confidence", "신뢰도 보통"], low: ["Low confidence", "신뢰도 낮음"] };
+function money(x) {
+  if (!Number.isFinite(x)) return "—";
+  const a = Math.abs(x), s = x < 0 ? "−" : "";
+  return a >= 1000 ? `${s}$${(a / 1000).toFixed(a >= 10000 ? 1 : 2)}B` : `${s}$${a.toFixed(0)}M`;
+}
+function quantile(s, p) { const h = (s.length - 1) * p, lo = Math.floor(h), hi = Math.ceil(h); return s[lo] + (s[hi] - s[lo]) * (h - lo); }
+function niceStep(span) { const raw = span / 5, p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; }
+
+function football(svg, r) {
+  const W = Math.max(svg.clientWidth || 700, 520), H = 200, left = 190, right = 28, top = 22, rowH = 48;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const lo = Math.min(r.iqr[0], r.minmax[0], r.honest[0]), hi = Math.max(r.iqr[1], r.minmax[1], r.honest[2]);
+  const step = niceStep(hi - lo), x0 = Math.max(0, Math.floor(lo / step) * step), x1 = Math.ceil(hi / step) * step;
+  const X = v => left + (v - x0) / (x1 - x0) * (W - left - right);
+  const tc = css(r.tier === "medium" ? "--med" : r.tier === "low" ? "--low" : "--high");
+  const rows = [
+    { lab: T("Peer 25th–75th pct", "피어 25–75%"), sub: T(`what decks show · held ${pct(D.scores["EV/EBITDA"].holdout.practice_iqr.coverage)}`, `흔히 쓰는 범위 · 적중 ${pct(D.scores["EV/EBITDA"].holdout.practice_iqr.coverage)}`), a: r.iqr[0], b: r.iqr[1], fill: css("--practice") },
+    { lab: T("Peer min–max", "피어 최저–최고"), sub: T("full peer spread", "피어 전체 범위"), a: r.minmax[0], b: r.minmax[1], fill: css("--practice-2") },
+    { lab: T("Honest 80% range", "정직한 80% 범위"), sub: T(TIER[r.tier][0].toLowerCase(), TIER[r.tier][1]), a: r.honest[0], b: r.honest[2], fill: tc, mid: r.honest[1] },
+  ];
+  let g = "";
+  for (let v = x0; v <= x1 + 1e-9; v += step) {
+    const x = X(v);
+    g += `<line x1="${x}" x2="${x}" y1="${top}" y2="${top + rowH * 3}" stroke="${css("--rule")}"/><text x="${x}" y="${top + rowH * 3 + 16}" text-anchor="middle">${money(v)}</text>`;
+  }
+  rows.forEach((row, i) => {
+    const y = top + i * rowH + 10;
+    g += `<text class="lab" x="0" y="${y + 9}">${esc(row.lab)}</text><text class="sub" x="0" y="${y + 25}">${esc(row.sub)}</text>`;
+    g += `<rect x="${X(row.a)}" y="${y}" width="${Math.max(2, X(row.b) - X(row.a))}" height="22" rx="4" fill="${row.fill}" data-tip="${esc(row.lab)}<br><b>${money(row.a)} – ${money(row.b)}</b>"/>`;
+    if (row.mid) g += `<line x1="${X(row.mid)}" x2="${X(row.mid)}" y1="${y - 3}" y2="${y + 25}" stroke="${css("--ink")}" stroke-width="2"/>`;
+  });
+  const px = X(r.point);
+  g += `<line x1="${px}" x2="${px}" y1="${top - 4}" y2="${top + rowH * 3}" stroke="${css("--accent")}" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+  g += `<text x="${Math.min(px + 5, W - right - 90)}" y="${top - 8}" style="fill:${css("--accent")}">${T("point", "점 추정")} ${money(r.point)}</text>`;
+  svg.innerHTML = g; bindTips(svg);
+}
+
+function computeRange(m, driver, peers, tier) {
+  const s = [...peers].sort((a, b) => a - b), med = quantile(s, .5), point = med * driver;
+  const c = CARD[m].centre, f = CARD[m].factor[tier];
+  return { point, tier, f, honest: [point * c / f, point * c, point * c * f], iqr: [quantile(s, .25) * driver, quantile(s, .75) * driver], minmax: [s[0] * driver, s[s.length - 1] * driver] };
+}
+
+/* hero */
+const EX = { sales: 1200, ebitda: 180, ni: 64, nd: 310, peers: [9.8, 11.2, 8.7, 12.5, 10.1, 9.4, 13.0, 10.6, 7.9, 11.8] };
+let heroTier = "high";
+function drawHero() { football($("hero-ff"), computeRange("EV/EBITDA", EX.ebitda, EX.peers, heroTier)); }
+document.querySelectorAll(".tierpick button").forEach(b => b.addEventListener("click", () => {
+  heroTier = b.dataset.tier;
+  document.querySelectorAll(".tierpick button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  drawHero();
+}));
+
+/* coverage chart */
+function drawCoverage() {
+  const svg = $("cov-chart"), W = Math.max(svg.clientWidth || 480, 420), left = 150, right = 54, rowH = 44, top = 14;
+  const S = D.scores["EV/EBITDA"].holdout, C = CARD["EV/EBITDA"].oos.holdout;
+  const rows = [
+    { lab: T("Peer 25th–75th pct", "피어 25–75%"), v: S.practice_iqr.coverage, target: .5, fill: css("--practice") },
+    { lab: T("Peer min–max", "피어 최저–최고"), v: S.practice_minmax.coverage, target: null, fill: css("--practice") },
+    { lab: T("Constant band", "고정 폭 범위"), v: S.constant.coverage, target: .8, fill: css("--practice") },
+    { lab: T("Confidence card", "신뢰도 카드"), v: C.coverage, target: .8, fill: css("--accent") },
+  ];
+  const H = top + rows.length * rowH + 24; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  const X = v => left + v * (W - left - right);
+  let g = "";
+  [0, .25, .5, .75, 1].forEach(v => g += `<line x1="${X(v)}" x2="${X(v)}" y1="${top}" y2="${top + rows.length * rowH}" stroke="${css("--rule")}"/><text x="${X(v)}" y="${top + rows.length * rowH + 16}" text-anchor="middle">${pct(v)}</text>`);
+  rows.forEach((r, i) => {
+    const y = top + i * rowH + 12;
+    g += `<text class="lab" x="0" y="${y + 13}">${esc(r.lab)}</text>`;
+    g += `<rect x="${left}" y="${y}" width="${X(r.v) - left}" height="18" rx="4" fill="${r.fill}" data-tip="${esc(r.lab)}<br><b>${pct(r.v, 1)}</b>${r.target ? T(` vs ${pct(r.target)} claimed`, ` · 목표 ${pct(r.target)}`) : ""}"/>`;
+    g += `<text x="${X(r.v) + 6}" y="${y + 13}" style="fill:${css("--ink")}">${pct(r.v)}</text>`;
+    if (r.target) g += `<line x1="${X(r.target)}" x2="${X(r.target)}" y1="${y - 4}" y2="${y + 22}" stroke="${css("--ink")}" stroke-width="2"/>`;
+  });
+  svg.innerHTML = g; bindTips(svg);
+}
+
+function drawDiag() {
+  const names = { industry_sic3: ["Whole 3-digit SIC industry", "3자리 SIC 산업 전체"], size_margin_k10: ["10 nearest on size and margin", "규모·마진 기준 가장 비슷한 10개"],
+    growth_roic_k8: ["8 nearest on growth and ROIC", "성장·ROIC 기준 가장 비슷한 8개"], margin_growth_k8: ["8 nearest on margin and growth", "마진·성장 기준 가장 비슷한 8개"] };
+  const rows = [["industry_sic3", "industry_sic3"], ["size_margin_k10", "size_margin_k10"], ["growth_roic_k8", "margin_growth_k8"]];
+  $("diag-table").querySelector("tbody").innerHTML = rows.map(([a, b]) => {
+    const ea = D.diagnostic[`EV/EBITDA · ${a}`], sb = D.diagnostic[`EV/Sales · ${b}`];
+    const nm = a === b ? T(...names[a]) : `${T(...names[a])} / ${T(...names[b])}`;
+    return `<tr><td>${esc(nm)}</td><td class="num">${pct(ea.iqr_coverage, 1)}</td><td class="num">${pct(sb.iqr_coverage, 1)}</td></tr>`;
+  }).join("");
+}
+
+function drawSplit() {
+  const svg = $("split"), W = Math.max(svg.clientWidth || 800, 560), H = 64;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const parts = [[T("FY2015 · lags", "FY2015 · 시차용"), 1, css("--rule")], [T("Explore FY2016–2019 · agents see these scores", "탐색 FY2016–2019 · 에이전트가 보는 점수"), 4, css("--accent-soft")],
+    [T("Validate FY2020–2023 · scored once", "검증 FY2020–2023 · 한 번 채점"), 4, css("--tint-2")], [T("Holdout FY2024–2025 · sealed", "최종 시험 FY2024–2025 · 봉인"), 2, css("--accent")]];
+  const tot = parts.reduce((s, p) => s + p[1], 0); let x = 0, g = "";
+  parts.forEach(([lab, w, fill], i) => {
+    const pw = w / tot * W;
+    g += `<rect x="${x + (i ? 2 : 0)}" y="6" width="${pw - (i ? 2 : 0)}" height="40" rx="4" fill="${fill}"/>`;
+    g += `<text x="${x + 10}" y="31" style="font-family:var(--sans);font-size:12.5px;fill:${i === 3 ? "#fff" : css("--ink")}">${esc(pw > 150 ? lab : lab.split(" · ")[0])}</text>`;
+    x += pw;
+  });
+  svg.innerHTML = g;
+  const F = D.counts.funnel;
+  $("funnel-cap").innerHTML = T(`Five independent runs × 30 proposals = ${F.proposed} attempts: ${F.graded} graded, ${F.rejected} rejected by the critic, ${F.invalid} invalid. Every attempt is archived. A random search drew ${D.counts.random_rules.toLocaleString()} rules from the same language as a control. Protocol frozen and pushed before the search.`,
+    `독립 실행 5번 × 제안 30개 = 시도 ${F.proposed}개: ${F.graded}개 채점, ${F.rejected}개 검토자 거절, ${F.invalid}개 형식 오류. 모든 시도를 기록했습니다. 대조군으로 같은 규칙 언어에서 무작위 규칙 ${D.counts.random_rules.toLocaleString()}개를 뽑았습니다. 프로토콜은 탐색 전에 고정해 GitHub에 올렸습니다.`);
+}
+
+/* dot plot */
+let dotM = "EV/EBITDA";
+const MNAME = { practice_iqr: ["Peer 25th–75th pct (practice)", "피어 25–75% (실무)"], constant: ["Constant band", "고정 폭 범위"], practice_minmax: ["Peer min–max (practice)", "피어 최저–최고 (실무)"],
+  agents: ["AI agents' rules", "AI 에이전트 규칙"], linear_all: ["Regression on all inputs", "입력 전부 쓴 회귀"], gbm: ["Black box (boosted trees)", "블랙박스 (GBM)"] };
+function drawDot() {
+  const svg = $("dot"), W = Math.max(svg.clientWidth || 800, 560), left = 230, right = 30, rowH = 40, top = 10;
+  const order = ["practice_iqr", "constant", "practice_minmax", "agents", "linear_all", "gbm"];
+  const H = top + order.length * rowH + 30; svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  const S = D.scores[dotM], vals = order.flatMap(k => [S.validate[k].is, S.holdout[k].is]);
+  const lo = Math.floor(Math.min(...vals) * 2) / 2 - .25, hi = Math.ceil(Math.max(...vals) * 2) / 2 + .1;
+  const X = v => left + (v - lo) / (hi - lo) * (W - left - right);
+  let g = "";
+  for (let v = Math.ceil(lo * 2) / 2; v <= hi; v += .5) g += `<line x1="${X(v)}" x2="${X(v)}" y1="${top}" y2="${top + order.length * rowH}" stroke="${css("--rule")}"/><text x="${X(v)}" y="${top + order.length * rowH + 18}" text-anchor="middle">${v.toFixed(1)}</text>`;
+  order.forEach((k, i) => {
+    const y = top + i * rowH + rowH / 2, isA = k === "agents";
+    if (isA) g += `<rect x="0" y="${y - rowH / 2 + 3}" width="${W}" height="${rowH - 6}" rx="6" fill="${css("--tint")}"/>`;
+    g += `<text class="lab" x="10" y="${y + 4}" style="font-weight:${isA ? 600 : 500}">${esc(T(...MNAME[k]))}</text>`;
+    const a = S.validate[k], b = S.holdout[k];
+    g += `<line x1="${X(a.is)}" x2="${X(b.is)}" y1="${y}" y2="${y}" stroke="${css("--rule-2")}" stroke-width="2"/>`;
+    [[a, "--s1", T("Validation", "검증")], [b, "--s2", T("Holdout", "최종 시험")]].forEach(([p, col, lab]) => {
+      g += `<circle cx="${X(p.is)}" cy="${y}" r="6.5" fill="${css(col)}" stroke="#fff" stroke-width="2"/>`;
+      g += `<circle cx="${X(p.is)}" cy="${y}" r="14" fill="transparent" data-tip="${esc(T(...MNAME[k]))} · ${lab}<br>${T("Interval score", "Interval score")} <b>${p.is.toFixed(3)}</b><br>${T("Coverage", "적중률")} <b>${pct(p.coverage, 1)}</b> · ${T("median range", "범위 중앙값")} <b>×/÷ ${p.factor.toFixed(2)}</b>"/>`;
+    });
+    if (isA || k === "gbm" || k === "constant") g += `<text x="${X(Math.max(a.is, b.is)) + 12}" y="${y + 4}" style="fill:${css("--ink")}">${b.is.toFixed(2)}</text>`;
+  });
+  svg.innerHTML = g; bindTips(svg);
+  const TT = D.tests;
+  const cell = (t, k) => {
+    const x = TT[t[0]][t[1]];
+    if (k === "T1") return `<span class="badge ${x.T1 ? "pass" : "fail"}">${x.T1 ? T("pass", "통과") : T("fail", "실패")}</span> <span class="mono">${x.T1_runs}/5</span>`;
+    if (k === "T2") return `<span class="badge ${x.T2 ? "pass" : "fail"}">${x.T2 ? T("pass", "통과") : T("fail", "실패")}</span> <span class="mono">p ${x.T2_p < .0001 ? "< 0.0001" : "= " + x.T2_p.toFixed(4)}</span>`;
+    if (k === "T3") return `<span class="badge ${x.T3 ? "pass" : "fail"}">${x.T3 ? T("pass", "통과") : T("fail", "실패")}</span>`;
+    return `<span class="badge ${x.T4 ? "pass" : "fail"}">${x.T4 ? T("pass", "통과") : T("fail", "실패")}</span> <span class="mono">G = ${x.G.toFixed(2)}</span>`;
+  };
+  const cols = [["EV/EBITDA", "validate"], ["EV/EBITDA", "holdout"], ["EV/Sales", "validate"], ["EV/Sales", "holdout"]];
+  const names = { T1: ["T1 · beats the constant band (≥ 4 of 5 runs)", "T1 · 고정 폭 범위보다 좋음 (5개 중 4개 이상)"], T2: ["T2 · beats random rules, same budget", "T2 · 같은 예산의 무작위 규칙보다 좋음"],
+    T3: ["T3 · matches a regression on all inputs", "T3 · 입력 전부 쓴 회귀만큼 좋음"], T4: ["T4 · captures ≥ 75% of the black box's gain", "T4 · 블랙박스 개선분의 75% 이상 확보"] };
+  $("tests").querySelector("tbody").innerHTML = ["T1", "T2", "T3", "T4"].map(k => `<tr><td>${esc(T(...names[k]))}</td>${cols.map(c => `<td>${cell(c, k)}</td>`).join("")}</tr>`).join("");
+}
+document.querySelectorAll("[data-m]").forEach(b => b.addEventListener("click", () => {
+  dotM = b.dataset.m; document.querySelectorAll("[data-m]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); drawDot();
+}));
+
+/* agents' findings */
+const VNAME = { log_sales: ["small size", "작은 규모"], loss_making: ["net loss", "적자"], net_debt_to_ebitda: ["net debt / EBITDA", "순부채/EBITDA"], ebitda_margin: ["low EBITDA margin", "낮은 EBITDA 마진"],
+  rnd_intensity: ["R&D intensity", "R&D 비중"], sales_growth_1y: ["extreme sales growth", "극단적 매출 성장"], n_peers: ["few peers", "적은 피어 수"], negative_ebitda: ["negative EBITDA", "EBITDA 마이너스"],
+  peer_range: ["peer disagreement", "피어 간 차이"], no_history: ["new listing", "신규 상장"], debt_to_assets: ["debt / assets", "부채비율"], gross_margin: ["low gross margin", "낮은 매출총이익률"],
+  log_assets: ["small assets", "작은 자산 규모"], peer_iqr: ["peer interquartile spread", "피어 사분위 범위"] };
+function drawFindings() {
+  const chips = (m, id, n) => $(id).innerHTML = D.consensus[m].slice(0, n).map(([k, c]) => `<span class="chip">${esc(T(...(VNAME[k] || [k, k])))} <span class="dots" aria-label="${c} of 5">${"●".repeat(c)}${"○".repeat(5 - c)}</span></span>`).join("");
+  chips("EV/EBITDA", "chips-ebitda", 4); chips("EV/Sales", "chips-sales", 5);
+  const F = D.counts.funnel;
+  $("funnel-big").textContent = `${F.graded} / ${F.proposed}`;
+  $("funnel-text").textContent = T(`proposals graded. The critic, which never saw a score, rejected ${F.rejected}. Most of each run's gain came in the first two generations.`,
+    `제안이 채점됐습니다. 점수를 보지 않는 검토자가 ${F.rejected}개를 거절했습니다. 각 실행의 개선은 대부분 처음 두 세대에서 나왔습니다.`);
+  $("rulelist").innerHTML = Object.entries(D.finalists).map(([run, fm]) => Object.entries(fm).map(([m, f]) =>
+    `<div><span><b>${run}</b> · ${m} · <span class="mono">${T("holdout", "최종")} ${f.holdout.toFixed(3)}</span></span><code>${esc(f.compact)}</code><small>${esc(f.mechanism)}</small></div>`).join("")).join("");
+}
+let wM = "EV/EBITDA";
+function drawWidth() {
+  const svg = $("width-chart"), W = Math.max(svg.clientWidth || 800, 560), left = 170, right = 200, top = 8, gh = 96;
+  const S = D.size_split[wM].holdout;
+  const H = top + 2 * gh + 22; svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const mx = Math.max(S.constant.largest.factor, S.constant.smallest.factor, S.agents.largest.factor, S.agents.smallest.factor);
+  const X = v => left + (v - 1) / (mx - 1) * (W - left - right);
+  let g = "";
+  [["largest", T("Largest 20% by sales", "매출 상위 20%")], ["smallest", T("Smallest 20% by sales", "매출 하위 20%")]].forEach(([grp, lab], i) => {
+    const y = top + i * gh;
+    g += `<text class="lab" x="0" y="${y + 30}">${esc(lab)}</text>`;
+    [["constant", css("--practice"), T("Constant band", "고정 폭 범위")], ["agents", css("--accent"), T("AI agents", "AI 에이전트")]].forEach(([k, fill, kl], j) => {
+      const v = S[k][grp], yy = y + 12 + j * 30;
+      g += `<rect x="${left}" y="${yy}" width="${Math.max(3, X(v.factor) - left)}" height="22" rx="4" fill="${fill}" data-tip="${esc(lab)} · ${esc(kl)}<br>${T("Median range", "범위 중앙값")} <b>×/÷ ${v.factor.toFixed(2)}</b><br>${T("Coverage", "적중률")} <b>${pct(v.coverage, 1)}</b>"/>`;
+      g += `<text x="${X(v.factor) + 8}" y="${yy + 15}" style="fill:${css("--ink")}">×/÷ ${v.factor.toFixed(2)} · ${T("holds", "적중")} ${pct(v.coverage)}</text>`;
+    });
+  });
+  svg.innerHTML = g; bindTips(svg);
+}
+document.querySelectorAll("[data-m2]").forEach(b => b.addEventListener("click", () => {
+  wM = b.dataset.m2; document.querySelectorAll("[data-m2]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); drawWidth();
+}));
+
+/* robustness table */
+const PNAME = { "primary: SIC2, 10 nearest on size+margin": ["Primary: 2-digit SIC, 10 nearest on size and margin", "기본: 2자리 SIC, 규모·마진 기준 10개"], "SIC3 industry, all peers": ["Whole 3-digit SIC industry", "3자리 SIC 산업 전체"],
+  "SIC4 industry, all peers": ["Whole 4-digit SIC industry", "4자리 SIC 산업 전체"], "SIC3, 5 nearest on size+margin": ["3-digit SIC, 5 nearest on size and margin", "3자리 SIC, 규모·마진 기준 5개"],
+  "SIC3, 8 nearest on growth+ROIC": ["3-digit SIC, 8 nearest on growth and ROIC", "3자리 SIC, 성장·ROIC 기준 8개"] };
+function drawRob() {
+  $("rob").querySelector("thead").innerHTML = `<tr><th>${T("Peer method", "피어 선정 방식")}</th><th>${T("Multiple", "Multiple")}</th><th>${T("Constant band → agents (validation)", "고정 폭 → 에이전트 (검증)")}</th><th>${T("Constant band → agents (holdout)", "고정 폭 → 에이전트 (최종)")}</th><th>${T("Runs better", "더 나은 실행")}</th><th>${T("Coverage with reused widths (holdout)", "폭 재사용 시 적중률 (최종)")}</th></tr>`;
+  const rows = [];
+  ["EV/EBITDA", "EV/Sales"].forEach(m => D.robustness[m].forEach((r, i) => {
+    rows.push(`<tr class="${i === 0 ? "hl" : ""}"><td>${esc(T(...(PNAME[r.method] || [r.method, r.method])))}</td><td>${m}</td><td class="num">${r.validate.constant.toFixed(2)} → <b>${r.validate.agents.toFixed(2)}</b></td><td class="num">${r.holdout.constant.toFixed(2)} → <b>${r.holdout.agents.toFixed(2)}</b></td><td><span class="badge pass">${r.validate.below}/5 · ${r.holdout.below}/5</span></td><td class="num">${pct(r.holdout.transferred_cov)}</td></tr>`);
+  }));
+  $("rob").querySelector("tbody").innerHTML = rows.join("");
+}
+
+/* calculator */
+let cM = "EV/EBITDA";
+const FLAGTXT = {
+  "EV/EBITDA": [["small", "Sales below $400M", "매출 $400M 미만", "Small firms' values rest more on expectations than on today's EBITDA.", "작은 회사의 가치는 현재 EBITDA보다 기대에 더 크게 좌우됩니다."],
+    ["loss", "Net loss", "적자", "A loss year makes EBITDA a poor guide to steady-state earnings.", "적자 연도의 EBITDA는 정상 이익을 잘 보여주지 못합니다."],
+    ["cash", "Net cash above 2× EBITDA", "순현금이 EBITDA의 2배 초과", "Large cash piles are priced unevenly, and EV depends on how the market treats them.", "큰 현금은 시장이 다르게 평가해서 EV가 흔들립니다."],
+    ["margin", "EBITDA margin below 8%", "EBITDA 마진 8% 미만", "Thin margins make EBITDA, and so the multiple, swing more.", "마진이 얇으면 EBITDA와 multiple이 더 크게 흔들립니다."]],
+  "EV/Sales": [["small", "Sales below $150M", "매출 $150M 미만", "Small firms' values rest more on expectations than on current sales.", "작은 회사의 가치는 현재 매출보다 기대에 더 크게 좌우됩니다."],
+    ["negebitda", "Negative EBITDA", "EBITDA 마이너스", "Without profits, sales say little about value.", "이익이 없으면 매출만으로는 가치를 알기 어렵습니다."],
+    ["spread", "Peer multiples span more than 30×", "피어 multiple 최고/최저 30배 초과", "When peers disagree this much, the median says little about the target.", "피어끼리 이만큼 다르면 중앙값이 대상 회사를 잘 대표하지 못합니다."],
+    ["few", "Fewer than 10 peers", "피어 10개 미만", "A thin peer set gives a noisy median.", "피어가 적으면 중앙값이 불안정합니다."]],
+};
+const numv = id => { const v = parseFloat(String($(id).value).replace(/[, $]/g, "")); return Number.isFinite(v) ? v : NaN; };
+function renderCalc() {
+  const sales = numv("sales"), ebitda = numv("ebitda"), ni = numv("ni"), nd = numv("nd");
+  const peers = String($("peers").value).split(/[\s,;]+/).map(Number).filter(x => Number.isFinite(x) && x > 0).sort((a, b) => a - b);
+  const errs = [];
+  if (peers.length < 3) errs.push(T("Enter at least three positive peer multiples.", "양수 피어 multiple을 3개 이상 입력하세요."));
+  if (!(sales > 0)) errs.push(T("Sales must be a positive number in $M.", "매출은 $M 단위의 양수여야 합니다."));
+  if (cM === "EV/EBITDA" && !(ebitda > 0)) errs.push(T("EV/EBITDA needs positive EBITDA. Switch to EV/Sales.", "EV/EBITDA는 EBITDA가 양수여야 합니다. EV/Sales로 바꾸세요."));
+  if (!Number.isFinite(ni) || !Number.isFinite(nd)) errs.push(T("Enter net income and net debt in $M.", "순이익과 순부채를 $M 단위로 입력하세요."));
+  if (errs.length) { $("err").textContent = errs.join(" "); $("err").hidden = false; $("calc-ff").innerHTML = ""; $("flags").innerHTML = ""; $("headline").textContent = "—"; ["m-point", "m-factor", "m-equity"].forEach(i => $(i).textContent = "—"); drawCard(null); return; }
+  $("err").hidden = true;
+  const on = cM === "EV/EBITDA" ? { small: sales < 400, loss: ni < 0, cash: nd / ebitda < -2, margin: ebitda / sales < .08 }
+    : { small: sales < 150, negebitda: !(ebitda > 0), spread: peers[peers.length - 1] / peers[0] > 30, few: peers.length < 10 };
+  const tier = TIERS[Math.min(Object.values(on).filter(Boolean).length, 2)];
+  const r = computeRange(cM, cM === "EV/EBITDA" ? ebitda : sales, peers, tier);
+  $("pill").className = `pill ${tier}`; $("pill").textContent = T(...TIER[tier]);
+  $("headline").innerHTML = `${money(r.honest[0])} – ${money(r.honest[2])} <small>${T("enterprise value, 80% range", "기업가치, 80% 범위")}</small>`;
+  $("m-point").textContent = money(r.point); $("m-factor").textContent = `×/÷ ${r.f.toFixed(2)}`; $("m-equity").textContent = money(r.honest[1] - nd);
+  $("flags").innerHTML = FLAGTXT[cM].map(([id, en, ko, wen, wko]) => `<li class="${on[id] ? "on" : "off"}"><span class="m">${on[id] ? "!" : "–"}</span><span>${esc(T(en, ko))}${on[id] ? `<span class="why">${esc(T(wen, wko))}</span>` : ""}</span></li>`).join("");
+  football($("calc-ff"), r); drawCard(tier);
+}
+function drawCard(cur) {
+  const rows = [];
+  ["EV/EBITDA", "EV/Sales"].forEach(m => TIERS.forEach((t, k) => {
+    const C = CARD[m];
+    rows.push(`<tr class="${m === cM && t === cur ? "hl" : ""}"><td>${k ? "" : m}</td><td><span class="pill ${t}">${esc(T(...TIER[t]).replace(/ confidence|신뢰도 /, ""))}</span></td><td>${["0", "1", T("2 or more", "2개 이상")][k]}</td><td class="num">${pct(C.share[t])}</td>` +
+      `<td class="num">× ${(C.centre / C.factor[t]).toFixed(2)} – × ${(C.centre * C.factor[t]).toFixed(2)} <span style="color:var(--muted)">(×/÷ ${C.factor[t].toFixed(2)})</span></td><td class="num">${pct(C.oos.validate.tiers[t])} / ${pct(C.oos.holdout.tiers[t])}</td></tr>`);
+  }));
+  $("cardtab").querySelector("tbody").innerHTML = rows.join("");
+}
+function setCalcM(m) { cM = m; $("c-ebitda").setAttribute("aria-pressed", String(m === "EV/EBITDA")); $("c-sales").setAttribute("aria-pressed", String(m === "EV/Sales")); renderCalc(); }
+$("c-ebitda").addEventListener("click", () => setCalcM("EV/EBITDA"));
+$("c-sales").addEventListener("click", () => setCalcM("EV/Sales"));
+$("form").addEventListener("input", renderCalc);
+$("form").addEventListener("submit", e => e.preventDefault());
+$("example").addEventListener("click", () => { $("sales").value = EX.sales; $("ebitda").value = EX.ebitda; $("ni").value = EX.ni; $("nd").value = EX.nd; $("peers").value = EX.peers.join(", "); setCalcM("EV/EBITDA"); });
+
+/* bound numbers */
+function fillValues() {
+  const hold = D.scores["EV/EBITDA"].holdout.practice_iqr.coverage;
+  const rob = ["EV/EBITDA", "EV/Sales"].flatMap(m => D.robustness[m].flatMap(r => [r.validate.below === 5, r.holdout.below === 5]));
+  const runs = Math.min(D.tests["EV/EBITDA"].holdout.T1_runs, D.tests["EV/Sales"].holdout.T1_runs);
+  const fy = Math.max(D.counts.firm_years["EV/EBITDA"], D.counts.firm_years["EV/Sales"]);
+  const V = { hero_iqr: pct(hold), st_iqr: pct(hold), st_runs: `${runs}/5`, st_rob: `${rob.filter(Boolean).length}/${rob.length}`, st_fy: fy.toLocaleString() };
+  document.querySelectorAll("[data-v]").forEach(el => el.textContent = V[el.dataset.v]);
+}
+
+function drawAll() { fillValues(); drawHero(); drawCoverage(); drawDiag(); drawSplit(); drawDot(); drawFindings(); drawWidth(); drawRob(); renderCalc(); }
+function setLang(l) {
+  LANG = l; document.body.classList.toggle("lang-ko", l === "ko"); document.documentElement.lang = l;
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
+  try { localStorage.setItem("crl-lang", l); } catch (e) {}
+  drawAll();
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+let saved = null; try { saved = localStorage.getItem("crl-lang"); } catch (e) {}
+setLang(saved || ((navigator.language || "").startsWith("ko") ? "ko" : "en"));
+let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawAll, 120); });
+</script>
+</body>
+</html>

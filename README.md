@@ -1,5 +1,8 @@
 # Comps Range Lab
 
+**Project site:** https://joonha9.github.io/comps-range-lab/ (English / 한국어), with the confidence card and a calculator.
+The site is generated from the results by `scripts/build_site.py`.
+
 **How much should you trust a comparable-company valuation?** Practitioners report comps as a
 range (for example, the 25th–75th percentile of peer multiples on a football-field chart). This
 project tests whether those ranges contain market value as often as they appear to, and whether AI

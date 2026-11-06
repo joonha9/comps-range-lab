@@ -1,0 +1,941 @@
+{
+ "counts": {
+  "firm_years": {
+   "EV/EBITDA": 20425,
+   "EV/Sales": 26776
+  },
+  "runs": 5,
+  "funnel": {
+   "proposed": 150,
+   "graded": 115,
+   "rejected": 29,
+   "invalid": 6,
+   "duplicate": 0
+  },
+  "random_rules": 2000
+ },
+ "diagnostic": {
+  "EV/EBITDA · industry_sic3": {
+   "iqr_coverage": 0.432,
+   "minmax_coverage": 0.852,
+   "quartiles": [
+    0.255,
+    0.225,
+    0.241,
+    0.279
+   ],
+   "iqr_width": 0.838
+  },
+  "EV/EBITDA · size_margin_k10": {
+   "iqr_coverage": 0.409,
+   "minmax_coverage": 0.806,
+   "quartiles": [
+    0.257,
+    0.176,
+    0.274,
+    0.293
+   ],
+   "iqr_width": 0.677
+  },
+  "EV/EBITDA · growth_roic_k8": {
+   "iqr_coverage": 0.368,
+   "minmax_coverage": 0.725,
+   "quartiles": [
+    0.222,
+    0.205,
+    0.216,
+    0.357
+   ],
+   "iqr_width": 0.579
+  },
+  "EV/Sales · industry_sic3": {
+   "iqr_coverage": 0.442,
+   "minmax_coverage": 0.875,
+   "quartiles": [
+    0.257,
+    0.228,
+    0.242,
+    0.273
+   ],
+   "iqr_width": 1.881
+  },
+  "EV/Sales · size_margin_k10": {
+   "iqr_coverage": 0.411,
+   "minmax_coverage": 0.812,
+   "quartiles": [
+    0.249,
+    0.177,
+    0.273,
+    0.301
+   ],
+   "iqr_width": 1.513
+  },
+  "EV/Sales · margin_growth_k8": {
+   "iqr_coverage": 0.369,
+   "minmax_coverage": 0.724,
+   "quartiles": [
+    0.217,
+    0.202,
+    0.213,
+    0.369
+   ],
+   "iqr_width": 1.02
+  }
+ },
+ "scores": {
+  "EV/EBITDA": {
+   "validate": {
+    "practice_iqr": {
+     "is": 4.004,
+     "coverage": 0.411,
+     "factor": 1.39
+    },
+    "practice_minmax": {
+     "is": 3.265,
+     "coverage": 0.807,
+     "factor": 2.7
+    },
+    "constant": {
+     "is": 3.391,
+     "coverage": 0.722,
+     "factor": 2.1
+    },
+    "agents": {
+     "is": 3.145,
+     "coverage": 0.718,
+     "factor": 1.99,
+     "runs": [
+      3.114,
+      3.165,
+      3.117,
+      3.138,
+      3.194
+     ]
+    },
+    "linear_all": {
+     "is": 3.048,
+     "coverage": 0.715,
+     "factor": 1.95
+    },
+    "gbm": {
+     "is": 2.719,
+     "coverage": 0.764,
+     "factor": 2.06
+    }
+   },
+   "holdout": {
+    "practice_iqr": {
+     "is": 4.042,
+     "coverage": 0.402,
+     "factor": 1.4
+    },
+    "practice_minmax": {
+     "is": 3.227,
+     "coverage": 0.803,
+     "factor": 2.68
+    },
+    "constant": {
+     "is": 3.449,
+     "coverage": 0.718,
+     "factor": 2.1
+    },
+    "agents": {
+     "is": 3.243,
+     "coverage": 0.703,
+     "factor": 1.98,
+     "runs": [
+      3.209,
+      3.267,
+      3.216,
+      3.241,
+      3.282
+     ]
+    },
+    "linear_all": {
+     "is": 3.106,
+     "coverage": 0.704,
+     "factor": 1.93
+    },
+    "gbm": {
+     "is": 2.818,
+     "coverage": 0.746,
+     "factor": 2.02
+    }
+   },
+   "explore": {
+    "practice_iqr": {
+     "is": 3.258,
+     "coverage": 0.409
+    },
+    "practice_minmax": {
+     "is": 2.684,
+     "coverage": 0.806
+    },
+    "constant": {
+     "is": 2.735,
+     "coverage": 0.796
+    },
+    "linear_all": {
+     "is": 2.448,
+     "coverage": 0.799
+    },
+    "gbm": {
+     "is": 2.219,
+     "coverage": 0.799
+    }
+   }
+  },
+  "EV/Sales": {
+   "validate": {
+    "practice_iqr": {
+     "is": 5.458,
+     "coverage": 0.41,
+     "factor": 1.65
+    },
+    "practice_minmax": {
+     "is": 4.298,
+     "coverage": 0.814,
+     "factor": 4.02
+    },
+    "constant": {
+     "is": 4.357,
+     "coverage": 0.776,
+     "factor": 3.38
+    },
+    "agents": {
+     "is": 4.207,
+     "coverage": 0.78,
+     "factor": 3.22,
+     "runs": [
+      4.18,
+      4.206,
+      4.171,
+      4.258,
+      4.222
+     ]
+    },
+    "linear_all": {
+     "is": 4.097,
+     "coverage": 0.784,
+     "factor": 3.33
+    },
+    "gbm": {
+     "is": 3.818,
+     "coverage": 0.774,
+     "factor": 3.07
+    }
+   },
+   "holdout": {
+    "practice_iqr": {
+     "is": 5.492,
+     "coverage": 0.408,
+     "factor": 1.65
+    },
+    "practice_minmax": {
+     "is": 4.33,
+     "coverage": 0.81,
+     "factor": 4.01
+    },
+    "constant": {
+     "is": 4.444,
+     "coverage": 0.773,
+     "factor": 3.38
+    },
+    "agents": {
+     "is": 4.266,
+     "coverage": 0.773,
+     "factor": 3.16,
+     "runs": [
+      4.237,
+      4.254,
+      4.239,
+      4.282,
+      4.316
+     ]
+    },
+    "linear_all": {
+     "is": 4.19,
+     "coverage": 0.77,
+     "factor": 3.23
+    },
+    "gbm": {
+     "is": 3.954,
+     "coverage": 0.776,
+     "factor": 3.06
+    }
+   },
+   "explore": {
+    "practice_iqr": {
+     "is": 5.226,
+     "coverage": 0.411
+    },
+    "practice_minmax": {
+     "is": 4.108,
+     "coverage": 0.812
+    },
+    "constant": {
+     "is": 4.233,
+     "coverage": 0.8
+    },
+    "linear_all": {
+     "is": 3.97,
+     "coverage": 0.8
+    },
+    "gbm": {
+     "is": 3.483,
+     "coverage": 0.801
+    }
+   }
+  }
+ },
+ "tests": {
+  "EV/EBITDA": {
+   "validate": {
+    "T1_runs": 5,
+    "T1": true,
+    "T2_p": 0.0,
+    "T2": true,
+    "T3": false,
+    "G": 0.36,
+    "T4": false,
+    "random_median": 3.307
+   },
+   "holdout": {
+    "T1_runs": 5,
+    "T1": true,
+    "T2_p": 0.0016,
+    "T2": true,
+    "T3": false,
+    "G": 0.33,
+    "T4": false,
+    "random_median": 3.326
+   }
+  },
+  "EV/Sales": {
+   "validate": {
+    "T1_runs": 5,
+    "T1": true,
+    "T2_p": 0.0,
+    "T2": true,
+    "T3": false,
+    "G": 0.28,
+    "T4": false,
+    "random_median": 4.422
+   },
+   "holdout": {
+    "T1_runs": 5,
+    "T1": true,
+    "T2_p": 0.0,
+    "T2": true,
+    "T3": false,
+    "G": 0.36,
+    "T4": false,
+    "random_median": 4.481
+   }
+  }
+ },
+ "consensus": {
+  "EV/EBITDA": [
+   [
+    "log_sales",
+    5
+   ],
+   [
+    "loss_making",
+    5
+   ],
+   [
+    "net_debt_to_ebitda",
+    4
+   ],
+   [
+    "ebitda_margin",
+    3
+   ],
+   [
+    "rnd_intensity",
+    1
+   ],
+   [
+    "sales_growth_1y",
+    1
+   ]
+  ],
+  "EV/Sales": [
+   [
+    "n_peers",
+    4
+   ],
+   [
+    "log_sales",
+    3
+   ],
+   [
+    "negative_ebitda",
+    3
+   ],
+   [
+    "peer_range",
+    3
+   ],
+   [
+    "ebitda_margin",
+    2
+   ],
+   [
+    "no_history",
+    2
+   ],
+   [
+    "debt_to_assets",
+    1
+   ],
+   [
+    "gross_margin",
+    1
+   ],
+   [
+    "log_assets",
+    1
+   ],
+   [
+    "peer_iqr",
+    1
+   ],
+   [
+    "sales_growth_1y",
+    1
+   ]
+  ]
+ },
+ "finalists": {
+  "a1": {
+   "EV/EBITDA": {
+    "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6, net_debt_to_ebitda -0.5, rnd_intensity +0.3 | if loss_making x1.25 | if sales_growth_1y >= p85 x1.25 | if sales_growth_1y <= p10 x1.25",
+    "mechanism": "EV equals equity plus debt minus cash. In firms holding large net cash relative to EBITDA, EV is smaller than market capitalization, so a given percentage uncertainty in the equity value becomes a larger percentage error in EV, and the market additionally disagrees on how much trapped or idle cash is worth. In heavily indebted firms the reverse holds: near-face-value debt dominates EV and damps log errors, which also explains why widening for high net debt (g02-02) scored worse. A single linear net_debt_to_ebitda term captures this whole capital-structure gradient on top of the size and thin-margin channels.",
+    "explore": 2.505,
+    "validate": 3.114,
+    "holdout": 3.209
+   },
+   "EV/Sales": {
+    "compact": "EV/Sales | base constant | terms n_peers -0.6, peer_range +0.3, log_assets -0.3 | if sales_growth_1y >= p85 x1.3 | if sales_growth_1y <= p10 x1.3 | if no_history x1.2 | if negative_ebitda x1.25",
+    "mechanism": "EV/Sales comps fail for two independent reasons. The anchor is weak when the 2-digit SIC sector is thin or its peers disagree, because the nearest peers come from different business models. And trailing sales are not the revenue run-rate after a big acquisition, divestiture, demand collapse or ramp, or for new listings, so the multiple departs from peers in both directions. Earlier rules each fixed one channel; combining them should cover both under-covered groups without heavy size weights that over-cover small firms.",
+    "explore": 4.052,
+    "validate": 4.18,
+    "holdout": 4.237
+   }
+  },
+  "a2": {
+   "EV/EBITDA": {
+    "compact": "EV/EBITDA | base constant | terms net_debt_to_ebitda -0.8, log_sales -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3",
+    "mechanism": "An EV/EBITDA multiple splits exactly into net debt/EBITDA plus market cap/EBITDA, and the first piece is read off the balance sheet at close to book value. So the larger net debt is relative to EBITDA, the more of the target's multiple is already known, and the log error of the comps estimate gets smaller. Firms holding a lot of net cash work the other way: their EV is equity minus cash, a difference that magnifies any equity mispricing. Small firms and loss-making firms carry the most idiosyncratic, story-driven equity value.",
+    "explore": 2.535,
+    "validate": 3.165,
+    "holdout": 3.267
+   },
+   "EV/Sales": {
+    "compact": "EV/Sales | base constant | terms debt_to_assets -0.6, ebitda_margin -0.5 | if negative_ebitda x1.3",
+    "mechanism": "EV is net debt plus equity, and debt claims are priced near their book value while equity absorbs the market's divergent views about how sales will turn into profit. For heavily debt-financed firms EV is largely the stable debt claim, so EV/Sales errors are compressed; for equity-financed firms with thin EBITDA margins EV is almost entirely an equity bet on future margin expansion that peer revenue multiples cannot price. Negative EBITDA is the extreme case where the value rests entirely on that bet.",
+    "explore": 4.091,
+    "validate": 4.206,
+    "holdout": 4.254
+   }
+  },
+  "a3": {
+   "EV/EBITDA": {
+    "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.7, net_debt_to_ebitda -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3",
+    "mechanism": "EV is equity plus debt minus cash, so the proportional error in EV equals the equity mispricing scaled by equity/EV. For a net-cash firm equity exceeds EV, so any disagreement about the operating business is amplified in EV; for a net-debt firm it is damped. Netting cash against debt (rather than using gross debt/assets as in g04-01) captures the cash-rich firms where EV is a residual and the peer multiple misses most in logs.",
+    "explore": 2.522,
+    "validate": 3.117,
+    "holdout": 3.216
+   },
+   "EV/Sales": {
+    "compact": "EV/Sales | base constant | terms peer_range +0.5, log_sales -0.6 | if gross_margin <= p15 x1.4 | if ebitda_margin <= p15 x1.4 | if n_peers <= p10 x1.4",
+    "mechanism": "Firms with very thin gross margins (distributors, contractors, commodity processors) pass most revenue through to suppliers, so value is a small multiple of a thin spread and EV/Sales is roughly proportional to that spread; small absolute differences in gross margin between the target and its peers become large proportional differences in the right EV/Sales, so the peer median misses more in logs. This differs from the low-EBITDA-margin flag because it targets the revenue pass-through structure itself, not current losses.",
+    "explore": 4.046,
+    "validate": 4.171,
+    "holdout": 4.239
+   }
+  },
+  "a4": {
+   "EV/EBITDA": {
+    "compact": "EV/EBITDA | base constant | terms log_sales -0.8, net_debt_to_ebitda -0.4 | if net_debt_to_ebitda <= p10 x1.3 | if net_debt_to_ebitda >= p95 x1.3 | if loss_making x1.3",
+    "mechanism": "Enterprise value is market capitalization minus net cash, so for a firm sitting on cash that is large relative to its EBITDA, EV is a small residual of a volatile equity value and any mispricing of the equity is magnified in log EV; such cash-rich firms are also typically growth or intangible businesses whose equity carries option value. At the other end, net debt far above EBITDA puts EV in a distress regime, while firms with moderate leverage have much of EV pinned to debt at face value and trade near peers.",
+    "explore": 2.523,
+    "validate": 3.138,
+    "holdout": 3.241
+   },
+   "EV/Sales": {
+    "compact": "EV/Sales | base constant | terms peer_iqr +0.4, log_sales -0.8 | if negative_ebitda x1.4 | if n_peers <= p10 x1.3 | if no_history x1.3",
+    "mechanism": "Comps are only as informative as the peer set: when peers disagree strongly on the sales multiple, or a firm's sector is thin or it lacks history, the median peer multiple says little about the target, and EV/Sales is especially sensitive because it ignores margin differences. Negative-EBITDA firms are additionally priced on survival odds, which no peer multiple encodes.",
+    "explore": 4.1,
+    "validate": 4.258,
+    "holdout": 4.282
+   }
+  },
+  "a5": {
+   "EV/EBITDA": {
+    "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6 | if loss_making x1.3",
+    "mechanism": "The peer multiple is applied to a dollar amount of EBITDA, and the smaller that amount (a small firm with a thin margin), the larger the share of it made up of transitory items, one-off costs and fixed-cost swings, so the percentage error in the capitalized base is largest. Firms that lose money below EBITDA show that the EBITDA base overstates sustainable earnings, which makes the base less reliable still.",
+    "explore": 2.572,
+    "validate": 3.194,
+    "holdout": 3.282
+   },
+   "EV/Sales": {
+    "compact": "EV/Sales | base constant | terms log_sales -0.5, n_peers -0.7, peer_range +0.4",
+    "mechanism": "A sales-comps error has two independent sources: noise in the target's own price and noise in the peer anchor. Small firms have thin analyst coverage and illiquid shares, so their prices drift further from fundamentals, while a thin sector (few peers) or peers whose multiples span a wide range make the median sales multiple an imprecise anchor; the two error sources add up.",
+    "explore": 4.108,
+    "validate": 4.222,
+    "holdout": 4.316
+   }
+  }
+ },
+ "trajectories": {
+  "a1": {
+   "EV/EBITDA": [
+    2.571,
+    2.54,
+    2.521,
+    2.505,
+    2.505
+   ],
+   "EV/Sales": [
+    4.447,
+    4.079,
+    4.052,
+    4.052,
+    4.052
+   ]
+  },
+  "a2": {
+   "EV/EBITDA": [
+    2.59,
+    2.585,
+    2.535,
+    2.535,
+    2.535
+   ],
+   "EV/Sales": [
+    4.452,
+    4.091,
+    4.091,
+    4.091,
+    4.091
+   ]
+  },
+  "a3": {
+   "EV/EBITDA": [
+    2.581,
+    2.559,
+    2.559,
+    2.55,
+    2.522
+   ],
+   "EV/Sales": [
+    4.143,
+    4.096,
+    4.096,
+    4.096,
+    4.046
+   ]
+  },
+  "a4": {
+   "EV/EBITDA": [
+    null,
+    2.584,
+    2.557,
+    2.557,
+    2.523
+   ],
+   "EV/Sales": [
+    null,
+    4.1,
+    4.1,
+    4.1,
+    4.1
+   ]
+  },
+  "a5": {
+   "EV/EBITDA": [
+    2.591,
+    2.591,
+    2.591,
+    2.591,
+    2.572
+   ],
+   "EV/Sales": [
+    4.556,
+    4.164,
+    4.164,
+    4.164,
+    4.108
+   ]
+  }
+ },
+ "size_split": {
+  "EV/EBITDA": {
+   "validate": {
+    "constant": {
+     "largest": {
+      "coverage": 0.856,
+      "factor": 2.1
+     },
+     "smallest": {
+      "coverage": 0.55,
+      "factor": 2.1
+     }
+    },
+    "agents": {
+     "largest": {
+      "coverage": 0.715,
+      "factor": 1.63
+     },
+     "smallest": {
+      "coverage": 0.703,
+      "factor": 2.87
+     }
+    }
+   },
+   "holdout": {
+    "constant": {
+     "largest": {
+      "coverage": 0.845,
+      "factor": 2.1
+     },
+     "smallest": {
+      "coverage": 0.552,
+      "factor": 2.1
+     }
+    },
+    "agents": {
+     "largest": {
+      "coverage": 0.668,
+      "factor": 1.62
+     },
+     "smallest": {
+      "coverage": 0.692,
+      "factor": 2.9
+     }
+    }
+   }
+  },
+  "EV/Sales": {
+   "validate": {
+    "constant": {
+     "largest": {
+      "coverage": 0.838,
+      "factor": 3.38
+     },
+     "smallest": {
+      "coverage": 0.649,
+      "factor": 3.38
+     }
+    },
+    "agents": {
+     "largest": {
+      "coverage": 0.734,
+      "factor": 2.44
+     },
+     "smallest": {
+      "coverage": 0.801,
+      "factor": 7.19
+     }
+    }
+   },
+   "holdout": {
+    "constant": {
+     "largest": {
+      "coverage": 0.827,
+      "factor": 3.38
+     },
+     "smallest": {
+      "coverage": 0.642,
+      "factor": 3.38
+     }
+    },
+    "agents": {
+     "largest": {
+      "coverage": 0.724,
+      "factor": 2.46
+     },
+     "smallest": {
+      "coverage": 0.785,
+      "factor": 6.93
+     }
+    }
+   }
+  }
+ },
+ "robustness": {
+  "EV/EBITDA": [
+   {
+    "method": "primary: SIC2, 10 nearest on size+margin",
+    "validate": {
+     "constant": 3.391,
+     "agents": 3.145,
+     "gbm": 2.719,
+     "below": 5,
+     "transferred_cov": 0.718
+    },
+    "holdout": {
+     "constant": 3.449,
+     "agents": 3.243,
+     "gbm": 2.818,
+     "below": 5,
+     "transferred_cov": 0.703
+    }
+   },
+   {
+    "method": "SIC3 industry, all peers",
+    "validate": {
+     "constant": 3.587,
+     "agents": 3.29,
+     "gbm": 2.764,
+     "below": 5,
+     "transferred_cov": 0.709
+    },
+    "holdout": {
+     "constant": 3.563,
+     "agents": 3.329,
+     "gbm": 2.932,
+     "below": 5,
+     "transferred_cov": 0.7
+    }
+   },
+   {
+    "method": "SIC4 industry, all peers",
+    "validate": {
+     "constant": 3.58,
+     "agents": 3.31,
+     "gbm": 2.767,
+     "below": 5,
+     "transferred_cov": 0.71
+    },
+    "holdout": {
+     "constant": 3.548,
+     "agents": 3.333,
+     "gbm": 2.833,
+     "below": 5,
+     "transferred_cov": 0.696
+    }
+   },
+   {
+    "method": "SIC3, 5 nearest on size+margin",
+    "validate": {
+     "constant": 3.51,
+     "agents": 3.263,
+     "gbm": 2.859,
+     "below": 5,
+     "transferred_cov": 0.708
+    },
+    "holdout": {
+     "constant": 3.523,
+     "agents": 3.321,
+     "gbm": 2.902,
+     "below": 5,
+     "transferred_cov": 0.694
+    }
+   },
+   {
+    "method": "SIC3, 8 nearest on growth+ROIC",
+    "validate": {
+     "constant": 3.371,
+     "agents": 3.121,
+     "gbm": 2.706,
+     "below": 5,
+     "transferred_cov": 0.727
+    },
+    "holdout": {
+     "constant": 3.343,
+     "agents": 3.136,
+     "gbm": 2.767,
+     "below": 5,
+     "transferred_cov": 0.722
+    }
+   }
+  ],
+  "EV/Sales": [
+   {
+    "method": "primary: SIC2, 10 nearest on size+margin",
+    "validate": {
+     "constant": 4.357,
+     "agents": 4.207,
+     "gbm": 3.818,
+     "below": 5,
+     "transferred_cov": 0.78
+    },
+    "holdout": {
+     "constant": 4.444,
+     "agents": 4.266,
+     "gbm": 3.954,
+     "below": 5,
+     "transferred_cov": 0.773
+    }
+   },
+   {
+    "method": "SIC3 industry, all peers",
+    "validate": {
+     "constant": 5.672,
+     "agents": 5.217,
+     "gbm": 4.147,
+     "below": 5,
+     "transferred_cov": 0.755
+    },
+    "holdout": {
+     "constant": 5.564,
+     "agents": 5.136,
+     "gbm": 4.071,
+     "below": 5,
+     "transferred_cov": 0.749
+    }
+   },
+   {
+    "method": "SIC4 industry, all peers",
+    "validate": {
+     "constant": 5.707,
+     "agents": 5.26,
+     "gbm": 4.223,
+     "below": 5,
+     "transferred_cov": 0.751
+    },
+    "holdout": {
+     "constant": 5.578,
+     "agents": 5.15,
+     "gbm": 4.152,
+     "below": 5,
+     "transferred_cov": 0.748
+    }
+   },
+   {
+    "method": "SIC3, 5 nearest on size+margin",
+    "validate": {
+     "constant": 4.673,
+     "agents": 4.452,
+     "gbm": 4.094,
+     "below": 5,
+     "transferred_cov": 0.769
+    },
+    "holdout": {
+     "constant": 4.647,
+     "agents": 4.455,
+     "gbm": 4.107,
+     "below": 5,
+     "transferred_cov": 0.769
+    }
+   },
+   {
+    "method": "SIC3, 8 nearest on growth+ROIC",
+    "validate": {
+     "constant": 5.002,
+     "agents": 4.636,
+     "gbm": 3.915,
+     "below": 5,
+     "transferred_cov": 0.79
+    },
+    "holdout": {
+     "constant": 5.044,
+     "agents": 4.67,
+     "gbm": 3.94,
+     "below": 5,
+     "transferred_cov": 0.779
+    }
+   }
+  ]
+ },
+ "card": {
+  "EV/EBITDA": {
+   "flags": [
+    "sales below $400M",
+    "net loss",
+    "net cash above 2x EBITDA",
+    "EBITDA margin below 8%"
+   ],
+   "centre": 1.027,
+   "factor": {
+    "high": 1.936,
+    "medium": 2.416,
+    "low": 5.052
+   },
+   "share": {
+    "high": 0.535,
+    "medium": 0.289,
+    "low": 0.176
+   },
+   "oos": {
+    "validate": {
+     "is": 3.179,
+     "coverage": 0.717,
+     "agents": 3.145,
+     "constant": 3.391,
+     "tiers": {
+      "high": 0.718,
+      "medium": 0.7,
+      "low": 0.739
+     }
+    },
+    "holdout": {
+     "is": 3.287,
+     "coverage": 0.696,
+     "agents": 3.243,
+     "constant": 3.449,
+     "tiers": {
+      "high": 0.688,
+      "medium": 0.695,
+      "low": 0.724
+     }
+    }
+   }
+  },
+  "EV/Sales": {
+   "flags": [
+    "sales below $150M",
+    "negative EBITDA",
+    "peer multiples span more than 30x",
+    "fewer than 10 peers"
+   ],
+   "centre": 1.057,
+   "factor": {
+    "high": 2.928,
+    "medium": 3.797,
+    "low": 6.514
+   },
+   "share": {
+    "high": 0.551,
+    "medium": 0.242,
+    "low": 0.207
+   },
+   "oos": {
+    "validate": {
+     "is": 4.235,
+     "coverage": 0.791,
+     "agents": 4.207,
+     "constant": 4.357,
+     "tiers": {
+      "high": 0.784,
+      "medium": 0.785,
+      "low": 0.812
+     }
+    },
+    "holdout": {
+     "is": 4.295,
+     "coverage": 0.784,
+     "agents": 4.266,
+     "constant": 4.444,
+     "tiers": {
+      "high": 0.793,
+      "medium": 0.769,
+      "low": 0.78
+     }
+    }
+   }
+  }
+ },
+ "flags_vars": [
+  "loss_making",
+  "negative_ebitda",
+  "no_history"
+ ],
+ "commits": {
+  "valuationlab": "7830673"
+ }
+}
