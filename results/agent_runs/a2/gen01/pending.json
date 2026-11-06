@@ -1,0 +1,326 @@
+[
+ {
+  "id": "g01-01",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:17",
+  "name": "ebitda_small_thin_margin",
+  "mechanism": "When a firm is small and its EBITDA margin is thin, current EBITDA is a noisy, partly transitory proxy for normalized cash earnings: a small absolute change in costs swings EBITDA by a large percentage, so EV/EBITDA applied to it misprices value. Small firms also carry more idiosyncratic risk (liquidity, key-customer, survival) that peers' multiples do not reflect, and net losses signal that below-EBITDA items are eroding equity value.",
+  "prediction": "Interval score below the constant band's 2.735 on EV/EBITDA, with coverage of the smallest-20% and loss-making groups rising toward 80%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -1.0,
+    "ebitda_margin": -1.0
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "hash": "633473b45e",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_small_thin_margin",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -1.0,
+    "ebitda_margin": -1.0
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms log_sales -1, ebitda_margin -1 | if loss_making x1.5"
+ },
+ {
+  "id": "g01-02",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:17",
+  "name": "ebitda_growth_options",
+  "mechanism": "For R&D-intensive, fast-growing firms much of enterprise value is a claim on future growth options rather than on current EBITDA, and the market prices those options very differently across firms in the same SIC code. Current EBITDA is also depressed by expensed R&D, so a peer-median multiple on it is a weak anchor; large asset bases indicate mature, tangible businesses whose EBITDA capitalizes reliably.",
+  "prediction": "Interval score below the constant band's 2.735 on EV/EBITDA, with coverage of the highest-R&D-20% and fastest-growing-20% groups closer to 80% than the constant band's 66% and 70%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "rnd_intensity": 0.8,
+    "sales_growth_1y": 0.6,
+    "log_assets": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "gross_margin",
+       "above_pct": 70
+      },
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 70
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "69e9f91fc3",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_growth_options",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "rnd_intensity": 0.8,
+    "sales_growth_1y": 0.6,
+    "log_assets": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "gross_margin",
+       "above_pct": 70
+      },
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 70
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms rnd_intensity +0.8, sales_growth_1y +0.6, log_assets -0.8 | if gross_margin >= p70 AND sales_growth_1y >= p70 x1.3"
+ },
+ {
+  "id": "g01-03",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:17",
+  "name": "ebitda_leverage_and_da_gap",
+  "mechanism": "Highly levered firms have enterprise values whose equity slice behaves like an option on asset value, so small differences in perceived distress risk move EV far from peer-implied levels; capital-intensive firms have a large gap between EBITDA and cash earnings (heavy D&A and maintenance capex) that the market treats differently across firms. Peer disagreement (peer range) adds the remaining information that the industry itself has no stable valuation anchor.",
+  "prediction": "Interval score below the constant band's 2.735 and below the peer_iqr-proportional benchmark's 2.732 on EV/EBITDA.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "net_debt_to_ebitda": 0.6,
+    "capex_intensity": 0.5,
+    "log_sales": -0.8,
+    "peer_range": 0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "hash": "5cca30f9fd",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_leverage_and_da_gap",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "net_debt_to_ebitda": 0.6,
+    "capex_intensity": 0.5,
+    "log_sales": -0.8,
+    "peer_range": 0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms net_debt_to_ebitda +0.6, capex_intensity +0.5, log_sales -0.8, peer_range +0.4 | if net_debt_to_ebitda >= p90 x1.4"
+ },
+ {
+  "id": "g01-04",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:17",
+  "name": "sales_unprofitable_small",
+  "mechanism": "EV/Sales implicitly assumes the target will convert sales to cash like its peers; for small firms with low or negative EBITDA margins that conversion is highly uncertain, so the market's valuation hinges on a turnaround or growth story that peers' multiples cannot capture. Firms with no sales history are new listings or entrants whose business model the market is still pricing with little track record.",
+  "prediction": "Interval score below the constant band's 4.233 on EV/Sales, with the loss-making and smallest-20% groups' coverage rising toward 80%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "log_sales": -1.0,
+    "ebitda_margin": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.6
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "e9d6878481",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_unprofitable_small",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "log_sales": -1.0,
+    "ebitda_margin": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.6
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms log_sales -1, ebitda_margin -0.8 | if negative_ebitda x1.6 | if no_history x1.3"
+ },
+ {
+  "id": "g01-05",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:17",
+  "name": "sales_intangible_growth",
+  "mechanism": "High gross margin, R&D-intensive, fast-growing firms (software, biotech, devices) are valued on the expected scale and durability of future margins, so revenue multiples within the same SIC code span an order of magnitude depending on market beliefs about each firm's franchise. Mature, asset-heavy firms with low gross margins have revenue that maps to value through a narrow, competitive margin band, making EV/Sales reliable for them.",
+  "prediction": "Interval score below the constant band's 4.233 on EV/Sales, and narrower median range for low-gross-margin firms than for high-gross-margin firms.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "rnd_intensity": 1.0,
+    "gross_margin": 0.6,
+    "sales_growth_1y": 0.6,
+    "log_assets": -0.8
+   },
+   "conditions": []
+  },
+  "hash": "000b652411",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_intangible_growth",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "rnd_intensity": 1.0,
+    "gross_margin": 0.6,
+    "sales_growth_1y": 0.6,
+    "log_assets": -0.8
+   },
+   "conditions": []
+  },
+  "compact": "EV/Sales | base constant | terms rnd_intensity +1, gross_margin +0.6, sales_growth_1y +0.6, log_assets -0.8"
+ },
+ {
+  "id": "g01-06",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:17",
+  "name": "sales_asset_light_story_stocks",
+  "mechanism": "Low asset turnover means each dollar of sales is backed by heavy (often intangible or long-lived) assets, so value depends on asset returns that differ widely across firms with similar revenue; high-turnover firms such as distributors and retailers trade in a tight EV/Sales band set by thin, competitive margins. Loss-making firms that are also growing fast are priced on narratives about future profitability, the case where a sales multiple is least informative.",
+  "prediction": "Interval score below the constant band's 4.233 on EV/Sales, with coverage of the fastest-growing-20% group near 80%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "asset_turnover": -0.7,
+    "log_sales": -0.9,
+    "net_margin": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "hash": "564602ddc7",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_asset_light_story_stocks",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "asset_turnover": -0.7,
+    "log_sales": -0.9,
+    "net_margin": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms asset_turnover -0.7, log_sales -0.9, net_margin -0.5 | if loss_making AND sales_growth_1y >= p80 x1.5"
+ }
+]

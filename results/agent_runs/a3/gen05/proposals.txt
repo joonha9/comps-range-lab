@@ -1,0 +1,52 @@
+{"proposals": [
+{"name": "g05-01 net-cash amplification (EV/EBITDA)",
+ "mechanism": "EV is equity plus debt minus cash, so the proportional error in EV equals the equity mispricing scaled by equity/EV. For a net-cash firm equity exceeds EV, so any disagreement about the operating business is amplified in EV; for a net-debt firm it is damped. Netting cash against debt (rather than using gross debt/assets as in g04-01) captures the cash-rich firms where EV is a residual and the peer multiple misses most in logs.",
+ "prediction": "Interval score below the constant band's 2.735 and at or below g04-01's 2.550; firms in the bottom decile of net_debt_to_ebitda (largest net cash) get wider ranges and their coverage moves closer to 80% than under the constant band.",
+ "rule": {"multiple": "EV/EBITDA", "base": "constant",
+   "terms": {"log_sales": -0.8, "ebitda_margin": -0.7, "net_debt_to_ebitda": -0.6},
+   "conditions": [
+     {"if": [{"var": "net_debt_to_ebitda", "below_pct": 10}], "times": 1.3},
+     {"if": [{"var": "loss_making"}], "times": 1.3}]}},
+{"name": "g05-02 expensed-intangible investment (EV/EBITDA)",
+ "mechanism": "R&D is expensed, so for R&D-heavy firms reported EBITDA is net of a large discretionary investment rather than a measure of normalized operating earnings; when such a firm also has a modest EBITDA margin, the share of its true earning power hidden in R&D differs widely between firms and the peer EV/EBITDA median transfers poorly. Firms with low R&D have EBITDA close to economic earnings, so the leverage-damped, size- and margin-based band can stay narrow for them.",
+ "prediction": "Interval score below g04-01's 2.550, with highest_rnd_20pct coverage rising from 73% toward 78-80% without pushing the overall median range wider than x/2.05.",
+ "rule": {"multiple": "EV/EBITDA", "base": "constant",
+   "terms": {"log_sales": -0.8, "ebitda_margin": -0.7, "debt_to_assets": -0.6},
+   "conditions": [
+     {"if": [{"var": "rnd_intensity", "above_pct": 80}, {"var": "ebitda_margin", "below_pct": 40}], "times": 1.5},
+     {"if": [{"var": "loss_making"}], "times": 1.3}]}},
+{"name": "g05-03 asset-light rent durability (EV/EBITDA)",
+ "mechanism": "A firm that both turns its assets over quickly and earns a very high return on invested capital is earning rents on intangibles (brands, networks, software, licenses) that are not on the balance sheet; its value depends on how long those rents last, a question on which investors disagree far more than on the earnings of asset-backed firms. The conjunction isolates such rent earners, whereas either high turnover or high ROIC alone mostly flags sector membership.",
+ "prediction": "Interval score below the constant band's 2.735 and within 0.02 of g04-01's 2.550; firms meeting both the turnover and ROIC thresholds show coverage below 76% under g04-01 and near 80% under this rule.",
+ "rule": {"multiple": "EV/EBITDA", "base": "constant",
+   "terms": {"log_sales": -0.8, "ebitda_margin": -0.7, "debt_to_assets": -0.6},
+   "conditions": [
+     {"if": [{"var": "asset_turnover", "above_pct": 70}, {"var": "roic", "above_pct": 80}], "times": 1.4},
+     {"if": [{"var": "loss_making"}], "times": 1.3}]}},
+{"name": "g05-04 cash-shell residual EV (EV/Sales)",
+ "mechanism": "A loss-making firm with almost no debt is typically funded by a cash pile (biotech, early-stage tech), so its EV is market capitalization minus cash, a small residual that can approach zero; a modest change in equity value then moves EV by a large proportion and the log error against any peer sales multiple explodes. Levered or profitable firms do not have this residual structure, so their EV tracks sales more tightly.",
+ "prediction": "Interval score below g02-05's 4.096; loss-making firms with debt_to_assets in the bottom 20% get the widest ranges and the loss_making coverage stays at 79-82% while the overall median range does not widen beyond x/3.15.",
+ "rule": {"multiple": "EV/Sales", "base": "constant",
+   "terms": {"peer_range": 0.5, "log_sales": -0.6},
+   "conditions": [
+     {"if": [{"var": "debt_to_assets", "below_pct": 20}, {"var": "loss_making"}], "times": 1.6},
+     {"if": [{"var": "n_peers", "below_pct": 10}], "times": 1.4}]}},
+{"name": "g05-05 capacity build-out (EV/Sales)",
+ "mechanism": "A firm spending an unusually large share of sales on capital expenditure is building capacity whose revenue has not arrived yet (network buildouts, new plants, drilling programs), so its EV reflects the expected output of assets under construction rather than current sales; how far current sales understate future sales differs firm by firm and is not captured by the peer median sales multiple. Firms with ordinary capex intensity are at steady state, where current sales map stably to value.",
+ "prediction": "Interval score below the constant band's 4.233 and at or below 4.10; firms in the top 15% of capex_intensity show coverage near 80% rather than the low 70s.",
+ "rule": {"multiple": "EV/Sales", "base": "constant",
+   "terms": {"peer_range": 0.5, "log_sales": -0.6},
+   "conditions": [
+     {"if": [{"var": "capex_intensity", "above_pct": 85}], "times": 1.5},
+     {"if": [{"var": "ebitda_margin", "below_pct": 15}], "times": 1.4},
+     {"if": [{"var": "n_peers", "below_pct": 10}], "times": 1.4}]}},
+{"name": "g05-06 pass-through thin gross margin (EV/Sales)",
+ "mechanism": "Firms with very thin gross margins (distributors, contractors, commodity processors) pass most revenue through to suppliers, so value is a small multiple of a thin spread and EV/Sales is roughly proportional to that spread; small absolute differences in gross margin between the target and its peers become large proportional differences in the right EV/Sales, so the peer median misses more in logs. This differs from the low-EBITDA-margin flag because it targets the revenue pass-through structure itself, not current losses.",
+ "prediction": "Interval score below g02-05's 4.096; firms in the bottom 15% of gross_margin show larger absolute log errors than mid-margin firms and their coverage under this rule is 78-82%.",
+ "rule": {"multiple": "EV/Sales", "base": "constant",
+   "terms": {"peer_range": 0.5, "log_sales": -0.6},
+   "conditions": [
+     {"if": [{"var": "gross_margin", "below_pct": 15}], "times": 1.4},
+     {"if": [{"var": "ebitda_margin", "below_pct": 15}], "times": 1.4},
+     {"if": [{"var": "n_peers", "below_pct": 10}], "times": 1.4}]}}
+]}

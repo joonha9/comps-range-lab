@@ -1,0 +1,312 @@
+[
+ {
+  "id": "g03-01",
+  "generation": 3,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:23:00",
+  "name": "g03-01 transitory EBITDA after sales shocks",
+  "mechanism": "When sales have just swung sharply in either direction, current-year EBITDA is a poor proxy for the normalized earnings the market capitalizes, so applying a peer EBITDA multiple to it misprices the firm. The distortion is largest for thin-margin firms, whose EBITDA moves most for a given sales shock because of operating leverage.",
+  "prediction": "Interval score below the constant band's 2.735, with coverage of the fastest_growing_20pct group rising from 70% to at least 78%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "ebitda_margin": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "hash": "8abf778b48",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "g03-01 transitory EBITDA after sales shocks",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "ebitda_margin": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms ebitda_margin -0.7 | if sales_growth_1y <= p10 x1.4 | if sales_growth_1y >= p90 x1.4"
+ },
+ {
+  "id": "g03-02",
+  "generation": 3,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:23:00",
+  "name": "g03-02 EBITDA-to-cash conversion",
+  "mechanism": "EV/EBITDA assumes the target turns EBITDA into free cash flow and value at the same rate as its peers. Firms that must reinvest heavily (high capex relative to sales) or earn low returns on capital keep much less of each EBITDA dollar, and how much less differs a lot from firm to firm, so the peer multiple is a weak anchor for them.",
+  "prediction": "Interval score below the constant band's 2.735; firms in the top capex-intensity quintile have wider ranges and coverage near 80%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "capex_intensity": 0.8,
+    "roic": -0.6
+   },
+   "conditions": []
+  },
+  "hash": "6cc003f175",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "g03-02 EBITDA-to-cash conversion",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "capex_intensity": 0.8,
+    "roic": -0.6
+   },
+   "conditions": []
+  },
+  "compact": "EV/EBITDA | base constant | terms capex_intensity +0.8, roic -0.6"
+ },
+ {
+  "id": "g03-03",
+  "generation": 3,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:23:00",
+  "name": "g03-03 expensed intangible investment",
+  "mechanism": "High-gross-margin firms that spend their gross profit on R&D and other expensed investment report EBITDA that understates their economic earnings, because spending that builds intangible assets is charged against EBITDA. The firms with the strongest version of this (high gross margin but very low EBITDA margin) have a depressed and unstable denominator, so their EBITDA multiple is hardest to predict from peers.",
+  "prediction": "Interval score below the constant band's 2.735, with highest_rnd_20pct coverage rising from 66% to at least 76%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.5,
+    "rnd_intensity": 0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "below_pct": 20
+      },
+      {
+       "var": "gross_margin",
+       "above_pct": 60
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "hash": "9795f6f48b",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "g03-03 expensed intangible investment",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.5,
+    "rnd_intensity": 0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "below_pct": 20
+      },
+      {
+       "var": "gross_margin",
+       "above_pct": 60
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms gross_margin +0.5, rnd_intensity +0.6 | if ebitda_margin <= p20 AND gross_margin >= p60 x1.5"
+ },
+ {
+  "id": "g03-04",
+  "generation": 3,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:23:00",
+  "name": "g03-04 peer match quality at the margin tails",
+  "mechanism": "Peers are picked as nearest on size and EBITDA margin within the 2-digit SIC, and EV/Sales scales almost directly with margin. Targets at either extreme of the margin distribution, and targets in thin sectors, have nearest peers that are far from them in margin and business model, so the peer-median sales multiple is a poor anchor for them.",
+  "prediction": "Interval score below both the constant band's 4.233 and g02-06's 4.164.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "n_peers": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "d26d56d3ad",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "g03-04 peer match quality at the margin tails",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "n_peers": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms n_peers -0.7 | if ebitda_margin >= p90 x1.4 | if ebitda_margin <= p10 x1.3"
+ },
+ {
+  "id": "g03-05",
+  "generation": 3,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:23:00",
+  "name": "g03-05 debt anchor in enterprise value",
+  "mechanism": "Enterprise value is equity plus net debt, and the debt part trades close to book value, so firms financed mostly by debt have EVs that move less with equity sentiment and stay closer to the peer-implied level. Loss-making firms financed almost entirely by equity are the opposite case: their whole EV is a market-priced option on future profits, which sales alone cannot pin down.",
+  "prediction": "Interval score below the constant band's 4.233, with loss_making coverage rising from 72% to at least 78%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "debt_to_assets",
+       "below_pct": 30
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "hash": "d3d7bfc59b",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "g03-05 debt anchor in enterprise value",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "debt_to_assets",
+       "below_pct": 30
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms debt_to_assets -0.8 | if loss_making AND debt_to_assets <= p30 x1.4"
+ },
+ {
+  "id": "g03-06",
+  "generation": 3,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:23:00",
+  "name": "g03-06 capital intensity ignored by sales",
+  "mechanism": "In asset-heavy businesses, enterprise value reflects the capital base and the return earned on it more than the level of sales, so EV/Sales varies with asset intensity. Peers are matched on size and margin but not on asset intensity, so firms that need a lot of assets or capex per dollar of sales get a peer sales multiple that is poorly matched.",
+  "prediction": "Interval score below the constant band's 4.233; firms in the bottom asset-turnover quintile have wider ranges than average and coverage near 80%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "asset_turnover": -0.8,
+    "capex_intensity": 0.5
+   },
+   "conditions": []
+  },
+  "hash": "c2db46f261",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "g03-06 capital intensity ignored by sales",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "asset_turnover": -0.8,
+    "capex_intensity": 0.5
+   },
+   "conditions": []
+  },
+  "compact": "EV/Sales | base constant | terms asset_turnover -0.8, capex_intensity +0.5"
+ }
+]

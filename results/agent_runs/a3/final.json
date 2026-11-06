@@ -1,0 +1,106 @@
+{
+ "run": "a3",
+ "selection_rule": "per multiple, the graded rule with the lowest exploration interval score",
+ "funnel": {
+  "proposed": 30,
+  "graded": 23,
+  "rejected": 7,
+  "invalid": 0,
+  "duplicate": 0
+ },
+ "graded_per_multiple": {
+  "EV/EBITDA": 12,
+  "EV/Sales": 11
+ },
+ "finalists": {
+  "EV/EBITDA": {
+   "id": "g05-01",
+   "name": "g05-01 net-cash amplification (EV/EBITDA)",
+   "mechanism": "EV is equity plus debt minus cash, so the proportional error in EV equals the equity mispricing scaled by equity/EV. For a net-cash firm equity exceeds EV, so any disagreement about the operating business is amplified in EV; for a net-debt firm it is damped. Netting cash against debt (rather than using gross debt/assets as in g04-01) captures the cash-rich firms where EV is a residual and the peer multiple misses most in logs.",
+   "spec": {
+    "name": "g05-01 net-cash amplification (EV/EBITDA)",
+    "multiple": "EV/EBITDA",
+    "base": "constant",
+    "terms": {
+     "log_sales": -0.8,
+     "ebitda_margin": -0.7,
+     "net_debt_to_ebitda": -0.6
+    },
+    "conditions": [
+     {
+      "if": [
+       {
+        "var": "net_debt_to_ebitda",
+        "below_pct": 10
+       }
+      ],
+      "times": 1.3
+     },
+     {
+      "if": [
+       {
+        "var": "loss_making"
+       }
+      ],
+      "times": 1.3
+     }
+    ]
+   },
+   "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.7, net_debt_to_ebitda -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3",
+   "explore": {
+    "interval_score": 2.521564118597582,
+    "coverage": 0.7972128482753462,
+    "median_factor": 1.9594256289932965
+   }
+  },
+  "EV/Sales": {
+   "id": "g05-06",
+   "name": "g05-06 pass-through thin gross margin (EV/Sales)",
+   "mechanism": "Firms with very thin gross margins (distributors, contractors, commodity processors) pass most revenue through to suppliers, so value is a small multiple of a thin spread and EV/Sales is roughly proportional to that spread; small absolute differences in gross margin between the target and its peers become large proportional differences in the right EV/Sales, so the peer median misses more in logs. This differs from the low-EBITDA-margin flag because it targets the revenue pass-through structure itself, not current losses.",
+   "spec": {
+    "name": "g05-06 pass-through thin gross margin (EV/Sales)",
+    "multiple": "EV/Sales",
+    "base": "constant",
+    "terms": {
+     "peer_range": 0.5,
+     "log_sales": -0.6
+    },
+    "conditions": [
+     {
+      "if": [
+       {
+        "var": "gross_margin",
+        "below_pct": 15
+       }
+      ],
+      "times": 1.4
+     },
+     {
+      "if": [
+       {
+        "var": "ebitda_margin",
+        "below_pct": 15
+       }
+      ],
+      "times": 1.4
+     },
+     {
+      "if": [
+       {
+        "var": "n_peers",
+        "below_pct": 10
+       }
+      ],
+      "times": 1.4
+     }
+    ]
+   },
+   "compact": "EV/Sales | base constant | terms peer_range +0.5, log_sales -0.6 | if gross_margin <= p15 x1.4 | if ebitda_margin <= p15 x1.4 | if n_peers <= p10 x1.4",
+   "explore": {
+    "interval_score": 4.046330931572232,
+    "coverage": 0.7998285451036994,
+    "median_factor": 3.1564745197958963
+   }
+  }
+ }
+}

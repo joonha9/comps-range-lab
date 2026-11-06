@@ -1,0 +1,370 @@
+[
+ {
+  "id": "g01-01",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:36",
+  "name": "ebitda_thin_margin_small_firm",
+  "mechanism": "When EBITDA is a thin slice of sales, small absolute errors or transitory swings in EBITDA move the EV/EBITDA ratio a lot, and the market prices such firms on normalized rather than reported EBITDA, so peer medians transfer poorly. Small firms add idiosyncratic business risk, illiquidity and sparse analyst coverage, so their values deviate more from sector medians; loss-making firms have reported EBITDA that is unlikely to persist.",
+  "prediction": "EV/EBITDA interval score below the constant band's 2.735, with coverage of loss_making and smallest_20pct firms rising toward 80% while median range width falls below x/2.10.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -1.0,
+    "ebitda_margin": -1.0
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "hash": "0e80f14d17",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_thin_margin_small_firm",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -1.0,
+    "ebitda_margin": -1.0
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms log_sales -1, ebitda_margin -1 | if loss_making x1.4"
+ },
+ {
+  "id": "g01-02",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:36",
+  "name": "ebitda_intangible_growth_option_value",
+  "mechanism": "Firms with heavy R&D, high gross margins and fast sales growth derive much of their value from growth options and intangible assets that current EBITDA does not capture, so investors' valuations of them diverge widely from the peer median multiple. Firms with no sales history (recent listings) have the least information for the market and the analyst to anchor on.",
+  "prediction": "EV/EBITDA interval score below the constant band's 2.735, with highest_rnd_20pct and fastest_growing_20pct coverage closer to 80% than the constant band's 66% and 70%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "rnd_intensity": 0.8,
+    "sales_growth_1y": 0.6,
+    "gross_margin": 0.5,
+    "log_assets": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "ca86f1c5ba",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_intangible_growth_option_value",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "rnd_intensity": 0.8,
+    "sales_growth_1y": 0.6,
+    "gross_margin": 0.5,
+    "log_assets": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms rnd_intensity +0.8, sales_growth_1y +0.6, gross_margin +0.5, log_assets -0.6 | if no_history x1.3"
+ },
+ {
+  "id": "g01-03",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:36",
+  "name": "ebitda_leverage_distress",
+  "mechanism": "For highly levered, distressed firms the enterprise value is driven by the option-like value of equity and by debt trading below book, so EV relative to EBITDA departs from healthy peers' multiples in either direction. Where the peers themselves disagree strongly on the multiple, the sector has no single valuation anchor and the median estimate is less reliable.",
+  "prediction": "EV/EBITDA interval score below the constant band's 2.735, and wider ranges (above median width) for firms in the top quintile of net_debt_to_ebitda.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "net_debt_to_ebitda": 0.6,
+    "log_sales": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "debt_to_assets",
+       "above_pct": 80
+      },
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.5
+    },
+    {
+     "if": [
+      {
+       "var": "peer_iqr",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "bbdbd8ee91",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_leverage_distress",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "net_debt_to_ebitda": 0.6,
+    "log_sales": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "debt_to_assets",
+       "above_pct": 80
+      },
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.5
+    },
+    {
+     "if": [
+      {
+       "var": "peer_iqr",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms net_debt_to_ebitda +0.6, log_sales -0.8 | if debt_to_assets >= p80 AND loss_making x1.5 | if peer_iqr >= p80 x1.3"
+ },
+ {
+  "id": "g01-04",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:36",
+  "name": "sales_unprofitable_option_value",
+  "mechanism": "Firms with non-positive EBITDA are valued on the hope of future profits rather than on current sales economics, so the same revenue can be worth very different amounts and a peer EV/Sales median is a weak anchor. Small size and heavy R&D compound this, since value then rests on unproven products and a few idiosyncratic outcomes.",
+  "prediction": "EV/Sales interval score below the constant band's 4.233, with coverage of loss_making firms above the constant band's 72% and of smallest_20pct above 68%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "log_sales": -1.0,
+    "rnd_intensity": 0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.8
+    },
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.2
+    }
+   ]
+  },
+  "hash": "1c30a864bd",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_unprofitable_option_value",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "log_sales": -1.0,
+    "rnd_intensity": 0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.8
+    },
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.2
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms log_sales -1, rnd_intensity +0.7 | if negative_ebitda x1.8 | if loss_making x1.2"
+ },
+ {
+  "id": "g01-05",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:36",
+  "name": "sales_margin_scalability",
+  "mechanism": "EV/Sales implicitly assumes the target converts sales to cash like its peers; high-gross-margin, fast-growing firms have scalable economics whose eventual profitability is uncertain, so their sales multiples spread out much more than those of low-margin, mature firms where sales map tightly to value. Small asset bases mean little tangible value to anchor EV.",
+  "prediction": "EV/Sales interval score below the constant band's 4.233, with median range narrower than x/3.38 because mature low-gross-margin firms get tight ranges.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.8,
+    "sales_growth_1y": 0.6,
+    "log_assets": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "rnd_intensity",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "hash": "4e1519ff34",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_margin_scalability",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.8,
+    "sales_growth_1y": 0.6,
+    "log_assets": -0.8
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "rnd_intensity",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms gross_margin +0.8, sales_growth_1y +0.6, log_assets -0.8 | if loss_making AND rnd_intensity >= p80 x1.5"
+ },
+ {
+  "id": "g01-06",
+  "generation": 1,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:17:36",
+  "name": "sales_peer_disagreement_weak_anchor",
+  "mechanism": "When the peers' EV/Sales multiples span a wide range the sector contains firms with very different margin structures, so the median peer is a weak anchor; using peer spread as a moderating term rather than the full base avoids letting noisy peer statistics dominate. Firms with depressed EBITDA margins or no sales history lack a stable earnings base that would tie their value to their revenue.",
+  "prediction": "EV/Sales interval score below both the constant band's 4.233 and the peer_iqr-proportional band's 4.340.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "peer_range": 0.6,
+    "log_sales": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "below_pct": 15
+      }
+     ],
+     "times": 1.6
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "36c5ea7d74",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_peer_disagreement_weak_anchor",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "peer_range": 0.6,
+    "log_sales": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "below_pct": 15
+      }
+     ],
+     "times": 1.6
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms peer_range +0.6, log_sales -0.7 | if ebitda_margin <= p15 x1.6 | if no_history x1.3"
+ }
+]

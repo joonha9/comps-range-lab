@@ -1,0 +1,356 @@
+[
+ {
+  "id": "g02-01",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:40",
+  "name": "ebitda_cash_gap",
+  "mechanism": "EBITDA ignores capital expenditure and every cost below the EBITDA line, so it is a weak stand-in for distributable cash flow when reinvestment needs are heavy relative to sales and margins are thin. How much of such a firm's EBITDA the market capitalizes depends on firm-specific capex and maintenance needs that a peer-median multiple does not capture. A net loss despite positive EBITDA is direct evidence that depreciation, interest and other below-EBITDA items absorb the EBITDA, which is the same gap.",
+  "prediction": "Interval score below the constant band's (2.735); coverage of loss_making firms rises above the constant band's 68% while median range width stays near x/2.0.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "capex_intensity": 0.7,
+    "ebitda_margin": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "e95bf8d6fc",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_cash_gap",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "capex_intensity": 0.7,
+    "ebitda_margin": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms capex_intensity +0.7, ebitda_margin -0.7 | if loss_making x1.3"
+ },
+ {
+  "id": "g02-02",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:40",
+  "name": "ebitda_forward_drift",
+  "mechanism": "The market prices forward EBITDA, not trailing EBITDA. When sales are moving fast in either direction, or the firm has no sales history, trailing EBITDA is a stale anchor and the gap between current and forward earnings is large and firm-specific. Small asset bases mean the year-to-year EBITDA itself is volatile, so trailing EBITDA tells less about the earnings level the market is capitalizing.",
+  "prediction": "Interval score below the constant band's (2.735); coverage of fastest_growing_20pct firms rises from about 70% to at least 76%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_assets": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "c9301dfc62",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_forward_drift",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_assets": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms log_assets -0.7 | if sales_growth_1y >= p80 x1.4 | if sales_growth_1y <= p10 x1.3 | if no_history x1.3"
+ },
+ {
+  "id": "g02-03",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:40",
+  "name": "ebitda_leverage_dampening",
+  "mechanism": "Enterprise value is net debt plus equity, and debt is valued close to its book amount while equity carries the sentiment and growth beliefs that make comps errors large. When debt funds a large share of assets, the uncertain equity slice is a small part of EV, so the log error of EV is dampened; small firms' equity also carries more idiosyncratic risk. Loss-making firms that are mostly equity-financed are valued on a growth or turnaround story with almost no debt anchor, so their EV is hardest to pin down.",
+  "prediction": "Interval score below the constant band's (2.735) and below the size-only effect, with ranges for high debt_to_assets firms narrower than the median range.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.7,
+    "log_sales": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "debt_to_assets",
+       "below_pct": 50
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "hash": "ff6d273fbe",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_leverage_dampening",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.7,
+    "log_sales": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "debt_to_assets",
+       "below_pct": 50
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms debt_to_assets -0.7, log_sales -0.7 | if loss_making AND debt_to_assets <= p50 x1.4"
+ },
+ {
+  "id": "g02-04",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:40",
+  "name": "sales_leverage_dampening",
+  "mechanism": "EV is net debt plus equity, and debt claims are priced near their book value while equity absorbs the market's divergent views about how sales will turn into profit. For heavily debt-financed firms EV is largely the stable debt claim, so EV/Sales errors are compressed; for equity-financed firms with thin EBITDA margins EV is almost entirely an equity bet on future margin expansion that peer revenue multiples cannot price. Negative EBITDA is the extreme case where the value rests entirely on that bet.",
+  "prediction": "Interval score below the constant band's (4.233); coverage of loss_making firms between 76% and 86%, avoiding the over-widening of g01-04.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.6,
+    "ebitda_margin": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "fa533ee579",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_leverage_dampening",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.6,
+    "ebitda_margin": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms debt_to_assets -0.6, ebitda_margin -0.5 | if negative_ebitda x1.3"
+ },
+ {
+  "id": "g02-05",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:40",
+  "name": "sales_forward_drift",
+  "mechanism": "Revenue multiples are applied to trailing sales, but the market values the firm on the sales it will have. When sales are growing or shrinking sharply, or there is no sales history, trailing sales misstate the forward base by a large, firm-specific amount. High gross margins amplify that error because each dollar of forward sales converts to profit at a high rate, so disagreement about future sales becomes larger disagreement about value.",
+  "prediction": "Interval score below the constant band's (4.233); coverage of fastest_growing_20pct firms of at least 80% with median range no wider than x/3.4.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.5
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 15
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "4f0179761f",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_forward_drift",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.5
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 15
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms gross_margin +0.5 | if sales_growth_1y >= p80 x1.5 | if sales_growth_1y <= p15 x1.3 | if no_history x1.3"
+ },
+ {
+  "id": "g02-06",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:40",
+  "name": "sales_anchor_reliability",
+  "mechanism": "The point estimate is only as good as the peer set: when few same-SIC peers exist, or the peers' revenue multiples disagree widely, the peer median is a noisy anchor. Because peers are chosen as nearest neighbours on size, the smallest targets sit at the edge of the size distribution and their peers are systematically larger and different, so the median peer multiple is a biased anchor for them.",
+  "prediction": "Interval score below the constant band's (4.233); coverage of fallback_or_few_peers rises from 71% to at least 77% and of smallest_20pct from 68% to at least 75%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "peer_range": 0.4,
+    "n_peers": -0.6,
+    "log_sales": -0.5
+   },
+   "conditions": []
+  },
+  "hash": "c646290b26",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_anchor_reliability",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "peer_range": 0.4,
+    "n_peers": -0.6,
+    "log_sales": -0.5
+   },
+   "conditions": []
+  },
+  "compact": "EV/Sales | base constant | terms peer_range +0.4, n_peers -0.6, log_sales -0.5"
+ }
+]

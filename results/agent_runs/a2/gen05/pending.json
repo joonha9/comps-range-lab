@@ -1,0 +1,418 @@
+[
+ {
+  "id": "g05-01",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:37:27",
+  "name": "ebitda_yield_on_assets",
+  "mechanism": "EBITDA divided by total assets equals EBITDA margin times asset turnover. When EBITDA is only a small yield on a large asset base, the market values the firm on what its assets are worth (replacement, liquidation or sum-of-parts value of land, reserves, plants or real estate) rather than on capitalized EBITDA. That makes EV/EBITDA high and dependent on asset values that peers matched on size and EBITDA margin cannot reveal. Smaller firms add idiosyncratic risk on top, because their asset values and earnings are less diversified.",
+  "prediction": "Interval score below the constant band's 2.735 and below g01-01's 2.590 (which has margin and size but no turnover); firms in the bottom 30% on both EBITDA margin and asset turnover get wider ranges, and constant-band under-coverage of the smallest 20% shrinks toward 80%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "ebitda_margin": -0.6,
+    "asset_turnover": -0.5,
+    "log_sales": -0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "below_pct": 30
+      },
+      {
+       "var": "asset_turnover",
+       "below_pct": 30
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "1a5d79ad78",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_yield_on_assets",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "ebitda_margin": -0.6,
+    "asset_turnover": -0.5,
+    "log_sales": -0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "below_pct": 30
+      },
+      {
+       "var": "asset_turnover",
+       "below_pct": 30
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms ebitda_margin -0.6, asset_turnover -0.5, log_sales -0.4 | if ebitda_margin <= p30 AND asset_turnover <= p30 x1.3"
+ },
+ {
+  "id": "g05-02",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:37:27",
+  "name": "debt_funded_acquisition_year",
+  "mechanism": "Net debt is carried at book value, so it is the known part of EV, and more net debt relative to EBITDA usually narrows the error. The exception is the year of a debt-funded acquisition: the year-end balance sheet holds all of the acquisition debt and the June EV reflects the whole combined firm, while trailing EBITDA includes the target for only part of the year. A large sales jump together with high net debt/EBITDA marks this case. Here the trailing multiple is distorted by a firm-specific amount that depends on deal timing and synergies, which peers cannot reveal.",
+  "prediction": "Interval score below the constant band's 2.735 and at or below g03-01's 2.535; coverage of fastest_growing_20pct rises toward 80%, and firms that are both high-growth and high-leverage show larger |e| than other high-leverage firms.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "net_debt_to_ebitda": -0.7,
+    "log_sales": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 85
+      },
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 60
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "hash": "6f6f93e114",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "debt_funded_acquisition_year",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "net_debt_to_ebitda": -0.7,
+    "log_sales": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 85
+      },
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 60
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms net_debt_to_ebitda -0.7, log_sales -0.5 | if sales_growth_1y >= p85 AND net_debt_to_ebitda >= p60 x1.5"
+ },
+ {
+  "id": "g05-03",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:37:27",
+  "name": "depreciation_amortization_wedge",
+  "mechanism": "The market capitalizes something between EBITDA and EBIT. When D&A takes a large share of EBITDA (EBITDA margin above median but EBIT margin in the bottom 30%), it matters a great deal whether that D&A is real economic depreciation needing reinvestment or non-cash amortization of acquired intangibles, and the answer is firm-specific. Peers matched on EBITDA margin can carry very different D&A burdens, so the peer EV/EBITDA is a weak anchor. A thin EBIT margin and a net loss despite positive EBITDA are further signs that below-EBITDA charges absorb the earnings base.",
+  "prediction": "Interval score below the constant band's 2.735; firms with a high EBITDA margin but a low EBIT margin have larger |e| than firms with a similar EBITDA margin and a normal EBIT margin, and loss_making coverage rises from 68% toward 80%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "ebit_margin": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "above_pct": 50
+      },
+      {
+       "var": "ebit_margin",
+       "below_pct": 30
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "b240c94827",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "depreciation_amortization_wedge",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "ebit_margin": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "ebitda_margin",
+       "above_pct": 50
+      },
+      {
+       "var": "ebit_margin",
+       "below_pct": 30
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms ebit_margin -0.6 | if ebitda_margin >= p50 AND ebit_margin <= p30 x1.4 | if loss_making x1.3"
+ },
+ {
+  "id": "g05-04",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:37:27",
+  "name": "pre_commercial_revenue",
+  "mechanism": "When a firm's sales are both tiny and loss-generating, current revenue is not what drives its value. EV reflects a pipeline, licence or technology whose worth is unrelated to this year's sales, so a revenue multiple applied to them can be off by an order of magnitude in either direction. R&D-heavy loss-makers are the clearest case. In contrast, debt is carried at book value and anchors part of EV, so debt-financed firms have damped EV/Sales errors.",
+  "prediction": "Interval score below the constant band's 4.233; small negative-EBITDA firms get the widest ranges and have the largest |e|, and coverage of smallest_20pct and loss_making approaches 80% without the over-coverage (92%) that g01-04's blanket size term produced.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.5,
+    "log_sales": -0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      },
+      {
+       "var": "log_sales",
+       "below_pct": 25
+      }
+     ],
+     "times": 1.6
+    },
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      },
+      {
+       "var": "rnd_intensity",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "9b74a841f1",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "pre_commercial_revenue",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.5,
+    "log_sales": -0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      },
+      {
+       "var": "log_sales",
+       "below_pct": 25
+      }
+     ],
+     "times": 1.6
+    },
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      },
+      {
+       "var": "rnd_intensity",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms debt_to_assets -0.5, log_sales -0.4 | if negative_ebitda AND log_sales <= p25 x1.6 | if negative_ebitda AND rnd_intensity >= p80 x1.3"
+ },
+ {
+  "id": "g05-05",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:37:27",
+  "name": "sustained_growth_unproven_margin",
+  "mechanism": "A firm that has grown fast for three years and still has a thin margin is valued on how long the growth runway lasts and what margin it will eventually reach. Both beliefs vary widely across firms, and peers matched on current size and margin do not reveal them. Multi-year growth separates a durable growth franchise from a one-year blip that the market looks through. Debt is carried at book value and damps EV errors.",
+  "prediction": "Interval score below the constant band's 4.233 and below g02-05's 4.250 (which used only 1-year growth); in FY2018-2019, firms in the top 20% on 3-year growth with an EBITDA margin in the bottom 40% have clearly larger |e| than firms in the top 20% on 1-year growth alone.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.5,
+    "sales_growth_3y": 0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_3y",
+       "above_pct": 80
+      },
+      {
+       "var": "ebitda_margin",
+       "below_pct": 40
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "hash": "2fc97d61dd",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sustained_growth_unproven_margin",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.5,
+    "sales_growth_3y": 0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_3y",
+       "above_pct": 80
+      },
+      {
+       "var": "ebitda_margin",
+       "below_pct": 40
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms debt_to_assets -0.5, sales_growth_3y +0.5 | if sales_growth_3y >= p80 AND ebitda_margin <= p40 x1.5"
+ },
+ {
+  "id": "g05-06",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:37:27",
+  "name": "capacity_build_out",
+  "mechanism": "A firm spending far more on capital expenditure than its current sales or EBITDA support is building capacity, such as plants, networks, wells or fleets. The market values it on the sales that capacity will produce, so trailing sales understate the revenue base by a firm-specific amount that depends on project timing and execution. Peers at a steady state cannot reveal this. Rapid sales growth alongside heavy capex marks capacity already coming online, and debt carried at book value anchors part of EV.",
+  "prediction": "Interval score below the constant band's 4.233; firms in the top 15% on capex intensity with an EBITDA margin in the bottom 40% have larger |e| than other firms, while asset-heavy high-margin firms such as utilities keep narrow ranges.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "capex_intensity",
+       "above_pct": 85
+      },
+      {
+       "var": "ebitda_margin",
+       "below_pct": 40
+      }
+     ],
+     "times": 1.5
+    },
+    {
+     "if": [
+      {
+       "var": "capex_intensity",
+       "above_pct": 85
+      },
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 70
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "047c024d35",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "capacity_build_out",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "capex_intensity",
+       "above_pct": 85
+      },
+      {
+       "var": "ebitda_margin",
+       "below_pct": 40
+      }
+     ],
+     "times": 1.5
+    },
+    {
+     "if": [
+      {
+       "var": "capex_intensity",
+       "above_pct": 85
+      },
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 70
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms debt_to_assets -0.6 | if capex_intensity >= p85 AND ebitda_margin <= p40 x1.5 | if capex_intensity >= p85 AND sales_growth_1y >= p70 x1.3"
+ }
+]

@@ -1,0 +1,69 @@
+{
+ "run": "a5",
+ "selection_rule": "per multiple, the graded rule with the lowest exploration interval score",
+ "funnel": {
+  "proposed": 30,
+  "graded": 20,
+  "rejected": 10,
+  "invalid": 0,
+  "duplicate": 0
+ },
+ "graded_per_multiple": {
+  "EV/EBITDA": 12,
+  "EV/Sales": 8
+ },
+ "finalists": {
+  "EV/EBITDA": {
+   "id": "g05-01",
+   "name": "g05-01 small dollar EBITDA base",
+   "mechanism": "The peer multiple is applied to a dollar amount of EBITDA, and the smaller that amount (a small firm with a thin margin), the larger the share of it made up of transitory items, one-off costs and fixed-cost swings, so the percentage error in the capitalized base is largest. Firms that lose money below EBITDA show that the EBITDA base overstates sustainable earnings, which makes the base less reliable still.",
+   "spec": {
+    "name": "g05-01 small dollar EBITDA base",
+    "multiple": "EV/EBITDA",
+    "base": "constant",
+    "terms": {
+     "log_sales": -0.8,
+     "ebitda_margin": -0.6
+    },
+    "conditions": [
+     {
+      "if": [
+       {
+        "var": "loss_making"
+       }
+      ],
+      "times": 1.3
+     }
+    ]
+   },
+   "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6 | if loss_making x1.3",
+   "explore": {
+    "interval_score": 2.572474882163016,
+    "coverage": 0.7957715259499172,
+    "median_factor": 2.0360688829256346
+   }
+  },
+  "EV/Sales": {
+   "id": "g05-04",
+   "name": "g05-04 price noise plus anchor noise (sales)",
+   "mechanism": "A sales-comps error has two independent sources: noise in the target's own price and noise in the peer anchor. Small firms have thin analyst coverage and illiquid shares, so their prices drift further from fundamentals, while a thin sector (few peers) or peers whose multiples span a wide range make the median sales multiple an imprecise anchor; the two error sources add up.",
+   "spec": {
+    "name": "g05-04 price noise plus anchor noise (sales)",
+    "multiple": "EV/Sales",
+    "base": "constant",
+    "terms": {
+     "log_sales": -0.5,
+     "n_peers": -0.7,
+     "peer_range": 0.4
+    },
+    "conditions": []
+   },
+   "compact": "EV/Sales | base constant | terms log_sales -0.5, n_peers -0.7, peer_range +0.4",
+   "explore": {
+    "interval_score": 4.108192033078075,
+    "coverage": 0.7993520036789781,
+    "median_factor": 3.287676914940355
+   }
+  }
+ }
+}

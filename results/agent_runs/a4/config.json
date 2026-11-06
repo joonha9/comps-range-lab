@@ -1,0 +1,10 @@
+{
+ "generations": 5,
+ "proposals_per_generation": 6,
+ "critic": true,
+ "archive_to_proposer": true,
+ "random_rules_per_multiple": 200,
+ "random_seed": 1003,
+ "created": "2026-11-06T16:15:59",
+ "valuationlab_commit": "7830673"
+}

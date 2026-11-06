@@ -1,0 +1,48 @@
+{"proposals": [
+{"name": "ebitda_unrepresentative_year",
+ "mechanism": "Reported EBITDA is a poor proxy for normalized earnings in a year when sales collapsed or surged, because operating leverage pushes EBITDA temporarily below or above its sustainable level; the market capitalizes normalized EBITDA, so applying a peer multiple to that year's EBITDA misses in either direction. This adds to the thin-margin and small-size effects, where small absolute EBITDA errors move the ratio a lot and idiosyncratic risk is high.",
+ "prediction": "Interval score below the constant band's 2.735 and at or below g01-01's 2.581, with coverage of fastest_growing_20pct rising above 75% compared with 71% under g01-01.",
+ "rule": {"multiple": "EV/EBITDA", "base": "constant",
+   "terms": {"log_sales": -0.9, "ebitda_margin": -0.7},
+   "conditions": [
+     {"if": [{"var": "sales_growth_1y", "below_pct": 10}], "times": 1.35},
+     {"if": [{"var": "sales_growth_1y", "above_pct": 90}], "times": 1.35},
+     {"if": [{"var": "loss_making"}], "times": 1.3}]}},
+{"name": "ebitda_to_cash_conversion",
+ "mechanism": "EBITDA ignores capital expenditure, so for capital-hungry firms the share of EBITDA that becomes free cash flow differs a lot between companies, and investors value them on EBIT or FCF rather than EBITDA; a peer median EV/EBITDA therefore transfers poorly when capex intensity is high and margins are thin. Deeply unprofitable firms (very negative net margin despite positive EBITDA) have large below-the-line charges such as depreciation, interest or impairments, which signal EBITDA that will not persist.",
+ "prediction": "Interval score below the constant band's 2.735; firms in the top capex-intensity quintile get wider ranges, and those ranges still cover about 80% of them.",
+ "rule": {"multiple": "EV/EBITDA", "base": "constant",
+   "terms": {"ebitda_margin": -0.9, "capex_intensity": 0.6, "log_assets": -0.8},
+   "conditions": [
+     {"if": [{"var": "net_margin", "below_pct": 10}], "times": 1.4}]}},
+{"name": "transitory_ebitda_plus_growth_options",
+ "mechanism": "Two separate channels make EV/EBITDA comps unreliable. First, thin EBITDA and small size make the ratio noisy and idiosyncratic. Second, R&D-heavy, fast-growing firms carry growth-option value that current EBITDA does not measure. Combining the two should rank uncertainty better than either alone, because they pick out different firms: mature low-margin small caps and young innovators.",
+ "prediction": "Interval score below 2.581 (g01-01) and below the linear-regression benchmark of 2.448 or close to it, with highest_rnd_20pct coverage above 75%.",
+ "rule": {"multiple": "EV/EBITDA", "base": "constant",
+   "terms": {"log_sales": -0.8, "ebitda_margin": -0.8, "rnd_intensity": 0.5, "sales_growth_1y": 0.4},
+   "conditions": [
+     {"if": [{"var": "loss_making"}], "times": 1.3}]}},
+{"name": "operating_investment_gap",
+ "mechanism": "A firm with high gross margin but low EBITDA margin is spending heavily on operating investment (sales, marketing, R&D), so its value depends on how much operating leverage it eventually achieves, not on current revenue economics; investors disagree widely on that, so the same sales are worth very different amounts. When the peers' sales multiples also span a wide range, the sector has no stable revenue-to-value mapping.",
+ "prediction": "Interval score below g01-06's 4.143 and below the constant band's 4.233, with smallest_20pct coverage closer to 80% than g01-06's over-wide 88%.",
+ "rule": {"multiple": "EV/Sales", "base": "constant",
+   "terms": {"gross_margin": 0.6, "ebitda_margin": -0.6, "peer_range": 0.4, "log_sales": -0.5},
+   "conditions": [
+     {"if": [{"var": "no_history"}], "times": 1.3}]}},
+{"name": "thin_sector_peer_mismatch",
+ "mechanism": "When a sector has few listed firms, the peer set is small and less similar to the target in business mix, so the median peer sales multiple is a weak anchor; every earlier rule under-covered these firms (69-73%). Firms with depressed EBITDA margins have no earnings base tying value to revenue, and wide peer dispersion means the sector itself prices sales inconsistently.",
+ "prediction": "Interval score below the constant band's 4.233, with fallback_or_few_peers coverage rising to about 78% or more compared with 71-73% before.",
+ "rule": {"multiple": "EV/Sales", "base": "constant",
+   "terms": {"peer_range": 0.6, "log_sales": -0.5},
+   "conditions": [
+     {"if": [{"var": "n_peers", "below_pct": 10}], "times": 1.5},
+     {"if": [{"var": "ebitda_margin", "below_pct": 15}], "times": 1.5}]}},
+{"name": "asset_heavy_revenue_disconnect",
+ "mechanism": "Sales multiples work best for firms whose value scales with revenue. For asset-heavy firms (low asset turnover) value comes from the asset base, its returns and commodity or regulatory conditions, so EV per dollar of sales varies widely, while high-turnover firms such as distributors and retailers have thin, stable margins and tightly clustered EV/Sales. Firms with non-positive EBITDA lack any operating anchor, though they get a moderate rather than extreme multiplier, since earlier rules over-covered them.",
+ "prediction": "Interval score below the constant band's 4.233; coverage of loss_making firms between 75% and 85% rather than the 88% of g01-04.",
+ "rule": {"multiple": "EV/Sales", "base": "constant",
+   "terms": {"asset_turnover": -0.7, "log_sales": -0.6, "sales_growth_1y": 0.3},
+   "conditions": [
+     {"if": [{"var": "negative_ebitda"}], "times": 1.4},
+     {"if": [{"var": "no_history"}], "times": 1.3}]}}
+]}

@@ -1,0 +1,420 @@
+[
+ {
+  "id": "g04-01",
+  "generation": 4,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:32:54",
+  "name": "ebitda_roic_extremes_debt_anchor",
+  "mechanism": "By the value-driver identity, EV/NOPAT = (1 - g/ROIC)/(WACC - g), so the multiple's sensitivity to growth beliefs rises steeply with return on capital: for very high-ROIC firms the multiple depends on how long that franchise lasts, which the market judges firm by firm and peers cannot reveal. Very low-ROIC firms earn little on their capital, so their EV is anchored to asset or restructuring value rather than to EBITDA, and a capitalized-EBITDA estimate misses it. Net debt, read off the balance sheet near book, is the known part of EV, so more of it relative to EBITDA leaves less to estimate.",
+  "prediction": "EV/EBITDA interval score below the constant band's 2.735, with coverage of the top and bottom ROIC deciles under the constant band below 80% and closer to 80% under this rule.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "net_debt_to_ebitda": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "roic",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "roic",
+       "below_pct": 15
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "hash": "db4b35d13f",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_roic_extremes_debt_anchor",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "net_debt_to_ebitda": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "roic",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "roic",
+       "below_pct": 15
+      }
+     ],
+     "times": 1.4
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms net_debt_to_ebitda -0.7 | if roic >= p85 x1.3 | if roic <= p15 x1.4"
+ },
+ {
+  "id": "g04-02",
+  "generation": 4,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:32:54",
+  "name": "ebitda_tangible_asset_anchor",
+  "mechanism": "When EBITDA comes from a large base of tangible assets (low sales-to-assets), EV is held close to the replacement cost of those assets and much of it is funded by collateralized debt priced near book, so peers in the same industry trade in a tight multiple band. Asset-light firms with high gross margins earn EBITDA on unrecorded intangibles (brands, software, customer relationships) whose durability the market prices very differently across firms, so their EV/EBITDA strays furthest from the peer median.",
+  "prediction": "EV/EBITDA interval score below the constant band's 2.735; the asset-light high-gross-margin group should get ranges wider than the median range while low-turnover, debt-funded firms get narrower ones.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "asset_turnover": 0.6,
+    "debt_to_assets": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "gross_margin",
+       "above_pct": 70
+      },
+      {
+       "var": "asset_turnover",
+       "above_pct": 70
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "a768a60fbb",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_tangible_asset_anchor",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "asset_turnover": 0.6,
+    "debt_to_assets": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "gross_margin",
+       "above_pct": 70
+      },
+      {
+       "var": "asset_turnover",
+       "above_pct": 70
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms asset_turnover +0.6, debt_to_assets -0.5 | if gross_margin >= p70 AND asset_turnover >= p70 x1.3"
+ },
+ {
+  "id": "g04-03",
+  "generation": 4,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:32:54",
+  "name": "ebitda_residual_claim_magnification",
+  "mechanism": "Comps errors are largest when EV is a small leftover of two large quantities. A small firm holding a lot of net cash has EV = equity minus cash, a difference that turns a modest equity mispricing into a large percentage EV error. A thin EBIT margin is the same thing for operations: value is a small leftover of revenue minus costs, so small differences in cost beliefs move value a lot. A firm with heavy net debt works the opposite way, because most of its EV is a book-valued claim.",
+  "prediction": "EV/EBITDA interval score below the constant band's 2.735, with the small net-cash group's coverage under the constant band below 70% and close to 80% under this rule.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "ebit_margin": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "net_debt_to_ebitda",
+       "below_pct": 15
+      },
+      {
+       "var": "log_sales",
+       "below_pct": 40
+      }
+     ],
+     "times": 1.6
+    },
+    {
+     "if": [
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 75
+      }
+     ],
+     "times": 0.75
+    }
+   ]
+  },
+  "hash": "0c1a8e8378",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "ebitda_residual_claim_magnification",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "ebit_margin": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "net_debt_to_ebitda",
+       "below_pct": 15
+      },
+      {
+       "var": "log_sales",
+       "below_pct": 40
+      }
+     ],
+     "times": 1.6
+    },
+    {
+     "if": [
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 75
+      }
+     ],
+     "times": 0.75
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms ebit_margin -0.6 | if net_debt_to_ebitda <= p15 AND log_sales <= p40 x1.6 | if net_debt_to_ebitda >= p75 x0.75"
+ },
+ {
+  "id": "g04-04",
+  "generation": 4,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:32:54",
+  "name": "sales_gross_vs_ebitda_margin_mismatch",
+  "mechanism": "A revenue multiple prices the long-run margin a firm's sales will reach, and gross margin caps that margin: a high-gross-margin firm whose EBITDA margin is low because it spends heavily on sales and R&D could earn far more at maturity. Peers are matched on current EBITDA margin rather than gross margin, so such a target is paired with low-gross-margin firms that have similar current EBITDA but much lower potential margins, a systematically mismatched EV/Sales anchor. Negative EBITDA is the extreme case where value rests entirely on future margins.",
+  "prediction": "EV/Sales interval score below the constant band's 4.233; the high-gross/low-EBITDA-margin group should get ranges wider than the median range and coverage near 80%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.6,
+    "ebitda_margin": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "gross_margin",
+       "above_pct": 70
+      },
+      {
+       "var": "ebitda_margin",
+       "below_pct": 30
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "04cdc167a5",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_gross_vs_ebitda_margin_mismatch",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.6,
+    "ebitda_margin": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "gross_margin",
+       "above_pct": 70
+      },
+      {
+       "var": "ebitda_margin",
+       "below_pct": 30
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms gross_margin +0.6, ebitda_margin -0.5 | if gross_margin >= p70 AND ebitda_margin <= p30 x1.3 | if negative_ebitda x1.3"
+ },
+ {
+  "id": "g04-05",
+  "generation": 4,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:32:54",
+  "name": "sales_balance_sheet_anchor_turnover",
+  "mechanism": "In logs, EV/Sales = EV/Assets minus Sales/Assets, and EV relative to the asset base is the more stable quantity because assets set replacement cost and debt is priced near book. Peers are matched on size and EBITDA margin but not on capital intensity, so a target whose asset turnover is extreme (very asset-heavy or very asset-light) is paired with peers of ordinary turnover, and the peer revenue multiple is biased by the turnover gap. Debt-heavy firms have more of their EV in a book-valued claim, which damps the error.",
+  "prediction": "EV/Sales interval score below the constant band's 4.233, with the bottom-15% and top-15% asset-turnover groups' constant-band coverage below 80% and closer to 80% under this rule.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "asset_turnover",
+       "below_pct": 15
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "asset_turnover",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.25
+    }
+   ]
+  },
+  "hash": "6e2b365bee",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_balance_sheet_anchor_turnover",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "debt_to_assets": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "asset_turnover",
+       "below_pct": 15
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "asset_turnover",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.25
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms debt_to_assets -0.5 | if asset_turnover <= p15 x1.4 | if asset_turnover >= p85 x1.25"
+ },
+ {
+  "id": "g04-06",
+  "generation": 4,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:32:54",
+  "name": "sales_growth_times_returns",
+  "mechanism": "By the value-driver identity, EV/Sales = NOPAT margin x (1 - g/ROIC)/(WACC - g), so growth adds value only when ROIC exceeds the cost of capital, and then the multiple becomes very sensitive to beliefs about how long the growth lasts. Peers are matched on EBITDA margin but not on growth or returns, so a fast-growing high-ROIC target's revenue multiple can be far from the peer median in a firm-specific way. Firms with very low ROIC destroy value as they grow, so their EV rests on restructuring or liquidation value that revenue multiples do not track.",
+  "prediction": "EV/Sales interval score below the constant band's 4.233, and below g02-05 (4.250), which used growth alone, showing that growth matters mainly through its interaction with returns.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "sales_growth_1y": 0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 70
+      },
+      {
+       "var": "roic",
+       "above_pct": 70
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "roic",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "196504a0b8",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "sales_growth_times_returns",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "sales_growth_1y": 0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 70
+      },
+      {
+       "var": "roic",
+       "above_pct": 70
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "roic",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms sales_growth_1y +0.4 | if sales_growth_1y >= p70 AND roic >= p70 x1.4 | if roic <= p10 x1.3"
+ }
+]

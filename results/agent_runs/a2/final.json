@@ -1,0 +1,86 @@
+{
+ "run": "a2",
+ "selection_rule": "per multiple, the graded rule with the lowest exploration interval score",
+ "funnel": {
+  "proposed": 30,
+  "graded": 24,
+  "rejected": 6,
+  "invalid": 0,
+  "duplicate": 0
+ },
+ "graded_per_multiple": {
+  "EV/EBITDA": 13,
+  "EV/Sales": 11
+ },
+ "finalists": {
+  "EV/EBITDA": {
+   "id": "g03-01",
+   "name": "netdebt_known_share_of_multiple",
+   "mechanism": "An EV/EBITDA multiple splits exactly into net debt/EBITDA plus market cap/EBITDA, and the first piece is read off the balance sheet at close to book value. So the larger net debt is relative to EBITDA, the more of the target's multiple is already known, and the log error of the comps estimate gets smaller. Firms holding a lot of net cash work the other way: their EV is equity minus cash, a difference that magnifies any equity mispricing. Small firms and loss-making firms carry the most idiosyncratic, story-driven equity value.",
+   "spec": {
+    "name": "netdebt_known_share_of_multiple",
+    "multiple": "EV/EBITDA",
+    "base": "constant",
+    "terms": {
+     "net_debt_to_ebitda": -0.8,
+     "log_sales": -0.6
+    },
+    "conditions": [
+     {
+      "if": [
+       {
+        "var": "net_debt_to_ebitda",
+        "below_pct": 10
+       }
+      ],
+      "times": 1.3
+     },
+     {
+      "if": [
+       {
+        "var": "loss_making"
+       }
+      ],
+      "times": 1.3
+     }
+    ]
+   },
+   "compact": "EV/EBITDA | base constant | terms net_debt_to_ebitda -0.8, log_sales -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3",
+   "explore": {
+    "interval_score": 2.5350943413994065,
+    "coverage": 0.798218055077901,
+    "median_factor": 1.9529331760277744
+   }
+  },
+  "EV/Sales": {
+   "id": "g02-04",
+   "name": "sales_leverage_dampening",
+   "mechanism": "EV is net debt plus equity, and debt claims are priced near their book value while equity absorbs the market's divergent views about how sales will turn into profit. For heavily debt-financed firms EV is largely the stable debt claim, so EV/Sales errors are compressed; for equity-financed firms with thin EBITDA margins EV is almost entirely an equity bet on future margin expansion that peer revenue multiples cannot price. Negative EBITDA is the extreme case where the value rests entirely on that bet.",
+   "spec": {
+    "name": "sales_leverage_dampening",
+    "multiple": "EV/Sales",
+    "base": "constant",
+    "terms": {
+     "debt_to_assets": -0.6,
+     "ebitda_margin": -0.5
+    },
+    "conditions": [
+     {
+      "if": [
+       {
+        "var": "negative_ebitda"
+       }
+      ],
+      "times": 1.3
+     }
+    ]
+   },
+   "compact": "EV/Sales | base constant | terms debt_to_assets -0.6, ebitda_margin -0.5 | if negative_ebitda x1.3",
+   "explore": {
+    "interval_score": 4.090861927524589,
+    "coverage": 0.8004455280387074,
+    "median_factor": 3.140429455160132
+   }
+  }
+ }
+}

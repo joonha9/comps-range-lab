@@ -1,0 +1,348 @@
+[
+ {
+  "id": "g05-01",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:33:57",
+  "name": "g05-01 small dollar EBITDA base",
+  "mechanism": "The peer multiple is applied to a dollar amount of EBITDA, and the smaller that amount (a small firm with a thin margin), the larger the share of it made up of transitory items, one-off costs and fixed-cost swings, so the percentage error in the capitalized base is largest. Firms that lose money below EBITDA show that the EBITDA base overstates sustainable earnings, which makes the base less reliable still.",
+  "prediction": "Interval score below the constant band's (2.735) and below g03-01 (2.677), with loss_making and smallest_20pct coverage near 80%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.8,
+    "ebitda_margin": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "fb808f1420",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "g05-01 small dollar EBITDA base",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.8,
+    "ebitda_margin": -0.6
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6 | if loss_making x1.3"
+ },
+ {
+  "id": "g05-02",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:33:57",
+  "name": "g05-02 value-driver mismatch",
+  "mechanism": "The justified EV/EBITDA multiple depends on three value drivers: growth, return on invested capital and risk (the discount rate). Peers are matched on size and EBITDA margin but not on growth or ROIC, so targets at the extremes of ROIC or growth are paired with peers whose value drivers differ, while small size stands in for risk: the discount rates of small firms vary much more from firm to firm.",
+  "prediction": "Interval score below the constant band's (2.735), with fastest_growing_20pct coverage rising toward 80% and smallest_20pct coverage near 80%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.9
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "roic",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.25
+    },
+    {
+     "if": [
+      {
+       "var": "roic",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "d5f8d25819",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "g05-02 value-driver mismatch",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.9
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "roic",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.25
+    },
+    {
+     "if": [
+      {
+       "var": "roic",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms log_sales -0.9 | if roic >= p90 x1.25 | if roic <= p10 x1.3 | if sales_growth_1y >= p90 x1.3"
+ },
+ {
+  "id": "g05-03",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:33:57",
+  "name": "g05-03 EV identity with distressed debt",
+  "mechanism": "EV is market equity plus net debt measured at book value. Equity is the noisy, sentiment-driven part, so firms financed mostly by equity (especially small, thinly covered ones) have the noisiest EV. But for distressed firms (loss-making with very high net debt to EBITDA), book debt overstates the market value of the debt and the equity behaves like an option, so the EV measured with book debt drifts away from the peer-implied level.",
+  "prediction": "Interval score below the constant band's (2.735) and no worse than g04-03 (2.606), with loss_making coverage above g04-03's 71%.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.8,
+    "debt_to_assets": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "hash": "3e43e9cd71",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "g05-03 EV identity with distressed debt",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.8,
+    "debt_to_assets": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      },
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 80
+      }
+     ],
+     "times": 1.5
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms log_sales -0.8, debt_to_assets -0.5 | if loss_making AND net_debt_to_ebitda >= p80 x1.5"
+ },
+ {
+  "id": "g05-04",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:33:57",
+  "name": "g05-04 price noise plus anchor noise (sales)",
+  "mechanism": "A sales-comps error has two independent sources: noise in the target's own price and noise in the peer anchor. Small firms have thin analyst coverage and illiquid shares, so their prices drift further from fundamentals, while a thin sector (few peers) or peers whose multiples span a wide range make the median sales multiple an imprecise anchor; the two error sources add up.",
+  "prediction": "Interval score below g02-06 (4.164), with smallest_20pct coverage rising from 70% toward 78% while fallback_or_few_peers coverage stays above 80%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.5,
+    "n_peers": -0.7,
+    "peer_range": 0.4
+   },
+   "conditions": []
+  },
+  "hash": "4098eaca40",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "g05-04 price noise plus anchor noise (sales)",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.5,
+    "n_peers": -0.7,
+    "peer_range": 0.4
+   },
+   "conditions": []
+  },
+  "compact": "EV/Sales | base constant | terms log_sales -0.5, n_peers -0.7, peer_range +0.4"
+ },
+ {
+  "id": "g05-05",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:33:57",
+  "name": "g05-05 pre-commercial option value",
+  "mechanism": "For firms with tiny sales and negative EBITDA (typically R&D-driven pre-commercial companies), enterprise value is an option on a pipeline or technology, not a multiple of current sales, so the sales multiple is almost arbitrary and their actual EV can land far above or below the peer-implied level. R&D intensity measures how much of value rests on such unproven investment.",
+  "prediction": "Interval score below the constant band's (4.233), with highest_rnd_20pct and smallest_20pct coverage near 80% but not overcovered the way g01-04 was (about 90%).",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "rnd_intensity": 0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      },
+      {
+       "var": "log_sales",
+       "below_pct": 20
+      }
+     ],
+     "times": 1.6
+    }
+   ]
+  },
+  "hash": "cac3b85c16",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "g05-05 pre-commercial option value",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "rnd_intensity": 0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      },
+      {
+       "var": "log_sales",
+       "below_pct": 20
+      }
+     ],
+     "times": 1.6
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms rnd_intensity +0.4 | if negative_ebitda AND log_sales <= p20 x1.6"
+ },
+ {
+  "id": "g05-06",
+  "generation": 5,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:33:57",
+  "name": "g05-06 abnormal sales level times contribution margin",
+  "mechanism": "EV/Sales assumes current sales is the normal level the market capitalizes, but after a sharp collapse or surge, current sales misstates the normalized level, so the peer multiple lands on the wrong base. In high-gross-margin (high contribution margin) businesses, each dollar of sales that is abnormal turns into more profit and value, so the same sales distortion produces a bigger valuation error.",
+  "prediction": "Interval score below the constant band's (4.233), with fastest_growing_20pct coverage near 80%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "6a6b587363",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "g05-06 abnormal sales level times contribution margin",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.4
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 90
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms gross_margin +0.5 | if sales_growth_1y <= p10 x1.4 | if sales_growth_1y >= p90 x1.3"
+ }
+]

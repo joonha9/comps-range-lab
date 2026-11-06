@@ -1,0 +1,124 @@
+{
+ "run": "a1",
+ "selection_rule": "per multiple, the graded rule with the lowest exploration interval score",
+ "funnel": {
+  "proposed": 30,
+  "graded": 27,
+  "rejected": 3,
+  "invalid": 0,
+  "duplicate": 0
+ },
+ "graded_per_multiple": {
+  "EV/EBITDA": 13,
+  "EV/Sales": 14
+ },
+ "finalists": {
+  "EV/EBITDA": {
+   "id": "g04-02",
+   "name": "g04-E2 net cash amplifies equity uncertainty in EV",
+   "mechanism": "EV equals equity plus debt minus cash. In firms holding large net cash relative to EBITDA, EV is smaller than market capitalization, so a given percentage uncertainty in the equity value becomes a larger percentage error in EV, and the market additionally disagrees on how much trapped or idle cash is worth. In heavily indebted firms the reverse holds: near-face-value debt dominates EV and damps log errors, which also explains why widening for high net debt (g02-02) scored worse. A single linear net_debt_to_ebitda term captures this whole capital-structure gradient on top of the size and thin-margin channels.",
+   "spec": {
+    "name": "g04-E2 net cash amplifies equity uncertainty in EV",
+    "multiple": "EV/EBITDA",
+    "base": "constant",
+    "terms": {
+     "log_sales": -0.8,
+     "ebitda_margin": -0.6,
+     "net_debt_to_ebitda": -0.5,
+     "rnd_intensity": 0.3
+    },
+    "conditions": [
+     {
+      "if": [
+       {
+        "var": "loss_making"
+       }
+      ],
+      "times": 1.25
+     },
+     {
+      "if": [
+       {
+        "var": "sales_growth_1y",
+        "above_pct": 85
+       }
+      ],
+      "times": 1.25
+     },
+     {
+      "if": [
+       {
+        "var": "sales_growth_1y",
+        "below_pct": 10
+       }
+      ],
+      "times": 1.25
+     }
+    ]
+   },
+   "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6, net_debt_to_ebitda -0.5, rnd_intensity +0.3 | if loss_making x1.25 | if sales_growth_1y >= p85 x1.25 | if sales_growth_1y <= p10 x1.25",
+   "explore": {
+    "interval_score": 2.5052699525310356,
+    "coverage": 0.7981609322208829,
+    "median_factor": 1.988122244158028
+   }
+  },
+  "EV/Sales": {
+   "id": "g03-04",
+   "name": "weak_anchor_plus_runrate_break_sales",
+   "mechanism": "EV/Sales comps fail for two independent reasons. The anchor is weak when the 2-digit SIC sector is thin or its peers disagree, because the nearest peers come from different business models. And trailing sales are not the revenue run-rate after a big acquisition, divestiture, demand collapse or ramp, or for new listings, so the multiple departs from peers in both directions. Earlier rules each fixed one channel; combining them should cover both under-covered groups without heavy size weights that over-cover small firms.",
+   "spec": {
+    "name": "weak_anchor_plus_runrate_break_sales",
+    "multiple": "EV/Sales",
+    "base": "constant",
+    "terms": {
+     "n_peers": -0.6,
+     "peer_range": 0.3,
+     "log_assets": -0.3
+    },
+    "conditions": [
+     {
+      "if": [
+       {
+        "var": "sales_growth_1y",
+        "above_pct": 85
+       }
+      ],
+      "times": 1.3
+     },
+     {
+      "if": [
+       {
+        "var": "sales_growth_1y",
+        "below_pct": 10
+       }
+      ],
+      "times": 1.3
+     },
+     {
+      "if": [
+       {
+        "var": "no_history"
+       }
+      ],
+      "times": 1.2
+     },
+     {
+      "if": [
+       {
+        "var": "negative_ebitda"
+       }
+      ],
+      "times": 1.25
+     }
+    ]
+   },
+   "compact": "EV/Sales | base constant | terms n_peers -0.6, peer_range +0.3, log_assets -0.3 | if sales_growth_1y >= p85 x1.3 | if sales_growth_1y <= p10 x1.3 | if no_history x1.2 | if negative_ebitda x1.25",
+   "explore": {
+    "interval_score": 4.051972183498405,
+    "coverage": 0.7994068314617244,
+    "median_factor": 3.0900479300645403
+   }
+  }
+ }
+}

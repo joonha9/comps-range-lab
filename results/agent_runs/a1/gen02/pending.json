@@ -1,0 +1,344 @@
+[
+ {
+  "id": "g02-01",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:11",
+  "name": "g02-ebitda-denominator-and-expensed-investment",
+  "mechanism": "Two separate things make trailing EV/EBITDA unreliable. First, when EBITDA is a thin slice of sales, small cost shocks swing it by large percentages, so the market prices normalized rather than current EBITDA (made worse in small and loss-making firms). Second, R&D-heavy and fast-growing firms expense investment that is economically capex, so current EBITDA understates the earnings base on which EV is set. A rule with only one channel leaves the other group under-covered.",
+  "prediction": "Interval score below 2.571 (best earlier rule) and below the constant band's 2.735, with coverage of fastest_growing_20pct and highest_rnd_20pct both rising above 74% while loss_making and smallest_20pct stay at 75% or more.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.8,
+    "ebitda_margin": -0.6,
+    "rnd_intensity": 0.5,
+    "sales_growth_1y": 0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "75160739c1",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "g02-ebitda-denominator-and-expensed-investment",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.8,
+    "ebitda_margin": -0.6,
+    "rnd_intensity": 0.5,
+    "sales_growth_1y": 0.4
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "loss_making"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6, rnd_intensity +0.5, sales_growth_1y +0.4 | if loss_making x1.3"
+ },
+ {
+  "id": "g02-02",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:11",
+  "name": "g02-ebitda-da-wedge-and-leverage",
+  "mechanism": "EBITDA comes before depreciation and capex. In capital-intensive firms where D&A and reinvestment eat most of EBITDA, the earnings investors actually value (EBIT, free cash flow) are a small, volatile residual, so the same EBITDA supports very different EVs across peers. When net debt is large relative to EBITDA, equity is a thin levered claim whose value depends on refinancing and covenant risk, which adds dispersion that peers with ordinary leverage do not share.",
+  "prediction": "Interval score below the constant band's 2.735, and lower than a size-only rule, because capex_intensity and a low EBIT margin add information beyond log_sales.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "capex_intensity": 0.5,
+    "ebit_margin": -0.7,
+    "log_sales": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.25
+    }
+   ]
+  },
+  "hash": "e75acd67df",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "g02-ebitda-da-wedge-and-leverage",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "capex_intensity": 0.5,
+    "ebit_margin": -0.7,
+    "log_sales": -0.7
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "net_debt_to_ebitda",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.25
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms capex_intensity +0.5, ebit_margin -0.7, log_sales -0.7 | if net_debt_to_ebitda >= p85 x1.25"
+ },
+ {
+  "id": "g02-03",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:11",
+  "name": "g02-ebitda-cyclical-peak-trough",
+  "mechanism": "A firm whose sales just jumped or collapsed is likely at a cyclical or event-driven peak or trough (acquisition, divestiture, lost contract), so trailing EBITDA is a poor proxy for the run-rate the market values. Investors look through it and the multiple swings far from peers in either direction. The relationship is U-shaped in growth, which a single linear growth term cannot capture, so both tails get their own condition, on top of size and net-margin scaling.",
+  "prediction": "Interval score below the constant band's 2.735, with coverage of fastest_growing_20pct at 76% or more and a clear improvement over the constant band for firms in the bottom decile of sales growth.",
+  "raw": {
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.8,
+    "net_margin": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "0baf61cd24",
+  "multiple": "EV/EBITDA",
+  "spec": {
+   "name": "g02-ebitda-cyclical-peak-trough",
+   "multiple": "EV/EBITDA",
+   "base": "constant",
+   "terms": {
+    "log_sales": -0.8,
+    "net_margin": -0.5
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/EBITDA | base constant | terms log_sales -0.8, net_margin -0.5 | if sales_growth_1y >= p85 x1.3 | if sales_growth_1y <= p10 x1.3"
+ },
+ {
+  "id": "g02-04",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:11",
+  "name": "g02-sales-thin-sector-moderate-size",
+  "mechanism": "When a 2-digit SIC sector is thin, the 'nearest' peers are forced from businesses that differ in model and margin structure, so the peer median EV/Sales is a weak anchor. These fallback firms are the only group the constant band under-covers that earlier rules never fixed. Size adds idiosyncratic and liquidity noise but only mildly: earlier rules that weighted size and margin heavily over-covered small and loss-making firms (about 90%) and scored worse than the constant band, so this rule keeps those weights low and adds peer dispersion only as a moderate term.",
+  "prediction": "Interval score below the constant band's 4.233, with fallback_or_few_peers coverage rising above 76% and smallest_20pct coverage staying between 72% and 85% (no over-coverage).",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "n_peers": -0.6,
+    "log_sales": -0.4,
+    "peer_range": 0.3
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "hash": "f1bf32052f",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "g02-sales-thin-sector-moderate-size",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "n_peers": -0.6,
+    "log_sales": -0.4,
+    "peer_range": 0.3
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "negative_ebitda"
+      }
+     ],
+     "times": 1.3
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms n_peers -0.6, log_sales -0.4, peer_range +0.3 | if negative_ebitda x1.3"
+ },
+ {
+  "id": "g02-05",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:11",
+  "name": "g02-sales-opex-headroom",
+  "mechanism": "A firm with a high gross margin but a low EBITDA margin spends heavily on discretionary opex (selling, marketing, R&D) that could in principle be cut. Its EV depends on whether the market thinks that spending will scale down into high mature margins, a judgment that varies widely across firms with similar current economics. A firm whose low gross margin limits its EBITDA has no such headroom, and its revenue multiple is pinned by structurally thin margins.",
+  "prediction": "Interval score below the constant band's 4.233 and below g01-04 (4.447), because the gross-margin-minus-EBITDA-margin contrast identifies margin optionality better than low EBITDA margin alone.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.6,
+    "ebitda_margin": -0.6,
+    "log_sales": -0.3
+   },
+   "conditions": []
+  },
+  "hash": "b8db717e6b",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "g02-sales-opex-headroom",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "gross_margin": 0.6,
+    "ebitda_margin": -0.6,
+    "log_sales": -0.3
+   },
+   "conditions": []
+  },
+  "compact": "EV/Sales | base constant | terms gross_margin +0.6, ebitda_margin -0.6, log_sales -0.3"
+ },
+ {
+  "id": "g02-06",
+  "generation": 2,
+  "proposer": "claude-code-subagent",
+  "time": "2026-11-06T16:20:11",
+  "name": "g02-sales-revenue-run-rate-break",
+  "mechanism": "EV/Sales assumes trailing sales represent the firm's revenue run-rate. After a big acquisition, a divestiture, a collapse in demand or an explosive ramp, they do not: the market values forward revenue that is far above or below trailing sales, so the multiple departs from peers in both directions. Newly listed firms with no prior-year sales are often in exactly this kind of transition. This is a U-shaped growth effect plus a history flag, not a size or margin effect.",
+  "prediction": "Interval score below the constant band's 4.233, with fastest_growing_20pct coverage at 78% or more and loss_making and smallest_20pct coverage staying below 85%.",
+  "raw": {
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "log_assets": -0.3
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.35
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.25
+    }
+   ]
+  },
+  "hash": "5ee4da872d",
+  "multiple": "EV/Sales",
+  "spec": {
+   "name": "g02-sales-revenue-run-rate-break",
+   "multiple": "EV/Sales",
+   "base": "constant",
+   "terms": {
+    "log_assets": -0.3
+   },
+   "conditions": [
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "above_pct": 85
+      }
+     ],
+     "times": 1.35
+    },
+    {
+     "if": [
+      {
+       "var": "sales_growth_1y",
+       "below_pct": 10
+      }
+     ],
+     "times": 1.3
+    },
+    {
+     "if": [
+      {
+       "var": "no_history"
+      }
+     ],
+     "times": 1.25
+    }
+   ]
+  },
+  "compact": "EV/Sales | base constant | terms log_assets -0.3 | if sales_growth_1y >= p85 x1.35 | if sales_growth_1y <= p10 x1.3 | if no_history x1.25"
+ }
+]

@@ -1,0 +1,57 @@
+{"proposals": [
+{"name": "g03-01 D&A wedge (EBITDA far above EBIT)",
+ "mechanism": "When EBITDA is healthy but EBIT is thin, a large share of EBITDA is consumed by depreciation and amortization (heavy maintenance capex or amortization of acquired intangibles), and investors disagree on how much of that D&A is a real recurring cost; some value such firms on EBITDA, others on EBIT or free cash flow, so the peer median EV/EBITDA transfers poorly. Small firms add idiosyncratic risk and thin coverage on top of this accounting wedge.",
+ "prediction": "Interval score below the constant band's 2.735 and at or below 2.60; firms meeting the wedge condition (ebitda_margin >= p40 and ebit_margin <= p25) have larger |e| than other firms of similar size.",
+ "rule": {"multiple": "EV/EBITDA", "base": "constant",
+   "terms": {"log_sales": -0.8, "ebit_margin": -0.6},
+   "conditions": [
+     {"if": [{"var": "ebitda_margin", "above_pct": 40}, {"var": "ebit_margin", "below_pct": 25}], "times": 1.4},
+     {"if": [{"var": "net_margin", "below_pct": 10}], "times": 1.25}
+   ]}},
+{"name": "g03-02 Asset-light value without a tangible anchor",
+ "mechanism": "For asset-heavy firms (low sales/assets, e.g. utilities, pipelines, lessors) enterprise value is anchored by the replacement cost and regulated or contracted returns of a large tangible asset base, so EV/EBITDA clusters tightly within the sector. Asset-light firms with very high returns on capital are valued on the length of their reinvestment runway and franchise durability, which current EBITDA does not reveal, so their multiples scatter widely around the peer median.",
+ "prediction": "Interval score below the constant band's 2.735; coverage of the lowest-asset-turnover quintile above 85% (they get narrow ranges and still are covered) and interval score improvement concentrated in high-turnover firms.",
+ "rule": {"multiple": "EV/EBITDA", "base": "constant",
+   "terms": {"asset_turnover": 0.7, "log_assets": -0.9},
+   "conditions": [
+     {"if": [{"var": "roic", "above_pct": 90}], "times": 1.3},
+     {"if": [{"var": "roic", "below_pct": 10}], "times": 1.3}
+   ]}},
+{"name": "g03-03 Cyclical trough in capital-intensive firms",
+ "mechanism": "Capital-intensive cyclical firms (energy, materials, industrial equipment) whose sales just fell are reporting trough EBITDA, and the market capitalizes mid-cycle earnings, so their EV/EBITDA spikes by an amount that depends on how deep and temporary each firm's trough is; peers in the same SIC code are at different points of recovery. The same operating leverage that makes their EBITDA swing also makes thin-margin firms' ratios unstable.",
+ "prediction": "Interval score below the constant band's 2.735; firms meeting the trough condition (sales_growth_1y <= p20 and capex_intensity >= p60) have constant-band coverage below 70% and coverage near 80% under this rule.",
+ "rule": {"multiple": "EV/EBITDA", "base": "constant",
+   "terms": {"log_sales": -0.8, "capex_intensity": 0.4},
+   "conditions": [
+     {"if": [{"var": "sales_growth_1y", "below_pct": 20}, {"var": "capex_intensity", "above_pct": 60}], "times": 1.5},
+     {"if": [{"var": "ebitda_margin", "below_pct": 15}], "times": 1.4}
+   ]}},
+{"name": "g03-04 Cash-burning growth and shrinking businesses",
+ "mechanism": "A loss-making firm that is growing fast is valued on the eventual margin of a business it has not yet built, so the same revenue can be worth wildly different amounts depending on investors' belief in its path to profitability; a shrinking firm is valued on how fast and how far the decline goes, which revenue alone does not reveal. Small size and wide peer dispersion add to both.",
+ "prediction": "Interval score below the constant band's 4.233 and below 4.15; coverage of loss-making fast growers (loss_making and sales_growth_1y >= p70) near 80% versus below 72% under the constant band.",
+ "rule": {"multiple": "EV/Sales", "base": "constant",
+   "terms": {"log_sales": -0.6, "peer_range": 0.5},
+   "conditions": [
+     {"if": [{"var": "loss_making"}, {"var": "sales_growth_1y", "above_pct": 70}], "times": 1.5},
+     {"if": [{"var": "sales_growth_1y", "below_pct": 10}], "times": 1.3}
+   ]}},
+{"name": "g03-05 Capital-intensity mismatch at turnover extremes",
+ "mechanism": "An EV/Sales multiple implicitly assumes the target needs as much capital per dollar of sales as its peers; at extreme asset turnover (lessors and asset owners at the bottom, distributors and services at the top) small differences in business mix within the same SIC code (owner vs operator, wholesale vs retail) translate into large proportional differences in value per dollar of sales. Firms with small asset bases also have little tangible value to anchor EV.",
+ "prediction": "Interval score below the constant band's 4.233; firms in the bottom and top deciles of asset_turnover have larger |e| than mid-turnover firms, and their coverage under this rule is within 3 points of 80%.",
+ "rule": {"multiple": "EV/Sales", "base": "constant",
+   "terms": {"log_assets": -0.6, "peer_range": 0.5},
+   "conditions": [
+     {"if": [{"var": "asset_turnover", "below_pct": 10}], "times": 1.4},
+     {"if": [{"var": "asset_turnover", "above_pct": 90}], "times": 1.25},
+     {"if": [{"var": "ebitda_margin", "below_pct": 15}], "times": 1.4}
+   ]}},
+{"name": "g03-06 Debt-heavy enterprise value",
+ "mechanism": "When net debt is large relative to EBITDA, debt is a big share of enterprise value and is measured at book while it may trade well below par, and the equity of a stressed firm behaves like an option; both make EV per dollar of sales depart from healthy peers in either direction. Highly levered loss-makers are closest to distress, where restructuring outcomes dominate value.",
+ "prediction": "Interval score below the constant band's 4.233; firms with net_debt_to_ebitda >= p85 have larger |e| than the rest, and coverage of the loss_making group rises from 72% toward 80%.",
+ "rule": {"multiple": "EV/Sales", "base": "constant",
+   "terms": {"log_sales": -0.6, "peer_range": 0.5, "ebitda_margin": -0.4},
+   "conditions": [
+     {"if": [{"var": "net_debt_to_ebitda", "above_pct": 85}], "times": 1.35},
+     {"if": [{"var": "debt_to_assets", "above_pct": 90}, {"var": "loss_making"}], "times": 1.3}
+   ]}}
+]}
