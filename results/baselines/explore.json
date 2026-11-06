@@ -1,0 +1,673 @@
+{
+ "years": [
+  2016,
+  2017,
+  2018,
+  2019
+ ],
+ "valuationlab_commit": "7830673",
+ "multiples": {
+  "EV/EBITDA": {
+   "practice_iqr": {
+    "interval_score": 3.2580027484277583,
+    "coverage": 0.408849710858643,
+    "mean_width": 0.6224822989641381,
+    "median_factor": 1.2949521256244774,
+    "by_year": {
+     "2016": {
+      "interval_score": 2.8504646623907153,
+      "coverage": 0.4090909090909091
+     },
+     "2017": {
+      "interval_score": 3.181440524978546,
+      "coverage": 0.3987873134328358
+     },
+     "2018": {
+      "interval_score": 3.3885931451748315,
+      "coverage": 0.4136919315403423
+     },
+     "2019": {
+      "interval_score": 3.6115126611669406,
+      "coverage": 0.41382868937048506
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 1684,
+      "coverage": 0.3669833729216152
+     },
+     "smallest_20pct": {
+      "n": 1650,
+      "coverage": 0.4024242424242424
+     },
+     "fastest_growing_20pct": {
+      "n": 1565,
+      "coverage": 0.35335463258785943
+     },
+     "highest_rnd_20pct": {
+      "n": 1654,
+      "coverage": 0.3935912938331318
+     },
+     "fallback_or_few_peers": {
+      "n": 236,
+      "coverage": 0.3728813559322034
+     }
+    },
+    "n": 8261
+   },
+   "practice_minmax": {
+    "interval_score": 2.6836051241907866,
+    "coverage": 0.8055893366291336,
+    "mean_width": 1.8597227554403166,
+    "median_factor": 2.264981177013945,
+    "by_year": {
+     "2016": {
+      "interval_score": 2.4209159034568524,
+      "coverage": 0.8059981255857545
+     },
+     "2017": {
+      "interval_score": 2.5703734562798353,
+      "coverage": 0.808768656716418
+     },
+     "2018": {
+      "interval_score": 2.8198470923260714,
+      "coverage": 0.8083129584352078
+     },
+     "2019": {
+      "interval_score": 2.923284044700388,
+      "coverage": 0.7992776057791537
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 1684,
+      "coverage": 0.7755344418052257
+     },
+     "smallest_20pct": {
+      "n": 1650,
+      "coverage": 0.7684848484848484
+     },
+     "fastest_growing_20pct": {
+      "n": 1565,
+      "coverage": 0.7488817891373802
+     },
+     "highest_rnd_20pct": {
+      "n": 1654,
+      "coverage": 0.786577992744861
+     },
+     "fallback_or_few_peers": {
+      "n": 236,
+      "coverage": 0.6779661016949152
+     }
+    },
+    "n": 8261
+   },
+   "constant": {
+    "interval_score": 2.734967249365785,
+    "coverage": 0.796327941244042,
+    "mean_width": 1.4834397666449595,
+    "median_factor": 2.10022582528274,
+    "by_year": {
+     "2016": {
+      "interval_score": 2.408696934595795,
+      "coverage": 0.8439550140581068
+     },
+     "2017": {
+      "interval_score": 2.685001555253641,
+      "coverage": 0.8264925373134329
+     },
+     "2018": {
+      "interval_score": 2.808007560624318,
+      "coverage": 0.7775061124694377
+     },
+     "2019": {
+      "interval_score": 3.038162946989386,
+      "coverage": 0.737358101135191
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 1684,
+      "coverage": 0.6846793349168646
+     },
+     "smallest_20pct": {
+      "n": 1650,
+      "coverage": 0.6290909090909091
+     },
+     "fastest_growing_20pct": {
+      "n": 1565,
+      "coverage": 0.7028753993610224
+     },
+     "highest_rnd_20pct": {
+      "n": 1654,
+      "coverage": 0.6626360338573156
+     },
+     "fallback_or_few_peers": {
+      "n": 236,
+      "coverage": 0.826271186440678
+     }
+    },
+    "n": 8261
+   },
+   "peer_iqr_scaled": {
+    "interval_score": 2.7320833654307695,
+    "coverage": 0.8002621776512276,
+    "mean_width": 1.7668973987957126,
+    "median_factor": 2.109336253167944,
+    "by_year": {
+     "2016": {
+      "interval_score": 2.4208818716682705,
+      "coverage": 0.8134957825679475
+     },
+     "2017": {
+      "interval_score": 2.671230746988145,
+      "coverage": 0.7938432835820896
+     },
+     "2018": {
+      "interval_score": 2.867564024408884,
+      "coverage": 0.798044009779951
+     },
+     "2019": {
+      "interval_score": 2.9686568186577795,
+      "coverage": 0.7956656346749226
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 1684,
+      "coverage": 0.7470308788598575
+     },
+     "smallest_20pct": {
+      "n": 1650,
+      "coverage": 0.7733333333333333
+     },
+     "fastest_growing_20pct": {
+      "n": 1565,
+      "coverage": 0.746964856230032
+     },
+     "highest_rnd_20pct": {
+      "n": 1654,
+      "coverage": 0.7738814993954051
+     },
+     "fallback_or_few_peers": {
+      "n": 236,
+      "coverage": 0.7161016949152542
+     }
+    },
+    "n": 8261
+   },
+   "linear_all": {
+    "interval_score": 2.4482246150375717,
+    "coverage": 0.7993940124194567,
+    "mean_width": 1.5707259546864276,
+    "median_factor": 1.937320012861189,
+    "by_year": {
+     "2016": {
+      "interval_score": 2.197739895262535,
+      "coverage": 0.8580131208997188
+     },
+     "2017": {
+      "interval_score": 2.3784389329668567,
+      "coverage": 0.8344216417910447
+     },
+     "2018": {
+      "interval_score": 2.5381611978232383,
+      "coverage": 0.776039119804401
+     },
+     "2019": {
+      "interval_score": 2.6785584340976576,
+      "coverage": 0.7291021671826625
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 1684,
+      "coverage": 0.8052256532066508
+     },
+     "smallest_20pct": {
+      "n": 1650,
+      "coverage": 0.7915151515151515
+     },
+     "fastest_growing_20pct": {
+      "n": 1565,
+      "coverage": 0.7648562300319489
+     },
+     "highest_rnd_20pct": {
+      "n": 1654,
+      "coverage": 0.8077388149939541
+     },
+     "fallback_or_few_peers": {
+      "n": 236,
+      "coverage": 0.7754237288135594
+     }
+    },
+    "n": 8261
+   },
+   "gbm": {
+    "interval_score": 2.2194954713678943,
+    "coverage": 0.7985440791335997,
+    "mean_width": 1.5623513409504062,
+    "median_factor": 1.903612716931502,
+    "by_year": {
+     "2016": {
+      "interval_score": 1.9906340031399783,
+      "coverage": 0.796157450796626
+     },
+     "2017": {
+      "interval_score": 2.124643510985453,
+      "coverage": 0.7826492537313433
+     },
+     "2018": {
+      "interval_score": 2.3161384047226234,
+      "coverage": 0.8449877750611247
+     },
+     "2019": {
+      "interval_score": 2.446565966623522,
+      "coverage": 0.7703818369453045
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 1684,
+      "coverage": 0.7986935866983373
+     },
+     "smallest_20pct": {
+      "n": 1650,
+      "coverage": 0.7751515151515151
+     },
+     "fastest_growing_20pct": {
+      "n": 1565,
+      "coverage": 0.8019169329073482
+     },
+     "highest_rnd_20pct": {
+      "n": 1654,
+      "coverage": 0.8041112454655381
+     },
+     "fallback_or_few_peers": {
+      "n": 236,
+      "coverage": 0.809322033898305
+     }
+    },
+    "n": 8261
+   },
+   "hand_rule": {
+    "interval_score": 2.9794904932859296,
+    "coverage": 0.8012000703622533,
+    "mean_width": 2.1975284920881863,
+    "median_factor": 2.113746341211575,
+    "by_year": {
+     "2016": {
+      "interval_score": 2.651395226366487,
+      "coverage": 0.8097469540768509
+     },
+     "2017": {
+      "interval_score": 2.8632817273741926,
+      "coverage": 0.7999067164179104
+     },
+     "2018": {
+      "interval_score": 3.125854247321952,
+      "coverage": 0.7907090464547677
+     },
+     "2019": {
+      "interval_score": 3.2774307720810882,
+      "coverage": 0.804437564499484
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 1684,
+      "coverage": 0.8271971496437055
+     },
+     "smallest_20pct": {
+      "n": 1650,
+      "coverage": 0.8896969696969697
+     },
+     "fastest_growing_20pct": {
+      "n": 1565,
+      "coverage": 0.7891373801916933
+     },
+     "highest_rnd_20pct": {
+      "n": 1654,
+      "coverage": 0.8567110036275696
+     },
+     "fallback_or_few_peers": {
+      "n": 236,
+      "coverage": 0.6991525423728814
+     }
+    },
+    "n": 8261
+   }
+  },
+  "EV/Sales": {
+   "practice_iqr": {
+    "interval_score": 5.226010769583489,
+    "coverage": 0.41068474286095913,
+    "mean_width": 1.0089493446039302,
+    "median_factor": 1.5851982908206075,
+    "by_year": {
+     "2016": {
+      "interval_score": 4.763112693559906,
+      "coverage": 0.40930053804765565
+     },
+     "2017": {
+      "interval_score": 5.09170532655395,
+      "coverage": 0.4094135225999253
+     },
+     "2018": {
+      "interval_score": 5.345238021515687,
+      "coverage": 0.4093907644547924
+     },
+     "2019": {
+      "interval_score": 5.703987036704413,
+      "coverage": 0.4146341463414634
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 3696,
+      "coverage": 0.38961038961038963
+     },
+     "smallest_20pct": {
+      "n": 2070,
+      "coverage": 0.391304347826087
+     },
+     "fastest_growing_20pct": {
+      "n": 1863,
+      "coverage": 0.37037037037037035
+     },
+     "highest_rnd_20pct": {
+      "n": 2074,
+      "coverage": 0.38958534233365477
+     },
+     "fallback_or_few_peers": {
+      "n": 245,
+      "coverage": 0.37551020408163266
+     }
+    },
+    "n": 10357
+   },
+   "practice_minmax": {
+    "interval_score": 4.107639421395673,
+    "coverage": 0.8122148632325419,
+    "mean_width": 2.8113051717921302,
+    "median_factor": 3.633559096909868,
+    "by_year": {
+     "2016": {
+      "interval_score": 3.7132480629713904,
+      "coverage": 0.8120676402767102
+     },
+     "2017": {
+      "interval_score": 4.037517546879839,
+      "coverage": 0.8113559955173701
+     },
+     "2018": {
+      "interval_score": 4.311288510046381,
+      "coverage": 0.8129608071400853
+     },
+     "2019": {
+      "interval_score": 4.368503565685081,
+      "coverage": 0.8124750099960016
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 3696,
+      "coverage": 0.786525974025974
+     },
+     "smallest_20pct": {
+      "n": 2070,
+      "coverage": 0.7888888888888889
+     },
+     "fastest_growing_20pct": {
+      "n": 1863,
+      "coverage": 0.7745571658615137
+     },
+     "highest_rnd_20pct": {
+      "n": 2074,
+      "coverage": 0.789778206364513
+     },
+     "fallback_or_few_peers": {
+      "n": 245,
+      "coverage": 0.6693877551020408
+     }
+    },
+    "n": 10357
+   },
+   "constant": {
+    "interval_score": 4.2326421809241275,
+    "coverage": 0.8002929887871418,
+    "mean_width": 2.4355017320280865,
+    "median_factor": 3.380688357069832,
+    "by_year": {
+     "2016": {
+      "interval_score": 3.8220166372677156,
+      "coverage": 0.847425057647963
+     },
+     "2017": {
+      "interval_score": 4.125343318836281,
+      "coverage": 0.8094882330967501
+     },
+     "2018": {
+      "interval_score": 4.416840842039987,
+      "coverage": 0.7869615832363213
+     },
+     "2019": {
+      "interval_score": 4.566367925552527,
+      "coverage": 0.757297081167533
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 3696,
+      "coverage": 0.724025974025974
+     },
+     "smallest_20pct": {
+      "n": 2070,
+      "coverage": 0.6830917874396135
+     },
+     "fastest_growing_20pct": {
+      "n": 1863,
+      "coverage": 0.7536231884057971
+     },
+     "highest_rnd_20pct": {
+      "n": 2074,
+      "coverage": 0.7213114754098361
+     },
+     "fallback_or_few_peers": {
+      "n": 245,
+      "coverage": 0.7142857142857143
+     }
+    },
+    "n": 10357
+   },
+   "peer_iqr_scaled": {
+    "interval_score": 4.339973706628258,
+    "coverage": 0.7998071593065735,
+    "mean_width": 2.764232852847937,
+    "median_factor": 3.5568655349052296,
+    "by_year": {
+     "2016": {
+      "interval_score": 3.9612290342725927,
+      "coverage": 0.8013066871637202
+     },
+     "2017": {
+      "interval_score": 4.178393471312386,
+      "coverage": 0.7975345536047814
+     },
+     "2018": {
+      "interval_score": 4.496715671986881,
+      "coverage": 0.8083042297244858
+     },
+     "2019": {
+      "interval_score": 4.723556648941169,
+      "coverage": 0.7920831667333067
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 3696,
+      "coverage": 0.7627164502164502
+     },
+     "smallest_20pct": {
+      "n": 2070,
+      "coverage": 0.7463768115942029
+     },
+     "fastest_growing_20pct": {
+      "n": 1863,
+      "coverage": 0.7713365539452496
+     },
+     "highest_rnd_20pct": {
+      "n": 2074,
+      "coverage": 0.7888138862102217
+     },
+     "fallback_or_few_peers": {
+      "n": 245,
+      "coverage": 0.7428571428571429
+     }
+    },
+    "n": 10357
+   },
+   "linear_all": {
+    "interval_score": 3.969886506362611,
+    "coverage": 0.80043281000864,
+    "mean_width": 2.545836266410392,
+    "median_factor": 3.2328014797449116,
+    "by_year": {
+     "2016": {
+      "interval_score": 3.6510772200566235,
+      "coverage": 0.8428132205995388
+     },
+     "2017": {
+      "interval_score": 3.8198841703514073,
+      "coverage": 0.8259245423982069
+     },
+     "2018": {
+      "interval_score": 4.085926154104897,
+      "coverage": 0.7760962359332557
+     },
+     "2019": {
+      "interval_score": 4.322658480937518,
+      "coverage": 0.7568972411035586
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 3696,
+      "coverage": 0.8035714285714286
+     },
+     "smallest_20pct": {
+      "n": 2070,
+      "coverage": 0.7956521739130434
+     },
+     "fastest_growing_20pct": {
+      "n": 1863,
+      "coverage": 0.7772410091250671
+     },
+     "highest_rnd_20pct": {
+      "n": 2074,
+      "coverage": 0.7994214079074252
+     },
+     "fallback_or_few_peers": {
+      "n": 245,
+      "coverage": 0.7755102040816326
+     }
+    },
+    "n": 10357
+   },
+   "gbm": {
+    "interval_score": 3.483186038154428,
+    "coverage": 0.8014503379310363,
+    "mean_width": 2.5275842286022927,
+    "median_factor": 2.86120277024886,
+    "by_year": {
+     "2016": {
+      "interval_score": 3.1584708318712846,
+      "coverage": 0.7928516525749424
+     },
+     "2017": {
+      "interval_score": 3.3620053183984955,
+      "coverage": 0.7975345536047814
+     },
+     "2018": {
+      "interval_score": 3.617089852505927,
+      "coverage": 0.826930539386884
+     },
+     "2019": {
+      "interval_score": 3.7951781498420063,
+      "coverage": 0.788484606157537
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 3696,
+      "coverage": 0.7927489177489178
+     },
+     "smallest_20pct": {
+      "n": 2070,
+      "coverage": 0.7772946859903381
+     },
+     "fastest_growing_20pct": {
+      "n": 1863,
+      "coverage": 0.7965646806226516
+     },
+     "highest_rnd_20pct": {
+      "n": 2074,
+      "coverage": 0.7902603664416586
+     },
+     "fallback_or_few_peers": {
+      "n": 245,
+      "coverage": 0.7877551020408163
+     }
+    },
+    "n": 10357
+   },
+   "hand_rule": {
+    "interval_score": 4.829493632898419,
+    "coverage": 0.800110515258498,
+    "mean_width": 3.5142837102720703,
+    "median_factor": 3.600947105782957,
+    "by_year": {
+     "2016": {
+      "interval_score": 4.3587144335382,
+      "coverage": 0.796694850115296
+     },
+     "2017": {
+      "interval_score": 4.657065695805856,
+      "coverage": 0.7937990287635412
+     },
+     "2018": {
+      "interval_score": 5.011200501203171,
+      "coverage": 0.8094683740783857
+     },
+     "2019": {
+      "interval_score": 5.290993901046453,
+      "coverage": 0.8004798080767693
+     }
+    },
+    "segments": {
+     "loss_making": {
+      "n": 3696,
+      "coverage": 0.8768939393939394
+     },
+     "smallest_20pct": {
+      "n": 2070,
+      "coverage": 0.8942028985507247
+     },
+     "fastest_growing_20pct": {
+      "n": 1863,
+      "coverage": 0.8276972624798712
+     },
+     "highest_rnd_20pct": {
+      "n": 2074,
+      "coverage": 0.922854387656702
+     },
+     "fallback_or_few_peers": {
+      "n": 245,
+      "coverage": 0.6938775510204082
+     }
+    },
+    "n": 10357
+   }
+  }
+ }
+}

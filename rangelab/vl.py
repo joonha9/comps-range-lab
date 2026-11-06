@@ -49,5 +49,10 @@ def panel():
     return load_panel(VL_ROOT)
 
 
+def panel_with_holdout():
+    """FY2015-2025. Only the one-time holdout evaluation under docs/protocol.md may call this."""
+    return load_panel(VL_ROOT, include_holdout=True)
+
+
 __all__ = ["FEATURES", "MULTIPLES", "PROTOCOL", "VL_COMMIT", "VL_ROOT", "apply_recipe",
-           "baselines_for", "panel", "validate", "vl_commit"]
+           "baselines_for", "panel", "panel_with_holdout", "validate", "vl_commit"]

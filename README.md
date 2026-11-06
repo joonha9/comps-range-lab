@@ -6,7 +6,8 @@ project tests whether those ranges contain market value as often as they appear 
 agents, following the SignalLab design (Liu, Liu, Liu & Mei 2026), can write short, interpretable
 rules that say when a comps valuation should be trusted and how wide its range should be.
 
-Status: early. Only Diagnostic 0 (below) has been run, on exploration years only.
+Status: protocol frozen ([`docs/protocol.md`](docs/protocol.md)); agent search on exploration years next.
+Validation and holdout years have not been scored.
 
 ## Diagnostic 0 (FY2016–2019, exploration years)
 
@@ -27,11 +28,14 @@ imported; the licensed FactSet data stays in that checkout and is never committe
 result records the ValuationLab commit it ran against.
 
 ```bash
-python3 scripts/diagnostic_ranges.py
+python3 scripts/diagnostic_ranges.py     # Diagnostic 0
+python3 scripts/run_baselines.py         # benchmarks, exploration years (leave-one-year-out)
+python3 scripts/agent_step.py --new a1   # create an agent run; then --runs a1 to advance it
+python3 -m pytest -q tests
 ```
 
 ## Protocol
 
-Same year split as ValuationLab: explore FY2016–2019, validate FY2020–2023, holdout FY2024–2025.
+See [`docs/protocol.md`](docs/protocol.md). Same year split as ValuationLab: explore FY2016–2019, validate FY2020–2023, holdout FY2024–2025.
 FY2024–2025 were opened once for ValuationLab's peer recipes (2026-11-05). This project will
 freeze its own protocol before touching validation or holdout years, and will disclose that history.
