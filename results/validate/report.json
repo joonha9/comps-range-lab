@@ -1,0 +1,1373 @@
+{
+ "period": "validate",
+ "fit_years": [
+  2016,
+  2017,
+  2018,
+  2019
+ ],
+ "eval_years": [
+  2020,
+  2021,
+  2022,
+  2023
+ ],
+ "runs": [
+  "a1",
+  "a2",
+  "a3",
+  "a4",
+  "a5"
+ ],
+ "valuationlab_commit": "7830673",
+ "multiples": {
+  "EV/EBITDA": {
+   "benchmarks": {
+    "practice_iqr": {
+     "interval_score": 4.0041871183383,
+     "coverage": 0.4106547176669461,
+     "mean_width": 0.7615169289115115,
+     "median_factor": 1.3878718924804267,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.255423387105983,
+       "coverage": 0.4120982986767486
+      },
+      "2021": {
+       "interval_score": 4.056799738734848,
+       "coverage": 0.4048873981792046
+      },
+      "2022": {
+       "interval_score": 3.8643857757629014,
+       "coverage": 0.41039603960396037
+      },
+      "2023": {
+       "interval_score": 3.8401395717494675,
+       "coverage": 0.41523713420787084
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.376425855513308
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.3932926829268293
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.3798297314996726
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.409367396593674
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.36141304347826086
+      }
+     },
+     "n": 8205
+    },
+    "practice_minmax": {
+     "interval_score": 3.265405142313273,
+     "coverage": 0.8066410792007448,
+     "mean_width": 2.235391766751737,
+     "median_factor": 2.6973711008440913,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.4773420032002167,
+       "coverage": 0.8104914933837429
+      },
+      "2021": {
+       "interval_score": 3.3180751385537564,
+       "coverage": 0.8059415428845232
+      },
+      "2022": {
+       "interval_score": 3.1190147227696374,
+       "coverage": 0.8084158415841585
+      },
+      "2023": {
+       "interval_score": 3.147188704729482,
+       "coverage": 0.801715438950555
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.7865290602933188
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.7737804878048781
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.7609692206941716
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.7968369829683698
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.6902173913043478
+      }
+     },
+     "n": 8205
+    },
+    "constant": {
+     "interval_score": 3.3905252284629483,
+     "coverage": 0.7222211349766886,
+     "mean_width": 1.4845956215381115,
+     "median_factor": 2.1007571151322733,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.7143044255574744,
+       "coverage": 0.7022684310018904
+      },
+      "2021": {
+       "interval_score": 3.386907728343109,
+       "coverage": 0.7283181600383325
+      },
+      "2022": {
+       "interval_score": 3.2407367874558415,
+       "coverage": 0.7277227722772277
+      },
+      "2023": {
+       "interval_score": 3.22015197249537,
+       "coverage": 0.7305751765893037
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.5996740901683868
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.55
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.6319580877537656
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.6131386861313869
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.6739130434782609
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 0.7422978107690558,
+     "rolling": {
+      "interval_score": 3.3622661030760677,
+      "coverage": 0.7484053371801869
+     }
+    },
+    "peer_iqr_scaled": {
+     "interval_score": 3.3555322434743666,
+     "coverage": 0.8054513406934134,
+     "mean_width": 2.159965246654446,
+     "median_factor": 2.533711784804405,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.5722057087915067,
+       "coverage": 0.8081285444234405
+      },
+      "2021": {
+       "interval_score": 3.425479892220827,
+       "coverage": 0.8049832295160517
+      },
+      "2022": {
+       "interval_score": 3.2414845776558803,
+       "coverage": 0.8044554455445545
+      },
+      "2023": {
+       "interval_score": 3.1829587952292524,
+       "coverage": 0.8042381432896064
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.7680608365019012
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.7591463414634146
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.7452521283562541
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.7737226277372263
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.7255434782608695
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 1.41819096873635,
+     "rolling": {
+      "interval_score": 3.351407831072095,
+      "coverage": 0.8044596967310098
+     }
+    },
+    "linear_all": {
+     "interval_score": 3.0476143024905955,
+     "coverage": 0.7153600976594242,
+     "mean_width": 1.5885313934802525,
+     "median_factor": 1.9494726621005962,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.225715589082303,
+       "coverage": 0.724952741020794
+      },
+      "2021": {
+       "interval_score": 3.0888011638337187,
+       "coverage": 0.7201724964063249
+      },
+      "2022": {
+       "interval_score": 2.948967731461288,
+       "coverage": 0.7069306930693069
+      },
+      "2023": {
+       "interval_score": 2.9269727255850713,
+       "coverage": 0.7093844601412714
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.7468766974470397
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.7060975609756097
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.6725605762933857
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.732360097323601
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.6956521739130435
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 2.5050020687944468,
+     "rolling": {
+      "interval_score": 3.0162268724718757,
+      "coverage": 0.7368470825960882
+     }
+    },
+    "gbm": {
+     "interval_score": 2.7186153868203125,
+     "coverage": 0.7642570738064067,
+     "mean_width": 1.835158178693946,
+     "median_factor": 2.055386237212205,
+     "by_year": {
+      "2020": {
+       "interval_score": 2.8651944870492727,
+       "coverage": 0.7589792060491494
+      },
+      "2021": {
+       "interval_score": 2.716518856590525,
+       "coverage": 0.781983708672736
+      },
+      "2022": {
+       "interval_score": 2.6787811665332146,
+       "coverage": 0.7673267326732673
+      },
+      "2023": {
+       "interval_score": 2.6139670371082366,
+       "coverage": 0.7487386478304743
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.7729494839761
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.7432926829268293
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.7648984937786509
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.7773722627737226
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.7364130434782609
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 1.813921355537585,
+     "rolling": {
+      "interval_score": 2.685572972021313,
+      "coverage": 0.7787573694334091
+     }
+    },
+    "hand_rule": {
+     "interval_score": 3.64000169488905,
+     "coverage": 0.8117153910941285,
+     "mean_width": 2.6756391884187276,
+     "median_factor": 2.580047901109767,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.8980239182416496,
+       "coverage": 0.8223062381852552
+      },
+      "2021": {
+       "interval_score": 3.678097839292201,
+       "coverage": 0.804504072831816
+      },
+      "2022": {
+       "interval_score": 3.5090675743259805,
+       "coverage": 0.8173267326732673
+      },
+      "2023": {
+       "interval_score": 3.4748174476963705,
+       "coverage": 0.8027245206861756
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.857686040195546
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.8817073170731707
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.7806155861165684
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.8570559610705596
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.7282608695652174
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 1.4167938862835892,
+     "rolling": {
+      "interval_score": 3.62128458565312,
+      "coverage": 0.8080415347944967
+     }
+    }
+   },
+   "finalists": {
+    "a1": {
+     "interval_score": 3.11393522040746,
+     "coverage": 0.7199844583331872,
+     "mean_width": 1.5574213608168388,
+     "median_factor": 2.000346353641318,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.3415330330174093,
+       "coverage": 0.7112476370510397
+      },
+      "2021": {
+       "interval_score": 3.14332089229819,
+       "coverage": 0.7168183996166747
+      },
+      "2022": {
+       "interval_score": 3.024959714024516,
+       "coverage": 0.7207920792079208
+      },
+      "2023": {
+       "interval_score": 2.945927242289724,
+       "coverage": 0.731079717457114
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.7115697990222705
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.7054878048780487
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.6745252128356254
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.7086374695863747
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.6086956521739131
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 0.6463335037834776,
+     "rolling": {
+      "interval_score": 3.089295195508699,
+      "coverage": 0.7435475912296401
+     },
+     "id": "g04-02",
+     "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6, net_debt_to_ebitda -0.5, rnd_intensity +0.3 | if loss_making x1.25 | if sales_growth_1y >= p85 x1.25 | if sales_growth_1y <= p10 x1.25",
+     "explore_is": 2.5052699525310356
+    },
+    "a2": {
+     "interval_score": 3.1648806249952175,
+     "coverage": 0.7162300073648438,
+     "mean_width": 1.5474545841873584,
+     "median_factor": 1.9670921568026083,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.426643547149678,
+       "coverage": 0.7084120982986768
+      },
+      "2021": {
+       "interval_score": 3.181745735941585,
+       "coverage": 0.7201724964063249
+      },
+      "2022": {
+       "interval_score": 3.0599398159246083,
+       "coverage": 0.7153465346534653
+      },
+      "2023": {
+       "interval_score": 2.9911934009649985,
+       "coverage": 0.7209889001009082
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.6539923954372624
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.7018292682926829
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.6489849377865095
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.6922141119221411
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.6222826086956522
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 0.6596967420551718,
+     "rolling": {
+      "interval_score": 3.1403850504898787,
+      "coverage": 0.7442547102038994
+     },
+     "id": "g03-01",
+     "compact": "EV/EBITDA | base constant | terms net_debt_to_ebitda -0.8, log_sales -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3",
+     "explore_is": 2.5350943413994065
+    },
+    "a3": {
+     "interval_score": 3.1172041047653196,
+     "coverage": 0.7183161156003017,
+     "mean_width": 1.5953978326474467,
+     "median_factor": 1.96986462183627,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.3637400183941,
+       "coverage": 0.7112476370510397
+      },
+      "2021": {
+       "interval_score": 3.1337528529610728,
+       "coverage": 0.7196933397220892
+      },
+      "2022": {
+       "interval_score": 3.021978348689471,
+       "coverage": 0.7188118811881188
+      },
+      "2023": {
+       "interval_score": 2.9493451990166353,
+       "coverage": 0.7235116044399597
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.714828897338403
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.7262195121951219
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.6313032089063523
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.6806569343065694
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.6277173913043478
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 0.6578627938108134,
+     "rolling": {
+      "interval_score": 3.0968527098455416,
+      "coverage": 0.742554346902773
+     },
+     "id": "g05-01",
+     "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.7, net_debt_to_ebitda -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3",
+     "explore_is": 2.521564118597582
+    },
+    "a4": {
+     "interval_score": 3.137745144289971,
+     "coverage": 0.7155601368626864,
+     "mean_width": 1.5263102568456122,
+     "median_factor": 1.996888577649307,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.404461028858411,
+       "coverage": 0.7036862003780718
+      },
+      "2021": {
+       "interval_score": 3.152766575222115,
+       "coverage": 0.7216099664590321
+      },
+      "2022": {
+       "interval_score": 3.0276732348292854,
+       "coverage": 0.7099009900990099
+      },
+      "2023": {
+       "interval_score": 2.9660797382500705,
+       "coverage": 0.7270433905146317
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.701792504073873
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.7128048780487805
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.641781270464964
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.6739659367396593
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.625
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 0.6492745556086585,
+     "rolling": {
+      "interval_score": 3.1062109871097427,
+      "coverage": 0.74051561365097
+     },
+     "id": "g05-03",
+     "compact": "EV/EBITDA | base constant | terms log_sales -0.8, net_debt_to_ebitda -0.4 | if net_debt_to_ebitda <= p10 x1.3 | if net_debt_to_ebitda >= p95 x1.3 | if loss_making x1.3",
+     "explore_is": 2.5233210170450655
+    },
+    "a5": {
+     "interval_score": 3.1936101021857275,
+     "coverage": 0.7183356508425073,
+     "mean_width": 1.5337174184397304,
+     "median_factor": 2.027067123366058,
+     "by_year": {
+      "2020": {
+       "interval_score": 3.444924756174541,
+       "coverage": 0.7074669187145558
+      },
+      "2021": {
+       "interval_score": 3.1986411003075914,
+       "coverage": 0.7216099664590321
+      },
+      "2022": {
+       "interval_score": 3.086387182500069,
+       "coverage": 0.7227722772277227
+      },
+      "2023": {
+       "interval_score": 3.044487369760709,
+       "coverage": 0.7214934409687185
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1841,
+       "coverage": 0.7474198804997284
+      },
+      "smallest_20pct": {
+       "n": 1640,
+       "coverage": 0.6701219512195122
+      },
+      "fastest_growing_20pct": {
+       "n": 1527,
+       "coverage": 0.6234446627373936
+      },
+      "highest_rnd_20pct": {
+       "n": 1644,
+       "coverage": 0.6167883211678832
+      },
+      "fallback_or_few_peers": {
+       "n": 368,
+       "coverage": 0.6711956521739131
+      }
+     },
+     "n": 8205,
+     "centre": 0.020205325812340642,
+     "q": 0.6817950251282577,
+     "rolling": {
+      "interval_score": 3.1632883730963153,
+      "coverage": 0.7415005120622089
+     },
+     "id": "g05-01",
+     "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6 | if loss_making x1.3",
+     "explore_is": 2.572474882163016
+    }
+   },
+   "tests": {
+    "agents_mean_interval_score": 3.145475039328739,
+    "T1_vs_constant": {
+     "constant": 3.3905252284629483,
+     "runs_below": 5,
+     "pass": true
+    },
+    "T2_vs_random": {
+     "random_median_of_means": 3.306827442435747,
+     "p_one_sided": 0.0,
+     "p_holm": 0.0,
+     "pass": true
+    },
+    "T3_vs_linear_all": {
+     "linear_all": 3.0476143024905955,
+     "pass": false
+    },
+    "T4_share_of_gbm_gain": {
+     "gbm": 2.7186153868203125,
+     "G": 0.36470695016927934,
+     "close_to_black_box": false
+    },
+    "secondary_segment_mad80": {
+     "agents_mean": 0.12826958952772077,
+     "constant": 0.18626321849364,
+     "linear_all": 0.08929057880946414,
+     "gbm": 0.04101480661328731
+    }
+   }
+  },
+  "EV/Sales": {
+   "benchmarks": {
+    "practice_iqr": {
+     "interval_score": 5.457921107304647,
+     "coverage": 0.41042113347604836,
+     "mean_width": 1.0901128889303235,
+     "median_factor": 1.6545074302911058,
+     "by_year": {
+      "2020": {
+       "interval_score": 5.807908205312143,
+       "coverage": 0.4187540141297367
+      },
+      "2021": {
+       "interval_score": 5.345594739396888,
+       "coverage": 0.40391334730957373
+      },
+      "2022": {
+       "interval_score": 5.454203786046042,
+       "coverage": 0.4087213599408721
+      },
+      "2023": {
+       "interval_score": 5.223977698463514,
+       "coverage": 0.41029581252401076
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.3904564315352697
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.3924611973392461
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.37741607324516785
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.38645418326693226
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.36893203883495146
+      }
+     },
+     "n": 11285
+    },
+    "practice_minmax": {
+     "interval_score": 4.297566771073238,
+     "coverage": 0.8138514236074763,
+     "mean_width": 3.0265316302597673,
+     "median_factor": 4.023667258647105,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.558386868005075,
+       "coverage": 0.8163134232498395
+      },
+      "2021": {
+       "interval_score": 4.270259824568076,
+       "coverage": 0.8099231306778477
+      },
+      "2022": {
+       "interval_score": 4.347538374991653,
+       "coverage": 0.8181818181818182
+      },
+      "2023": {
+       "interval_score": 4.014082016728146,
+       "coverage": 0.8109873223203995
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.7979253112033196
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.8004434589800443
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.7741607324516785
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.7959274015050908
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.6893203883495146
+      }
+     },
+     "n": 11285
+    },
+    "constant": {
+     "interval_score": 4.356541790927048,
+     "coverage": 0.7758504565398872,
+     "mean_width": 2.437221609520462,
+     "median_factor": 3.3824855354374677,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.644874680611849,
+       "coverage": 0.7511239563262685
+      },
+      "2021": {
+       "interval_score": 4.296385738916563,
+       "coverage": 0.7886093640810622
+      },
+      "2022": {
+       "interval_score": 4.375062462567795,
+       "coverage": 0.7841832963784183
+      },
+      "2023": {
+       "interval_score": 4.109844281611988,
+       "coverage": 0.7794852093737995
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.7114107883817428
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.6492239467849223
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.7314343845371313
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.6710934041611333
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.7637540453074434
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 1.218610804760231,
+     "rolling": {
+      "interval_score": 4.3533799138193086,
+      "coverage": 0.7836610789701058
+     }
+    },
+    "peer_iqr_scaled": {
+     "interval_score": 4.526168728519483,
+     "coverage": 0.8050392845129739,
+     "mean_width": 2.983972080999259,
+     "median_factor": 3.967916871094378,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.818185921678227,
+       "coverage": 0.8159922928709056
+      },
+      "2021": {
+       "interval_score": 4.434035469687211,
+       "coverage": 0.8071278825995807
+      },
+      "2022": {
+       "interval_score": 4.5544922486030375,
+       "coverage": 0.795269770879527
+      },
+      "2023": {
+       "interval_score": 4.297961274109458,
+       "coverage": 0.8017671917018825
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.7873443983402489
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.7716186252771619
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.7700915564598169
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.796812749003984
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.7249190938511327
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 1.3686515378600512,
+     "rolling": {
+      "interval_score": 4.519542473861878,
+      "coverage": 0.8015465081764763
+     }
+    },
+    "linear_all": {
+     "interval_score": 4.097427581881732,
+     "coverage": 0.7836757045377549,
+     "mean_width": 2.6116542125666706,
+     "median_factor": 3.3256780275434887,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.36536742628678,
+       "coverage": 0.7797045600513809
+      },
+      "2021": {
+       "interval_score": 4.033924448480329,
+       "coverage": 0.7875611460517121
+      },
+      "2022": {
+       "interval_score": 4.087352028520892,
+       "coverage": 0.7860310421286031
+      },
+      "2023": {
+       "interval_score": 3.903066424238925,
+       "coverage": 0.7814060699193238
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.8026970954356847
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.7875831485587583
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.7756866734486266
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.7813191677733511
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.7313915857605178
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 2.5217922422920123,
+     "rolling": {
+      "interval_score": 4.090150501606699,
+      "coverage": 0.7868281776423516
+     }
+    },
+    "gbm": {
+     "interval_score": 3.817754124746405,
+     "coverage": 0.7738319113200134,
+     "mean_width": 2.600639633355625,
+     "median_factor": 3.070298178165805,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.070333407089442,
+       "coverage": 0.7681438664097624
+      },
+      "2021": {
+       "interval_score": 3.7318324328128063,
+       "coverage": 0.7805730258560447
+      },
+      "2022": {
+       "interval_score": 3.808747129936507,
+       "coverage": 0.7686622320768662
+      },
+      "2023": {
+       "interval_score": 3.660103529146867,
+       "coverage": 0.77794852093738
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.7709543568464731
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.7427937915742794
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.7812817904374364
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.7565294378043382
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.6893203883495146
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 1.739124552749554,
+     "rolling": {
+      "interval_score": 3.7921138692892526,
+      "coverage": 0.7909930178207151
+     }
+    },
+    "hand_rule": {
+     "interval_score": 5.183948078639283,
+     "coverage": 0.8058849959888252,
+     "mean_width": 3.915879181821392,
+     "median_factor": 4.1515526910593135,
+     "by_year": {
+      "2020": {
+       "interval_score": 5.577178515356285,
+       "coverage": 0.8243416827231856
+      },
+      "2021": {
+       "interval_score": 5.120042835393388,
+       "coverage": 0.7983927323549965
+      },
+      "2022": {
+       "interval_score": 5.1473400514582055,
+       "coverage": 0.7971175166297118
+      },
+      "2023": {
+       "interval_score": 4.891230912349252,
+       "coverage": 0.8036880522474068
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.8852697095435684
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.9068736141906873
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.8265513733468972
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.932713590084108
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.686084142394822
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 1.3446693997415593,
+     "rolling": {
+      "interval_score": 5.165510660823745,
+      "coverage": 0.8027553529720046
+     }
+    }
+   },
+   "finalists": {
+    "a1": {
+     "interval_score": 4.179595460345955,
+     "coverage": 0.7807018682044087,
+     "mean_width": 2.54456907852834,
+     "median_factor": 3.196588166715185,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.446083985649072,
+       "coverage": 0.77296082209377
+      },
+      "2021": {
+       "interval_score": 4.126681994086259,
+       "coverage": 0.7861635220125787
+      },
+      "2022": {
+       "interval_score": 4.208482532153594,
+       "coverage": 0.7838137472283814
+      },
+      "2023": {
+       "interval_score": 3.937133329494895,
+       "coverage": 0.7798693814829043
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.7823651452282158
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.7778270509977827
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.7985757884028484
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.7755644090305445
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.8478964401294499
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 1.0642581527941963,
+     "rolling": {
+      "interval_score": 4.177040948599304,
+      "coverage": 0.7863286549315011
+     },
+     "id": "g03-04",
+     "compact": "EV/Sales | base constant | terms n_peers -0.6, peer_range +0.3, log_assets -0.3 | if sales_growth_1y >= p85 x1.3 | if sales_growth_1y <= p10 x1.3 | if no_history x1.2 | if negative_ebitda x1.25",
+     "explore_is": 4.051972183498405
+    },
+    "a2": {
+     "interval_score": 4.2064611253917015,
+     "coverage": 0.7819652203192886,
+     "mean_width": 2.569673239412946,
+     "median_factor": 3.19337218321642,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.490383390630334,
+       "coverage": 0.7594733461785484
+      },
+      "2021": {
+       "interval_score": 4.174395737029079,
+       "coverage": 0.7914046121593291
+      },
+      "2022": {
+       "interval_score": 4.225470118898808,
+       "coverage": 0.7875092387287509
+      },
+      "2023": {
+       "interval_score": 3.935595255008587,
+       "coverage": 0.7894736842105263
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.7975103734439835
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.77960088691796
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.7812817904374364
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.8233731739707836
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.6666666666666666
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 1.1320732581348663,
+     "rolling": {
+      "interval_score": 4.20719685066051,
+      "coverage": 0.7896560008422105
+     },
+     "id": "g02-04",
+     "compact": "EV/Sales | base constant | terms debt_to_assets -0.6, ebitda_margin -0.5 | if negative_ebitda x1.3",
+     "explore_is": 4.090861927524589
+    },
+    "a3": {
+     "interval_score": 4.17106898059113,
+     "coverage": 0.7742451707446527,
+     "mean_width": 2.62468923944754,
+     "median_factor": 3.1615283317159752,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.476228868918164,
+       "coverage": 0.7469492614001284
+      },
+      "2021": {
+       "interval_score": 4.093402344891548,
+       "coverage": 0.7816212438853948
+      },
+      "2022": {
+       "interval_score": 4.170139059873169,
+       "coverage": 0.7808573540280858
+      },
+      "2023": {
+       "interval_score": 3.9445056486816377,
+       "coverage": 0.7875528236650019
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.7908713692946058
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.835920177383592
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.7583926754832147
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.8118636564851704
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.8446601941747572
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 1.0859323294873358,
+     "rolling": {
+      "interval_score": 4.173055497216701,
+      "coverage": 0.7857817893536226
+     },
+     "id": "g05-06",
+     "compact": "EV/Sales | base constant | terms peer_range +0.5, log_sales -0.6 | if gross_margin <= p15 x1.4 | if ebitda_margin <= p15 x1.4 | if n_peers <= p10 x1.4",
+     "explore_is": 4.046330931572232
+    },
+    "a4": {
+     "interval_score": 4.257610766887649,
+     "coverage": 0.7902635817060882,
+     "mean_width": 2.7998395535345373,
+     "median_factor": 3.205004290562617,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.577863821827233,
+       "coverage": 0.783558124598587
+      },
+      "2021": {
+       "interval_score": 4.2229444179043085,
+       "coverage": 0.7910552061495457
+      },
+      "2022": {
+       "interval_score": 4.213487718651535,
+       "coverage": 0.7912047302291205
+      },
+      "2023": {
+       "interval_score": 4.0161471091675205,
+       "coverage": 0.7952362658470995
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.833195020746888
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.8678492239467849
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.780264496439471
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.8556883576803895
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.8317152103559871
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 1.1117256119244157,
+     "rolling": {
+      "interval_score": 4.260188970420272,
+      "coverage": 0.7932848344310351
+     },
+     "id": "g02-06",
+     "compact": "EV/Sales | base constant | terms peer_iqr +0.4, log_sales -0.8 | if negative_ebitda x1.4 | if n_peers <= p10 x1.3 | if no_history x1.3",
+     "explore_is": 4.100199985174
+    },
+    "a5": {
+     "interval_score": 4.222365092352568,
+     "coverage": 0.7714982772457446,
+     "mean_width": 2.465355872426133,
+     "median_factor": 3.3322953917100127,
+     "by_year": {
+      "2020": {
+       "interval_score": 4.493739666943682,
+       "coverage": 0.7498394348105331
+      },
+      "2021": {
+       "interval_score": 4.166347249870194,
+       "coverage": 0.7788259958071279
+      },
+      "2022": {
+       "interval_score": 4.259318280061902,
+       "coverage": 0.779379157427938
+      },
+      "2023": {
+       "interval_score": 3.9700551725344955,
+       "coverage": 0.77794852093738
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 4820,
+       "coverage": 0.7441908713692946
+      },
+      "smallest_20pct": {
+       "n": 2255,
+       "coverage": 0.742350332594235
+      },
+      "fastest_growing_20pct": {
+       "n": 1966,
+       "coverage": 0.7446592065106816
+      },
+      "highest_rnd_20pct": {
+       "n": 2259,
+       "coverage": 0.7339530765825587
+      },
+      "fallback_or_few_peers": {
+       "n": 309,
+       "coverage": 0.8576051779935275
+      }
+     },
+     "n": 11285,
+     "centre": 0.05193532334613241,
+     "q": 1.2032388760815211,
+     "rolling": {
+      "interval_score": 4.217337816181133,
+      "coverage": 0.7807101544537737
+     },
+     "id": "g05-04",
+     "compact": "EV/Sales | base constant | terms log_sales -0.5, n_peers -0.7, peer_range +0.4",
+     "explore_is": 4.108192033078075
+    }
+   },
+   "tests": {
+    "agents_mean_interval_score": 4.2074202851138,
+    "T1_vs_constant": {
+     "constant": 4.356541790927048,
+     "runs_below": 5,
+     "pass": true
+    },
+    "T2_vs_random": {
+     "random_median_of_means": 4.421830386267471,
+     "p_one_sided": 0.0,
+     "p_holm": 0.0,
+     "pass": true
+    },
+    "T3_vs_linear_all": {
+     "linear_all": 4.097427581881732,
+     "pass": false
+    },
+    "T4_share_of_gbm_gain": {
+     "gbm": 3.817754124746405,
+     "G": 0.276772307856155,
+     "close_to_black_box": false
+    },
+    "secondary_segment_mad80": {
+     "agents_mean": 0.03822769973871325,
+     "constant": 0.09461668616552543,
+     "linear_all": 0.0253433039788862,
+     "gbm": 0.05182404699759171
+    }
+   }
+  }
+ }
+}
