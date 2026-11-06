@@ -1,0 +1,353 @@
+{
+ "years": [
+  2016,
+  2017,
+  2018,
+  2019
+ ],
+ "valuationlab_commit": "7830673",
+ "results": {
+  "EV/EBITDA \u00b7 industry_sic3": {
+   "all": {
+    "n": 8262,
+    "iqr_coverage": 0.43173565722585333,
+    "minmax_coverage": 0.8518518518518519,
+    "median_iqr_width_pct": 0.8380322226857025,
+    "median_abs_point_error": 0.33321519109391307,
+    "factor_for_50pct": 1.3954475540481357,
+    "factor_for_80pct": 2.0986644408809605,
+    "pctile_quartile_shares": [
+     0.2551440329218107,
+     0.22464294359719197,
+     0.24074074074074073,
+     0.2794722827402566
+    ]
+   },
+   "by_year": {
+    "2016": {
+     "n": 2134,
+     "iqr_coverage": 0.43580131208997186
+    },
+    "2017": {
+     "n": 2145,
+     "iqr_coverage": 0.4331002331002331
+    },
+    "2018": {
+     "n": 2045,
+     "iqr_coverage": 0.42640586797066016
+    },
+    "2019": {
+     "n": 1938,
+     "iqr_coverage": 0.43137254901960786
+    }
+   },
+   "segments": {
+    "loss_making": {
+     "n": 1684,
+     "iqr_coverage": 0.3515439429928741,
+     "median_abs_point_error": 0.47817236615077535
+    },
+    "small_size": {
+     "n": 609,
+     "iqr_coverage": 0.3218390804597701,
+     "median_abs_point_error": 0.6083236744974735
+    },
+    "high_growth": {
+     "n": 1208,
+     "iqr_coverage": 0.3617549668874172,
+     "median_abs_point_error": 0.43071733845448523
+    },
+    "high_rnd": {
+     "n": 633,
+     "iqr_coverage": 0.40916271721958924,
+     "median_abs_point_error": 0.607347144976311
+    }
+   }
+  },
+  "EV/EBITDA \u00b7 size_margin_k10": {
+   "all": {
+    "n": 8261,
+    "iqr_coverage": 0.4086672315700278,
+    "minmax_coverage": 0.8057135939958843,
+    "median_iqr_width_pct": 0.676901007659352,
+    "median_abs_point_error": 0.3308275233059073,
+    "factor_for_50pct": 1.3921196634031445,
+    "factor_for_80pct": 2.0992349056332857,
+    "pctile_quartile_shares": [
+     0.2569906790945406,
+     0.17564459508534075,
+     0.2740588306500424,
+     0.29330589517007627
+    ]
+   },
+   "by_year": {
+    "2016": {
+     "n": 2134,
+     "iqr_coverage": 0.4090909090909091
+    },
+    "2017": {
+     "n": 2144,
+     "iqr_coverage": 0.3987873134328358
+    },
+    "2018": {
+     "n": 2045,
+     "iqr_coverage": 0.4136919315403423
+    },
+    "2019": {
+     "n": 1938,
+     "iqr_coverage": 0.41382868937048506
+    }
+   },
+   "segments": {
+    "loss_making": {
+     "n": 1684,
+     "iqr_coverage": 0.3669833729216152,
+     "median_abs_point_error": 0.4456901773730415
+    },
+    "small_size": {
+     "n": 609,
+     "iqr_coverage": 0.40558292282430214,
+     "median_abs_point_error": 0.5617178920254068
+    },
+    "high_growth": {
+     "n": 1208,
+     "iqr_coverage": 0.3468543046357616,
+     "median_abs_point_error": 0.44062999850946427
+    },
+    "high_rnd": {
+     "n": 633,
+     "iqr_coverage": 0.3222748815165877,
+     "median_abs_point_error": 0.5870086842768959
+    }
+   }
+  },
+  "EV/EBITDA \u00b7 growth_roic_k8": {
+   "all": {
+    "n": 8108,
+    "iqr_coverage": 0.36827824370991613,
+    "minmax_coverage": 0.7247163295510607,
+    "median_iqr_width_pct": 0.5792048769827448,
+    "median_abs_point_error": 0.32337793256042896,
+    "factor_for_50pct": 1.3817874747139087,
+    "factor_for_80pct": 2.056882917228526,
+    "pctile_quartile_shares": [
+     0.2220029600394672,
+     0.20522940305870746,
+     0.2162062160828811,
+     0.35656142081894426
+    ]
+   },
+   "by_year": {
+    "2016": {
+     "n": 2084,
+     "iqr_coverage": 0.376679462571977
+    },
+    "2017": {
+     "n": 2088,
+     "iqr_coverage": 0.37547892720306514
+    },
+    "2018": {
+     "n": 2019,
+     "iqr_coverage": 0.362555720653789
+    },
+    "2019": {
+     "n": 1917,
+     "iqr_coverage": 0.35732916014606153
+    }
+   },
+   "segments": {
+    "loss_making": {
+     "n": 1636,
+     "iqr_coverage": 0.33312958435207823,
+     "median_abs_point_error": 0.4526114198431719
+    },
+    "small_size": {
+     "n": 559,
+     "iqr_coverage": 0.2808586762075134,
+     "median_abs_point_error": 0.5845475652375592
+    },
+    "high_growth": {
+     "n": 1170,
+     "iqr_coverage": 0.3170940170940171,
+     "median_abs_point_error": 0.43321312797164746
+    },
+    "high_rnd": {
+     "n": 598,
+     "iqr_coverage": 0.3277591973244147,
+     "median_abs_point_error": 0.6076358604099796
+    }
+   }
+  },
+  "EV/Sales \u00b7 industry_sic3": {
+   "all": {
+    "n": 10357,
+    "iqr_coverage": 0.4417302307618036,
+    "minmax_coverage": 0.875446557883557,
+    "median_iqr_width_pct": 1.8814238810609571,
+    "median_abs_point_error": 0.6026835497986608,
+    "factor_for_50pct": 1.8270151137424129,
+    "factor_for_80pct": 3.7315356509123383,
+    "pctile_quartile_shares": [
+     0.25741044704064886,
+     0.22815487110167038,
+     0.24157574587235686,
+     0.27285893598532396
+    ]
+   },
+   "by_year": {
+    "2016": {
+     "n": 2602,
+     "iqr_coverage": 0.43812451960030746
+    },
+    "2017": {
+     "n": 2677,
+     "iqr_coverage": 0.4463952185282032
+    },
+    "2018": {
+     "n": 2577,
+     "iqr_coverage": 0.44043461389212263
+    },
+    "2019": {
+     "n": 2501,
+     "iqr_coverage": 0.44182327069172334
+    }
+   },
+   "segments": {
+    "loss_making": {
+     "n": 3696,
+     "iqr_coverage": 0.4082792207792208,
+     "median_abs_point_error": 0.8250758624436343
+    },
+    "small_size": {
+     "n": 2064,
+     "iqr_coverage": 0.4011627906976744,
+     "median_abs_point_error": 1.1099862751197467
+    },
+    "high_growth": {
+     "n": 1875,
+     "iqr_coverage": 0.45226666666666665,
+     "median_abs_point_error": 0.6834741064259295
+    },
+    "high_rnd": {
+     "n": 2073,
+     "iqr_coverage": 0.47563917028461167,
+     "median_abs_point_error": 0.901813303634966
+    }
+   }
+  },
+  "EV/Sales \u00b7 size_margin_k10": {
+   "all": {
+    "n": 10357,
+    "iqr_coverage": 0.410640146760645,
+    "minmax_coverage": 0.8122043062662934,
+    "median_iqr_width_pct": 1.5128536212205757,
+    "median_abs_point_error": 0.5773621860687217,
+    "factor_for_50pct": 1.7813334019190978,
+    "factor_for_80pct": 3.3568229781481946,
+    "pctile_quartile_shares": [
+     0.2492999903446944,
+     0.1765955392488172,
+     0.2729554890412281,
+     0.3011489813652602
+    ]
+   },
+   "by_year": {
+    "2016": {
+     "n": 2602,
+     "iqr_coverage": 0.40930053804765565
+    },
+    "2017": {
+     "n": 2677,
+     "iqr_coverage": 0.4094135225999253
+    },
+    "2018": {
+     "n": 2577,
+     "iqr_coverage": 0.4093907644547924
+    },
+    "2019": {
+     "n": 2501,
+     "iqr_coverage": 0.4146341463414634
+    }
+   },
+   "segments": {
+    "loss_making": {
+     "n": 3696,
+     "iqr_coverage": 0.38961038961038963,
+     "median_abs_point_error": 0.6879030605227341
+    },
+    "small_size": {
+     "n": 2064,
+     "iqr_coverage": 0.39001937984496127,
+     "median_abs_point_error": 0.7654743596154243
+    },
+    "high_growth": {
+     "n": 1875,
+     "iqr_coverage": 0.36906666666666665,
+     "median_abs_point_error": 0.6910176233536223
+    },
+    "high_rnd": {
+     "n": 2073,
+     "iqr_coverage": 0.3897732754462132,
+     "median_abs_point_error": 0.7567805734586646
+    }
+   }
+  },
+  "EV/Sales \u00b7 margin_growth_k8": {
+   "all": {
+    "n": 10327,
+    "iqr_coverage": 0.3691294664471773,
+    "minmax_coverage": 0.7238307349665924,
+    "median_iqr_width_pct": 1.0202439624835886,
+    "median_abs_point_error": 0.5103749731784228,
+    "factor_for_50pct": 1.6659157515669274,
+    "factor_for_80pct": 3.1148244593669174,
+    "pctile_quartile_shares": [
+     0.21690713663212938,
+     0.2016074368161131,
+     0.21264646073399826,
+     0.36883896581775927
+    ]
+   },
+   "by_year": {
+    "2016": {
+     "n": 2600,
+     "iqr_coverage": 0.37461538461538463
+    },
+    "2017": {
+     "n": 2672,
+     "iqr_coverage": 0.375
+    },
+    "2018": {
+     "n": 2565,
+     "iqr_coverage": 0.3617933723196881
+    },
+    "2019": {
+     "n": 2490,
+     "iqr_coverage": 0.3646586345381526
+    }
+   },
+   "segments": {
+    "loss_making": {
+     "n": 3685,
+     "iqr_coverage": 0.34898236092265944,
+     "median_abs_point_error": 0.69746476574334
+    },
+    "small_size": {
+     "n": 2048,
+     "iqr_coverage": 0.31494140625,
+     "median_abs_point_error": 0.8865034701835897
+    },
+    "high_growth": {
+     "n": 1866,
+     "iqr_coverage": 0.35852090032154343,
+     "median_abs_point_error": 0.5940219710251036
+    },
+    "high_rnd": {
+     "n": 2072,
+     "iqr_coverage": 0.3658301158301158,
+     "median_abs_point_error": 0.743240236494531
+    }
+   }
+  }
+ }
+}
