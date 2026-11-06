@@ -6,8 +6,30 @@ project tests whether those ranges contain market value as often as they appear 
 agents, following the SignalLab design (Liu, Liu, Liu & Mei 2026), can write short, interpretable
 rules that say when a comps valuation should be trusted and how wide its range should be.
 
-Status: protocol frozen ([`docs/protocol.md`](docs/protocol.md)); agent search on exploration years next.
-Validation and holdout years have not been scored.
+Status: complete. Protocol frozen before the search ([`docs/protocol.md`](docs/protocol.md)); validation
+(FY2020–2023) and holdout (FY2024–2025) each scored once. The holdout is now spent.
+
+## Findings (interval score of 80% ranges, lower is better)
+
+| Method | EV/EBITDA validation | EV/EBITDA holdout | EV/Sales validation | EV/Sales holdout |
+|---|---|---|---|---|
+| Peer 25th–75th percentile range, as practitioners report it (covers ~41%) | 4.004 | 4.042 | 5.458 | 5.492 |
+| Constant band (one width for every firm) | 3.391 | 3.449 | 4.357 | 4.444 |
+| Peer min–max range, uncalibrated (covers ~81%) | 3.265 | 3.227 | 4.298 | 4.330 |
+| **AI agents' rules, mean of 5 runs** | **3.145** | **3.243** | **4.207** | **4.266** |
+| Linear regression on all 33 inputs | 3.048 | 3.106 | 4.097 | 4.190 |
+| Gradient-boosted trees (black box) | 2.719 | 2.818 | 3.818 | 3.954 |
+
+- **Replicated in the holdout on both multiples.** Agent rules beat the constant band in 5 of 5 runs (T1) and
+  random rules with the same budget (T2, p ≤ 0.002). They do not beat an unrestricted regression (T3) and
+  capture about a third of the black box's gain (T4: G = 0.28–0.36, below the 0.75 bar).
+- The five runs converged on the same short rule: wider ranges for small firms, loss-making firms, firms with
+  extreme net debt (large net cash or high leverage) and low EBITDA margins.
+- Practitioners' interquartile range contains market value about 41% of the time in every period.
+- Calibrated on 2016–2019, every EV/EBITDA method except the black box under-covers later years (about 70–72%
+  against 80%).
+
+Reports: [`results/validate/REPORT.md`](results/validate/REPORT.md), [`results/holdout/REPORT.md`](results/holdout/REPORT.md).
 
 ## Diagnostic 0 (FY2016–2019, exploration years)
 

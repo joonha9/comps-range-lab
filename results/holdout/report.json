@@ -1,0 +1,1213 @@
+{
+ "period": "holdout",
+ "fit_years": [
+  2016,
+  2017,
+  2018,
+  2019
+ ],
+ "eval_years": [
+  2024,
+  2025
+ ],
+ "runs": [
+  "a1",
+  "a2",
+  "a3",
+  "a4",
+  "a5"
+ ],
+ "valuationlab_commit": "7830673",
+ "multiples": {
+  "EV/EBITDA": {
+   "benchmarks": {
+    "practice_iqr": {
+     "interval_score": 4.041904421775397,
+     "coverage": 0.40192527961191216,
+     "mean_width": 0.7798513883386631,
+     "median_factor": 1.3981246157890475,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.050595019585595,
+       "coverage": 0.39226519337016574
+      },
+      "2025": {
+       "interval_score": 4.0332138239652,
+       "coverage": 0.4115853658536585
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.3797780517879161
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.36283185840707965
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.3288948069241012
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.3833543505674653
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.36787564766839376
+      }
+     },
+     "n": 3959
+    },
+    "practice_minmax": {
+     "interval_score": 3.226933723973203,
+     "coverage": 0.802757990224302,
+     "mean_width": 2.2176006832325514,
+     "median_factor": 2.6796159310653938,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.1037716343329396,
+       "coverage": 0.7975891511803114
+      },
+      "2025": {
+       "interval_score": 3.350095813613466,
+       "coverage": 0.8079268292682927
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.7644882860665845
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.7560050568900126
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.7390146471371505
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.7742749054224464
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.6994818652849741
+      }
+     },
+     "n": 3959
+    },
+    "constant": {
+     "interval_score": 3.449399667515538,
+     "coverage": 0.7175871196808402,
+     "mean_width": 1.4845956215381115,
+     "median_factor": 2.1007571151322733,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.466815391209784,
+       "coverage": 0.7207433450527373
+      },
+      "2025": {
+       "interval_score": 3.431983943821292,
+       "coverage": 0.7144308943089431
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.6004932182490752
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.5524652338811631
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.5739014647137151
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.5737704918032787
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7461139896373057
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 0.7422978107690558,
+     "rolling": {
+      "interval_score": 3.3883409783972147,
+      "coverage": 0.7696339574834723
+     }
+    },
+    "peer_iqr_scaled": {
+     "interval_score": 3.369779880973638,
+     "coverage": 0.8115680878996133,
+     "mean_width": 2.2119727958068562,
+     "median_factor": 2.5871625201520185,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.3775211589926024,
+       "coverage": 0.8116524359618282
+      },
+      "2025": {
+       "interval_score": 3.3620386029546734,
+       "coverage": 0.8114837398373984
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.7694204685573366
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.7281921618204804
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.7203728362183754
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.7667087011349306
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7512953367875648
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 1.41819096873635,
+     "rolling": {
+      "interval_score": 3.3605204051231743,
+      "coverage": 0.8060080065579662
+     }
+    },
+    "linear_all": {
+     "interval_score": 3.106048537505165,
+     "coverage": 0.70350329021246,
+     "mean_width": 1.5672937389996153,
+     "median_factor": 1.929931396073849,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.1496311933514445,
+       "coverage": 0.6961325966850829
+      },
+      "2025": {
+       "interval_score": 3.0624658816588863,
+       "coverage": 0.7108739837398373
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.7348951911220715
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.7079646017699115
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.6431424766977364
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.6872635561160151
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.689119170984456
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 2.5050020687944468,
+     "rolling": {
+      "interval_score": 3.043924389294236,
+      "coverage": 0.7520284369091808
+     }
+    },
+    "gbm": {
+     "interval_score": 2.818177528210729,
+     "coverage": 0.7461673312426244,
+     "mean_width": 1.771778381805952,
+     "median_factor": 2.0183410811521547,
+     "by_year": {
+      "2024": {
+       "interval_score": 2.78654466169737,
+       "coverage": 0.7428427925665495
+      },
+      "2025": {
+       "interval_score": 2.849810394724088,
+       "coverage": 0.7494918699186992
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.7546239210850801
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.7433628318584071
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.7243675099866844
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.7263556116015133
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7409326424870466
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 1.813921355537585,
+     "rolling": {
+      "interval_score": 2.7337065563117413,
+      "coverage": 0.7565106240276365
+     }
+    },
+    "hand_rule": {
+     "interval_score": 3.597915765782708,
+     "coverage": 0.8143539984809692,
+     "mean_width": 2.699659850813046,
+     "median_factor": 2.603133285390695,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.5925939619440292,
+       "coverage": 0.8131592164741336
+      },
+      "2025": {
+       "interval_score": 3.603237569621387,
+       "coverage": 0.8155487804878049
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.8668310727496917
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.8621997471554994
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.7723035952063915
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.8575031525851198
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7253886010362695
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 1.4167938862835892,
+     "rolling": {
+      "interval_score": 3.5655693387818195,
+      "coverage": 0.8075412016676671
+     }
+    }
+   },
+   "finalists": {
+    "a1": {
+     "interval_score": 3.2090957172534114,
+     "coverage": 0.702957005712699,
+     "mean_width": 1.5611274385217144,
+     "median_factor": 1.9864341896896704,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.257220806551341,
+       "coverage": 0.7026619789050729
+      },
+      "2025": {
+       "interval_score": 3.1609706279554817,
+       "coverage": 0.7032520325203252
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.7065351418002466
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.7029077117572693
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.6458055925432756
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.6569987389659521
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.6476683937823834
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 0.6463335037834776,
+     "rolling": {
+      "interval_score": 3.1464197909483347,
+      "coverage": 0.7491955670435659
+     },
+     "id": "g04-02",
+     "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6, net_debt_to_ebitda -0.5, rnd_intensity +0.3 | if loss_making x1.25 | if sales_growth_1y >= p85 x1.25 | if sales_growth_1y <= p10 x1.25",
+     "explore_is": 2.5052699525310356
+    },
+    "a2": {
+     "interval_score": 3.2674909616364327,
+     "coverage": 0.703961526054236,
+     "mean_width": 1.5396400518825035,
+     "median_factor": 1.951378273736164,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.293622093691859,
+       "coverage": 0.7046710195881467
+      },
+      "2025": {
+       "interval_score": 3.241359829581006,
+       "coverage": 0.7032520325203252
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.6374845869297164
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.6890012642225032
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.6271637816245007
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.6494325346784363
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.6476683937823834
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 0.6596967420551718,
+     "rolling": {
+      "interval_score": 3.2031044930671353,
+      "coverage": 0.7479516564377096
+     },
+     "id": "g03-01",
+     "compact": "EV/EBITDA | base constant | terms net_debt_to_ebitda -0.8, log_sales -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3",
+     "explore_is": 2.5350943413994065
+    },
+    "a3": {
+     "interval_score": 3.2162085516874876,
+     "coverage": 0.7026970707615163,
+     "mean_width": 1.5892777047914244,
+     "median_factor": 1.9557839419639396,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.2493237422278454,
+       "coverage": 0.7036664992466097
+      },
+      "2025": {
+       "interval_score": 3.1830933611471295,
+       "coverage": 0.7017276422764228
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.7127003699136868
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.7092288242730721
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.6031957390146472
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.6254728877679697
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.6528497409326425
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 0.6578627938108134,
+     "rolling": {
+      "interval_score": 3.158771283998809,
+      "coverage": 0.7476975913970592
+     },
+     "id": "g05-01",
+     "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.7, net_debt_to_ebitda -0.6 | if net_debt_to_ebitda <= p10 x1.3 | if loss_making x1.3",
+     "explore_is": 2.521564118597582
+    },
+    "a4": {
+     "interval_score": 3.2408141185966395,
+     "coverage": 0.7001945747734725,
+     "mean_width": 1.5177498081537788,
+     "median_factor": 2.0011644356990783,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.2730498010630473,
+       "coverage": 0.6971371170266197
+      },
+      "2025": {
+       "interval_score": 3.2085784361302316,
+       "coverage": 0.7032520325203252
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.6991368680641183
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.6978508217446271
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.6098535286284953
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.6166456494325346
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.6839378238341969
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 0.6492745556086585,
+     "rolling": {
+      "interval_score": 3.1620832888728194,
+      "coverage": 0.7484480466979456
+     },
+     "id": "g05-03",
+     "compact": "EV/EBITDA | base constant | terms log_sales -0.8, net_debt_to_ebitda -0.4 | if net_debt_to_ebitda <= p10 x1.3 | if net_debt_to_ebitda >= p95 x1.3 | if loss_making x1.3",
+     "explore_is": 2.5233210170450655
+    },
+    "a5": {
+     "interval_score": 3.2820262048986972,
+     "coverage": 0.704209721184354,
+     "mean_width": 1.5259658929092415,
+     "median_factor": 2.0144267776984472,
+     "by_year": {
+      "2024": {
+       "interval_score": 3.3282915376309967,
+       "coverage": 0.7056755399296836
+      },
+      "2025": {
+       "interval_score": 3.2357608721663973,
+       "coverage": 0.7027439024390244
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 811,
+       "coverage": 0.7546239210850801
+      },
+      "smallest_20pct": {
+       "n": 791,
+       "coverage": 0.6624525916561315
+      },
+      "fastest_growing_20pct": {
+       "n": 751,
+       "coverage": 0.5739014647137151
+      },
+      "highest_rnd_20pct": {
+       "n": 793,
+       "coverage": 0.5636822194199244
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7098445595854922
+      }
+     },
+     "n": 3959,
+     "centre": 0.020205325812340642,
+     "q": 0.6817950251282577,
+     "rolling": {
+      "interval_score": 3.2101187739146813,
+      "coverage": 0.7539846483974634
+     },
+     "id": "g05-01",
+     "compact": "EV/EBITDA | base constant | terms log_sales -0.8, ebitda_margin -0.6 | if loss_making x1.3",
+     "explore_is": 2.572474882163016
+    }
+   },
+   "tests": {
+    "agents_mean_interval_score": 3.243127110814534,
+    "T1_vs_constant": {
+     "constant": 3.449399667515538,
+     "runs_below": 5,
+     "pass": true
+    },
+    "T2_vs_random": {
+     "random_median_of_means": 3.325526070586128,
+     "p_one_sided": 0.0008,
+     "p_holm": 0.0016,
+     "pass": true
+    },
+    "T3_vs_linear_all": {
+     "linear_all": 3.106048537505165,
+     "pass": false
+    },
+    "T4_share_of_gbm_gain": {
+     "gbm": 2.818177528210729,
+     "G": 0.3267828294618763,
+     "close_to_black_box": false
+    },
+    "secondary_segment_mad80": {
+     "agents_mean": 0.14055827399388,
+     "constant": 0.1906511203430925,
+     "linear_all": 0.10752300066196196,
+     "gbm": 0.06207149659625373
+    }
+   },
+   "reproducibility_fy2016_2023": true,
+   "secondary_fit_2016_2023": {
+    "benchmarks": {
+     "constant": 3.390082082855601,
+     "peer_iqr_scaled": 3.3613378187708927,
+     "linear_all": 3.046035753231267,
+     "gbm": 2.7346907337227457,
+     "hand_rule": 3.5664398455164648
+    },
+    "finalists": {
+     "a1": 3.1494831347328596,
+     "a2": 3.2064921902455223,
+     "a3": 3.1614437636757664,
+     "a4": 3.166139851656024,
+     "a5": 3.2136836342839583
+    }
+   }
+  },
+  "EV/Sales": {
+   "benchmarks": {
+    "practice_iqr": {
+     "interval_score": 5.4924949350409396,
+     "coverage": 0.4082511403218032,
+     "mean_width": 1.0959983979040082,
+     "median_factor": 1.6500533928763277,
+     "by_year": {
+      "2024": {
+       "interval_score": 5.481619021067345,
+       "coverage": 0.4100077579519007
+      },
+      "2025": {
+       "interval_score": 5.503370849014533,
+       "coverage": 0.4064945226917058
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.372528616024974
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.3830409356725146
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.3567567567567568
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.38132295719844356
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.3626943005181347
+      }
+     },
+     "n": 5134
+    },
+    "practice_minmax": {
+     "interval_score": 4.329693596302206,
+     "coverage": 0.8102875723438121,
+     "mean_width": 3.0293749701025425,
+     "median_factor": 4.011736297019508,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.272627981364968,
+       "coverage": 0.8095422808378588
+      },
+      "2025": {
+       "interval_score": 4.386759211239443,
+       "coverage": 0.8110328638497653
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.7819979188345474
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.7914230019493177
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.7491891891891892
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.7762645914396887
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.6994818652849741
+      }
+     },
+     "n": 5134
+    },
+    "constant": {
+     "interval_score": 4.444264844503637,
+     "coverage": 0.772693526905767,
+     "mean_width": 2.437221609520462,
+     "median_factor": 3.3824855354374677,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.503010691531271,
+       "coverage": 0.7723041117145074
+      },
+      "2025": {
+       "interval_score": 4.3855189974760025,
+       "coverage": 0.7730829420970265
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.6925078043704475
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.6423001949317739
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.6616216216216216
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.6595330739299611
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7668393782383419
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 1.218610804760231,
+     "rolling": {
+      "interval_score": 4.433970180549924,
+      "coverage": 0.7884768311619567
+     }
+    },
+    "peer_iqr_scaled": {
+     "interval_score": 4.554303234447131,
+     "coverage": 0.7952516842282902,
+     "mean_width": 3.000103032605077,
+     "median_factor": 3.9387456578787043,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.558414196142448,
+       "coverage": 0.8033359193173002
+      },
+      "2025": {
+       "interval_score": 4.550192272751814,
+       "coverage": 0.7871674491392802
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.7575442247658689
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.7368421052631579
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.7427027027027027
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.7519455252918288
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7616580310880829
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 1.3686515378600512,
+     "rolling": {
+      "interval_score": 4.547791824368945,
+      "coverage": 0.7923290974187509
+     }
+    },
+    "linear_all": {
+     "interval_score": 4.190373138730223,
+     "coverage": 0.7695870074337934,
+     "mean_width": 2.5615452595425854,
+     "median_factor": 3.233462536639359,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.2349645544090775,
+       "coverage": 0.7668735453840186
+      },
+      "2025": {
+       "interval_score": 4.145781723051368,
+       "coverage": 0.7723004694835681
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.768990634755463
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.7680311890838206
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.7232432432432433
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.7402723735408561
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.772020725388601
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 2.5217922422920123,
+     "rolling": {
+      "interval_score": 4.174713598826976,
+      "coverage": 0.7812873708070334
+     }
+    },
+    "gbm": {
+     "interval_score": 3.9537882676184215,
+     "coverage": 0.7758401109180728,
+     "mean_width": 2.574150114663296,
+     "median_factor": 3.0558334757365992,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.007808653461755,
+       "coverage": 0.7684251357641583
+      },
+      "2025": {
+       "interval_score": 3.8997678817750883,
+       "coverage": 0.7832550860719875
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.7580645161290323
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.7368421052631579
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.72
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.7373540856031129
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7409326424870466
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 1.739124552749554,
+     "rolling": {
+      "interval_score": 3.858142058282628,
+      "coverage": 0.7902724510150291
+     }
+    },
+    "hand_rule": {
+     "interval_score": 5.106471028072647,
+     "coverage": 0.8014897635099452,
+     "mean_width": 3.830693383519006,
+     "median_factor": 4.168379827807396,
+     "by_year": {
+      "2024": {
+       "interval_score": 5.131159794387227,
+       "coverage": 0.8083785880527541
+      },
+      "2025": {
+       "interval_score": 5.081782261758066,
+       "coverage": 0.7946009389671361
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.8834547346514048
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.9025341130604289
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.8227027027027027
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.9046692607003891
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7150259067357513
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 1.3446693997415593,
+     "rolling": {
+      "interval_score": 5.085937053984017,
+      "coverage": 0.7973951371360652
+     }
+    }
+   },
+   "finalists": {
+    "a1": {
+     "interval_score": 4.237415776899228,
+     "coverage": 0.772494570040708,
+     "mean_width": 2.5138889608815203,
+     "median_factor": 3.099637652906592,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.287852921879837,
+       "coverage": 0.7730799069045772
+      },
+      "2025": {
+       "interval_score": 4.1869786319186195,
+       "coverage": 0.7719092331768388
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.7601456815816857
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.7660818713450293
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.7524324324324324
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.7626459143968871
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.844559585492228
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 1.0642581527941963,
+     "rolling": {
+      "interval_score": 4.228214388005727,
+      "coverage": 0.7841932640581009
+     },
+     "id": "g03-04",
+     "compact": "EV/Sales | base constant | terms n_peers -0.6, peer_range +0.3, log_assets -0.3 | if sales_growth_1y >= p85 x1.3 | if sales_growth_1y <= p10 x1.3 | if no_history x1.2 | if negative_ebitda x1.25",
+     "explore_is": 4.051972183498405
+    },
+    "a2": {
+     "interval_score": 4.25383967113468,
+     "coverage": 0.7740728701144024,
+     "mean_width": 2.5366650090710126,
+     "median_factor": 3.1499275821767854,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.321991539769036,
+       "coverage": 0.7699767261442979
+      },
+      "2025": {
+       "interval_score": 4.185687802500325,
+       "coverage": 0.778169014084507
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.7710718002081165
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.7612085769980507
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.7091891891891892
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.7772373540856031
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.7098445595854922
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 1.1320732581348663,
+     "rolling": {
+      "interval_score": 4.247476272828843,
+      "coverage": 0.7828439692547146
+     },
+     "id": "g02-04",
+     "compact": "EV/Sales | base constant | terms debt_to_assets -0.6, ebitda_margin -0.5 | if negative_ebitda x1.3",
+     "explore_is": 4.090861927524589
+    },
+    "a3": {
+     "interval_score": 4.239175014133593,
+     "coverage": 0.771698742580472,
+     "mean_width": 2.6372305297822862,
+     "median_factor": 3.1401298272919855,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.289117729470348,
+       "coverage": 0.7761830876648564
+      },
+      "2025": {
+       "interval_score": 4.189232298796839,
+       "coverage": 0.7672143974960877
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.7762747138397502
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.8187134502923976
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.7189189189189189
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.7762645914396887
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.844559585492228
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 1.0859323294873358,
+     "rolling": {
+      "interval_score": 4.2331442783784095,
+      "coverage": 0.7855275346588626
+     },
+     "id": "g05-06",
+     "compact": "EV/Sales | base constant | terms peer_range +0.5, log_sales -0.6 | if gross_margin <= p15 x1.4 | if ebitda_margin <= p15 x1.4 | if n_peers <= p10 x1.4",
+     "explore_is": 4.046330931572232
+    },
+    "a4": {
+     "interval_score": 4.281740691922472,
+     "coverage": 0.775795038310199,
+     "mean_width": 2.730310080420733,
+     "median_factor": 3.1442597366536535,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.312975979256202,
+       "coverage": 0.7788983708301008
+      },
+      "2025": {
+       "interval_score": 4.250505404588742,
+       "coverage": 0.7726917057902973
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.8007284079084287
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.8411306042884991
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.7383783783783784
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.8005836575875487
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.8186528497409327
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 1.1117256119244157,
+     "rolling": {
+      "interval_score": 4.280861687546027,
+      "coverage": 0.7820231014567709
+     },
+     "id": "g02-06",
+     "compact": "EV/Sales | base constant | terms peer_iqr +0.4, log_sales -0.8 | if negative_ebitda x1.4 | if n_peers <= p10 x1.3 | if no_history x1.3",
+     "explore_is": 4.100199985174
+    },
+    "a5": {
+     "interval_score": 4.316113578545762,
+     "coverage": 0.7695686445194745,
+     "mean_width": 2.464848291439373,
+     "median_factor": 3.283770647070339,
+     "by_year": {
+      "2024": {
+       "interval_score": 4.364808337356871,
+       "coverage": 0.7711404189294027
+      },
+      "2025": {
+       "interval_score": 4.267418819734652,
+       "coverage": 0.7679968701095462
+      }
+     },
+     "segments": {
+      "loss_making": {
+       "n": 1922,
+       "coverage": 0.7294484911550468
+      },
+      "smallest_20pct": {
+       "n": 1026,
+       "coverage": 0.7378167641325536
+      },
+      "fastest_growing_20pct": {
+       "n": 925,
+       "coverage": 0.6951351351351351
+      },
+      "highest_rnd_20pct": {
+       "n": 1028,
+       "coverage": 0.7198443579766537
+      },
+      "fallback_or_few_peers": {
+       "n": 193,
+       "coverage": 0.8652849740932642
+      }
+     },
+     "n": 5134,
+     "centre": 0.05193532334613241,
+     "q": 1.2032388760815211,
+     "rolling": {
+      "interval_score": 4.303128328950029,
+      "coverage": 0.7851630080456882
+     },
+     "id": "g05-04",
+     "compact": "EV/Sales | base constant | terms log_sales -0.5, n_peers -0.7, peer_range +0.4",
+     "explore_is": 4.108192033078075
+    }
+   },
+   "tests": {
+    "agents_mean_interval_score": 4.265656946527147,
+    "T1_vs_constant": {
+     "constant": 4.444264844503637,
+     "runs_below": 5,
+     "pass": true
+    },
+    "T2_vs_random": {
+     "random_median_of_means": 4.480904951502327,
+     "p_one_sided": 0.0,
+     "p_holm": 0.0,
+     "pass": true
+    },
+    "T3_vs_linear_all": {
+     "linear_all": 4.190373138730223,
+     "pass": false
+    },
+    "T4_share_of_gbm_gain": {
+     "gbm": 3.9537882676184215,
+     "G": 0.3641517381130494,
+     "close_to_black_box": false
+    },
+    "secondary_segment_mad80": {
+     "agents_mean": 0.04689097536387663,
+     "constant": 0.11543958538157084,
+     "linear_all": 0.04548836679760324,
+     "gbm": 0.061361330103530135
+    }
+   },
+   "reproducibility_fy2016_2023": true,
+   "secondary_fit_2016_2023": {
+    "benchmarks": {
+     "constant": 4.434760686158403,
+     "peer_iqr_scaled": 4.548113530710738,
+     "linear_all": 4.176948949004194,
+     "gbm": 3.888037231552186,
+     "hand_rule": 5.089116923338249
+    },
+    "finalists": {
+     "a1": 4.228984795481695,
+     "a2": 4.248294925821231,
+     "a3": 4.233665566484334,
+     "a4": 4.281073573156201,
+     "a5": 4.303892811198924
+    }
+   }
+  }
+ }
+}
