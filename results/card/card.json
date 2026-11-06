@@ -1,0 +1,192 @@
+{
+ "label": "built after the pre-registered tests; out-of-sample scores are exploratory",
+ "valuationlab_commit": "7830673",
+ "multiples": {
+  "EV/EBITDA": {
+   "flags": [
+    "sales below $400M",
+    "net loss",
+    "net cash above 2x EBITDA",
+    "EBITDA margin below 8%"
+   ],
+   "centre": 0.020205325812340642,
+   "factor_fit_2016_2019": {
+    "high": 1.7637729319589932,
+    "medium": 2.105250476480218,
+    "low": 4.273357221140404
+   },
+   "tier_share_explore": {
+    "high": 0.527054835976274,
+    "medium": 0.30238469918896016,
+    "low": 0.17056046483476578
+   },
+   "flag_share_explore": {
+    "sales below $400M": 0.20917564459508534,
+    "net loss": 0.20384941290400677,
+    "net cash above 2x EBITDA": 0.09998789492797482,
+    "EBITDA margin below 8%": 0.18799176855102287
+   },
+   "oos": {
+    "validate": {
+     "card": 3.1786085670630477,
+     "card_coverage": 0.7168331470710382,
+     "card_tier_coverage": {
+      "high": 0.718281036834925,
+      "medium": 0.7,
+      "low": 0.7389584706657878
+     },
+     "constant": 3.3905252284629483,
+     "constant_coverage": 0.7222211349766886,
+     "agents_mean": 3.145475039328739,
+     "card_segments": {
+      "loss_making": 0.7457903313416622,
+      "smallest_20pct": 0.6878048780487804,
+      "fastest_growing_20pct": 0.6214800261951539,
+      "highest_rnd_20pct": 0.6429440389294404,
+      "fallback_or_few_peers": 0.6603260869565217
+     },
+     "constant_segments": {
+      "loss_making": 0.5996740901683868,
+      "smallest_20pct": 0.55,
+      "fastest_growing_20pct": 0.6319580877537656,
+      "highest_rnd_20pct": 0.6131386861313869,
+      "fallback_or_few_peers": 0.6739130434782609
+     }
+    },
+    "holdout": {
+     "card": 3.28722657994313,
+     "card_coverage": 0.695898948724545,
+     "card_tier_coverage": {
+      "high": 0.6875287620800736,
+      "medium": 0.695067264573991,
+      "low": 0.7242921013412816
+     },
+     "constant": 3.449399667515538,
+     "constant_coverage": 0.7175871196808402,
+     "agents_mean": 3.243127110814534,
+     "card_segments": {
+      "loss_making": 0.7398273736128237,
+      "smallest_20pct": 0.6460176991150443,
+      "fastest_growing_20pct": 0.5752330226364847,
+      "highest_rnd_20pct": 0.5775535939470365,
+      "fallback_or_few_peers": 0.7046632124352331
+     },
+     "constant_segments": {
+      "loss_making": 0.6004932182490752,
+      "smallest_20pct": 0.5524652338811631,
+      "fastest_growing_20pct": 0.5739014647137151,
+      "highest_rnd_20pct": 0.5737704918032787,
+      "fallback_or_few_peers": 0.7461139896373057
+     }
+    }
+   },
+   "published": {
+    "centre": 0.02653011124099759,
+    "centre_factor": 1.0268851675829131,
+    "factor": {
+     "high": 1.9356115554738016,
+     "medium": 2.416456263252113,
+     "low": 5.0516832915989
+    },
+    "tier_share_all": {
+     "high": 0.5348837209302325,
+     "medium": 0.2890085679314566,
+     "low": 0.1761077111383109
+    }
+   }
+  },
+  "EV/Sales": {
+   "flags": [
+    "sales below $150M",
+    "negative EBITDA",
+    "peer multiples span more than 30x",
+    "fewer than 10 peers"
+   ],
+   "centre": 0.05193532334613241,
+   "factor_fit_2016_2019": {
+    "high": 2.856469739976057,
+    "medium": 3.6296454009410604,
+    "low": 6.640846072437968
+   },
+   "tier_share_explore": {
+    "high": 0.6033600463454668,
+    "medium": 0.2148305493868881,
+    "low": 0.18180940426764508
+   },
+   "flag_share_explore": {
+    "sales below $150M": 0.20778217630588008,
+    "negative EBITDA": 0.19880274210678767,
+    "peer multiples span more than 30x": 0.21444433716327121,
+    "fewer than 10 peers": 0.023655498696533744
+   },
+   "oos": {
+    "validate": {
+     "card": 4.2349632773467585,
+     "card_coverage": 0.7909049983120039,
+     "card_tier_coverage": {
+      "high": 0.784033466968799,
+      "medium": 0.7854954034729316,
+      "low": 0.8119494446572194
+     },
+     "constant": 4.356541790927048,
+     "constant_coverage": 0.7758504565398872,
+     "agents_mean": 4.2074202851138,
+     "card_segments": {
+      "loss_making": 0.7858921161825726,
+      "smallest_20pct": 0.7853658536585366,
+      "fastest_growing_20pct": 0.7665310274669379,
+      "highest_rnd_20pct": 0.7919433377600709,
+      "fallback_or_few_peers": 0.8381877022653722
+     },
+     "constant_segments": {
+      "loss_making": 0.7114107883817428,
+      "smallest_20pct": 0.6492239467849223,
+      "fastest_growing_20pct": 0.7314343845371313,
+      "highest_rnd_20pct": 0.6710934041611333,
+      "fallback_or_few_peers": 0.7637540453074434
+     }
+    },
+    "holdout": {
+     "card": 4.295128500536553,
+     "card_coverage": 0.7839976459047362,
+     "card_tier_coverage": {
+      "high": 0.792678506705328,
+      "medium": 0.7686453576864536,
+      "low": 0.7803958529688972
+     },
+     "constant": 4.444264844503637,
+     "constant_coverage": 0.772693526905767,
+     "agents_mean": 4.265656946527147,
+     "card_segments": {
+      "loss_making": 0.7539021852237253,
+      "smallest_20pct": 0.7758284600389863,
+      "fastest_growing_20pct": 0.721081081081081,
+      "highest_rnd_20pct": 0.7597276264591439,
+      "fallback_or_few_peers": 0.8290155440414507
+     },
+     "constant_segments": {
+      "loss_making": 0.6925078043704475,
+      "smallest_20pct": 0.6423001949317739,
+      "fastest_growing_20pct": 0.6616216216216216,
+      "highest_rnd_20pct": 0.6595330739299611,
+      "fallback_or_few_peers": 0.7668393782383419
+     }
+    }
+   },
+   "published": {
+    "centre": 0.055204150093147074,
+    "centre_factor": 1.0567563295587514,
+    "factor": {
+     "high": 2.9279599356723907,
+     "medium": 3.7969244702585816,
+     "low": 6.514258116882285
+    },
+    "tier_share_all": {
+     "high": 0.5506797131759785,
+     "medium": 0.24185838063937856,
+     "low": 0.20746190618464297
+    }
+   }
+  }
+ }
+}
